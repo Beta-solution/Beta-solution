@@ -1,5 +1,6 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Project;
 import com.example.betasolutions.service.ProjectService;
 import com.example.betasolutions.service.SkillService;
@@ -48,7 +49,11 @@ public class ProjectController {
 
     @PostMapping("/projects/{id}/edit")
     public String updateProject(@PathVariable int id, @ModelAttribute Project project, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return  "redirect:/login";
 
+        projectService.updateProject(id, project);
+        return "redirect:/projects"; //abfa
     }
 
     @PostMapping("/projects/{id}/delete")
