@@ -1,5 +1,6 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Project;
 import com.example.betasolutions.service.ProjectService;
 import com.example.betasolutions.service.SkillService;
@@ -38,7 +39,7 @@ public class ProjectController {
 
     @PostMapping("/projects/create")
     public String createProject(@ModelAttribute Project project, HttpSession httpSession){
-        Profile currentUser = (Profile) sessions.getAttribute("currentUser");
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
         if (currentUser == null) return "redirect:/login";
 
         projectService.createProject(project);

@@ -1,5 +1,6 @@
 package com.example.betasolutions.service;
 
+import com.example.betasolutions.model.Project;
 import com.example.betasolutions.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 

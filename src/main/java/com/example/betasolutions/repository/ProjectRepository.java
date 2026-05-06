@@ -1,5 +1,6 @@
 package com.example.betasolutions.repository;
 
+import com.example.betasolutions.model.Project;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +20,7 @@ public class ProjectRepository {
 
     }
 
-    public void createProject(){
+    public void createProject(Project project){
         String sql = """
     INSERT INTO Projects (name, description, price, totalDuration,
     startDate, endDate, estimatedDeadline, status)
@@ -33,8 +34,8 @@ public class ProjectRepository {
                 project.getStartDate(),
                 project.getEndDate(),
                 project.getEstimatedDeadline(),
-                project.getStatus().name().toLowerCase())
-        ); //abfa
+                project.getStatus().name().toLowerCase());
+        //abfa
     }
 
     public void updateProject(){
