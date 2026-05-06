@@ -4,7 +4,6 @@ package com.example.betasolutions.model;
 import com.example.betasolutions.enums.Status;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Task {
     private int id;
@@ -18,7 +17,15 @@ public class Task {
     private LocalDate endDate;
     private Project project;
 
-    public Task() {
+    public Task(int id, String name, String description, int duration, Status status,
+                LocalDate startDate, LocalDate endDate, int projectId) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public Task(int id, String name, String description, Profile profile,

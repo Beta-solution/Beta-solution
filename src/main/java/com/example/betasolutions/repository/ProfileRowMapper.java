@@ -17,7 +17,7 @@ public class ProfileRowMapper implements RowMapper<Profile> {
         profile.setUsername(rs.getString("username"));
         profile.setPassword(rs.getString("password"));
         profile.setEmail(rs.getString("email"));
-        profile.setRole(Role.valueOf(rs.getString("role")));
+        profile.setRole(Role.fromDb(rs.getString("role")));
         return profile;
     }
 }

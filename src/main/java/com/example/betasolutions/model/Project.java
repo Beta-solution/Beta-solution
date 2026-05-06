@@ -19,9 +19,6 @@ public class Project {
     private List<Skill> skills;
     private List<Profile> members;
 
-    public Project() {
-    }
-
     public Project(int id, String name, String description, float totalPrice,
                    int totalDuration, LocalDate startDate, LocalDate endDate,
                    LocalDate estimatedDeadline, Status status,
@@ -37,6 +34,18 @@ public class Project {
         this.status = status;
         this.skills = skills;
         this.members = members;
+    }
+
+    public Project(int id, String name, String description, float price, int totalDuration, LocalDate startDate,
+                   LocalDate endDate, LocalDate estimatedDeadline, Status status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.totalPrice = totalPrice;
+        this.totalDuration = totalDuration;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.estimatedDeadline = estimatedDeadline;
     }
 
     public int getId() {
