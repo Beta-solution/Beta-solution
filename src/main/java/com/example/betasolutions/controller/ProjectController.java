@@ -55,5 +55,4 @@ public class ProjectController {
     public String deleteProject(@PathVariable int id, HttpSession httpSession){
 
     }
-//:)
 }
