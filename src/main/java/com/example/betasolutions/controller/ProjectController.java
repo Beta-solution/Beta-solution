@@ -1,5 +1,6 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Project;
 import com.example.betasolutions.service.ProjectService;
 import com.example.betasolutions.service.SkillService;
@@ -53,7 +54,11 @@ public class ProjectController {
 
     @PostMapping("/projects/{id}/delete")
     public String deleteProject(@PathVariable int id, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
+        projectService.deleteProject(id);
+        return "redirect:/projects";
     }
     //:)
 }
