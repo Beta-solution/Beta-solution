@@ -19,9 +19,9 @@ public class ProjectService {
 
     }
 
-    public void createProject(){
-
-    }
+    public void createProject(Project project) {
+        projectRepository.createProject(project);
+    } //abfa
 
     public void updateProject(){
 
