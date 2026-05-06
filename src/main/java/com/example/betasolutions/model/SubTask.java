@@ -16,7 +16,16 @@ public class SubTask {
     private LocalDate endDate;
     private Task task;
 
-    public SubTask() {}
+    public SubTask(int id, String name, String description, int duration,
+                   Status status, LocalDate startDate, LocalDate endDate, int taskId) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 
     public SubTask(int id, String name, String description, Profile profile,
                    int duration, Skill skill, Status status,
