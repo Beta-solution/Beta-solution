@@ -24,7 +24,7 @@ public class ProjectRepository {
 
     }
 
-    public void updateProject(int id, Project project) {
+    public boolean updateProject(int id, Project project) {
         String sql = """
                 UPDATE Projects SET name = ?, description = ?, price = ?, totalduration = ?,
                 startDate = ?, endDate = ?, estimatedDeadline = ?, status = ? WHERE id = ?
@@ -39,6 +39,8 @@ public class ProjectRepository {
                 project.getEstimatedDeadline(),
                 project.getStatus(),
                 id); //abfa
+
+        return jdbcTemplate.update(sql, project.getName(), id) > 0;
     }
 
     public void deleteProject(){
