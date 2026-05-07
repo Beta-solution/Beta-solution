@@ -1,5 +1,6 @@
 package com.example.betasolutions.repository;
 
+import com.example.betasolutions.model.SubTask;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -23,10 +24,22 @@ public class SubTaskRepository {
 
     }
 
-    public void createSubTask(){
+    public void createSubTask(SubTask subTask, int taskId){
+        String sql = """
+                INSERT INTO Sub_Tasks (name, description, status,
+                startDate, endDate, task_id) VALUES (?, ?, ?, ?, ?, ?)
+                """;
 
+        jdbcTemplate.update(sql,
+                subTask.getName(),
+                subTask.getDescription(),
+                subTask.getDuration(),
+                subTask.getStatus(),
+                subTask.getStartDate(),
+                subTask.getEndDate(),
+                taskId
+                );
     }
-
     public void updateSubTask(){
 
     }

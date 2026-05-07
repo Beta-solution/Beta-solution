@@ -1,9 +1,11 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.SubTask;
 import com.example.betasolutions.service.ProfileService;
 import com.example.betasolutions.service.SkillService;
 import com.example.betasolutions.service.SubTaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +31,13 @@ public class SubTaskController {
     }
 
     @GetMapping("/tasks/{taskId}/subtasks/create")
-    public String showCreateForm(@PathVariable int taskId, Model model){
+    public String showCreateForm(@PathVariable int taskId, Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
+        model.addAttribute("subTask", new SubTask());
+        model.addAttribute("taskId",  taskId);
+        return "subtasks/create";
     }
 
     @PostMapping("/tasks/{taskId}/subtasks/create")
