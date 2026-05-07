@@ -1,8 +1,13 @@
 package com.example.betasolutions.repository;
 
+import com.example.betasolutions.exception.InvalidProfileException;
+import com.example.betasolutions.exception.ProfileNotFoundException;
 import com.example.betasolutions.model.Profile;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class ProfileRepository {
@@ -12,32 +17,92 @@ public class ProfileRepository {
         this.jdbcTemplate=jdbcTemplate;
     }
 
-    public void getAllProfiles(){
+    public List<Profile> getAllProfiles(){
+        String sql = "SELECT * FROM Profiles";
 
+        return jdbcTemplate.query(sql, new ProfileRowMapper());
     }
 
-    public void getProfileById(){
+    public Profile getProfileById(int id){
+        String sql = "SELECT * FROM Profiles WHERE id = ?";
 
+        try{
+            return jdbcTemplate.queryForObject(sql, new ProfileRowMapper(), id);
+        }catch (EmptyResultDataAccessException e){
+            throw new ProfileNotFoundException("Profile with id " + id + " was not found");
+        }
     }
 
-    public void getProfileByUsername(){
-
-    }
-
-    public void createProfile(){
-
-    }
-
-    public void updateProfile(){
-
-    }
-
-    public void deleteProfile(){
-
-    }
-
-    public Profile getByUsername(String username, String password) {
+    public Profile getProfileByUsername(String username, String password){
         String sql = "SELECT * FROM Profiles WHERE username = ? AND password = ?";
-        return jdbcTemplate.queryForObject(sql, new ProfileRowMapper(), username, password);
+
+        try{
+            return jdbcTemplate.queryForObject(sql, new ProfileRowMapper(), username, password);
+        }catch (EmptyResultDataAccessException e){
+            throw new ProfileNotFoundException("Invalid username or password");
+        }
+    }
+
+    public boolean createProfile(Profile profile){
+        validateProfile(profile);
+
+        String sql = """
+            INSERT INTO Profiles (name, username, password, email) VALUES (?, ?, ?, ?)
+            """;
+
+        int rows = jdbcTemplate.update(sql,
+                profile.getName(),
+                profile.getUsername(),
+                profile.getPassword(),
+                profile.getEmail()
+        );
+        return rows > 0;
+    }
+
+    public boolean updateProfile(Profile profile, int profileId){
+
+        validateProfile(profile);
+
+        String sql = "UPDATE Profiles SET name = ?, username = ?, password = ?, email = ? WHERE id = ?";
+
+        int rows = jdbcTemplate.update(sql,
+                profile.getName(),
+                profile.getUsername(),
+                profile.getPassword(),
+                profile.getEmail(),
+                profileId
+        );
+
+        if (rows == 0){
+            throw new ProfileNotFoundException("Profile with id " + profileId + " was not found");
+        }
+
+        return true;
+    }
+
+    public boolean deleteProfile(int profileId){
+        String sql = "DELETE FROM Profiles WHERE id = ?";
+        int rows = jdbcTemplate.update(sql,profileId);
+        if (rows == 0){
+            throw new ProfileNotFoundException("Profile with id " + profileId + " was not found");
+        }
+        return true;
+    }
+
+    //Hjælpemetoder
+
+    private void validateProfile(Profile profile) {
+        if (profile.getName() == null || profile.getName().isBlank()) {
+            throw new InvalidProfileException("Name cannot be empty");
+        }
+        if (profile.getUsername() == null || profile.getUsername().isBlank()) {
+            throw new InvalidProfileException("Username cannot be empty");
+        }
+        if (profile.getPassword() == null || profile.getPassword().isBlank()) {
+            throw new InvalidProfileException("Password cannot be empty");
+        }
+        if (profile.getEmail() == null || profile.getEmail().isBlank()) {
+            throw new InvalidProfileException("Email cannot be empty");
+        }
     }
 }
