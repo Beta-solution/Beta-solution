@@ -28,20 +28,22 @@ public class TaskRepository {
 
     }
 
-    public void updateTask(int id, Task task){
+    public boolean updateTask(int id, Task task){
         String sql = """
                 UPDATE Tasks SET name = ?, description = ?, duration = ?, status = ?,
                 startDate = ?, endDate = ? WHERE id = ?
                 """;
 
         jdbcTemplate.update(sql,
-                task.getName(),
+                Task.getName(),
                 task.getDescription(),
                 task.getDuration(),
                 task.getStatus(),
                 task.getStartDate(),
                 task.getEndDate(),
                 id);
+
+        return jdbcTemplate.update(sql, Task.getName(), id) > 0;
     } //abfa
 
     public void deleteTask(){
