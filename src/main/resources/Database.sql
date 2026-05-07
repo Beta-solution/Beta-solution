@@ -36,14 +36,15 @@ CREATE TABLE Profiles_Skills
 
 CREATE TABLE Projects
 (
-    id                INT          NOT NULL AUTO_INCREMENT,
-    name              VARCHAR(255) NOT NULL,
+    id                INT            NOT NULL AUTO_INCREMENT,
+    name              VARCHAR(255)   NOT NULL,
     description       VARCHAR(255),
-    price             FLOAT,
-    totalDuration     INT,
+    hourlyRate        DECIMAL(10, 2) NOT NULL,
+    totalDuration     FLOAT,
     startDate         DATE,
     endDate           DATE,
     estimatedDeadline DATE,
+    finalPrice        DECIMAL(10, 2),
     status            VARCHAR(50),
     PRIMARY KEY (id)
 );
