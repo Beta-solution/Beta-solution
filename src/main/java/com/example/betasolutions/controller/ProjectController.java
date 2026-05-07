@@ -44,8 +44,12 @@ public class ProjectController {
 
     @GetMapping("/projects/{id}/edit")
     public String showEditForm(@PathVariable int id, Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        model.addAttribute("project", projectService.getProjectById(id));
+        return "projects/edit";
+    } //abfa
 
     @PostMapping("/projects/{id}/edit")
     public String updateProject(@PathVariable int id, @ModelAttribute Project project, HttpSession httpSession){
@@ -54,7 +58,7 @@ public class ProjectController {
 
         projectService.updateProject(id, project);
         return "redirect:/projects"; //abfa
-    }
+    } //abfa
 
     @PostMapping("/projects/{id}/delete")
     public String deleteProject(@PathVariable int id, HttpSession httpSession){
