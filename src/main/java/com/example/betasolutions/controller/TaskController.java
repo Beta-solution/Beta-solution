@@ -48,7 +48,7 @@ public class TaskController {
         model.addAttribute("task", taskService.getTaskById(id));
         model.addAttribute("projectId", projectId);
         return "tasks/edit";
-    }
+    } //abfa
 
     @PostMapping("/projects/{projectId}/tasks/{id}/edit")
     public String updateTask(@PathVariable int id, @ModelAttribute Task task, HttpSession httpSession){
