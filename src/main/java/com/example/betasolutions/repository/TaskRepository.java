@@ -1,7 +1,10 @@
 package com.example.betasolutions.repository;
 
+import com.example.betasolutions.model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class TaskRepository {
@@ -11,17 +14,20 @@ public class TaskRepository {
         this.jdbcTemplate=jdbcTemplate;
     }
 
-    public void getAllTask(){
+    public List<Task> getAllTask(){
+        String sql = "SELECT * FROM Tasks";
+        return jdbcTemplate.query(sql, new TaskRowMapper());
+    }//abfa
 
-    }
+    public Task getTaskById(int id){
+        String sql = "SELECT * FROM Tasks WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new TaskRowMapper());
+    }//abfa
 
-    public void getTaskById(){
-
-    }
-
-    public void getTaskByProjectId(){
-
-    }
+    public List<Task> getTaskByProjectId(int projectId){
+        String sql = "SELECT * FROM Tasks WHERE project_Id = ?";
+        return jdbcTemplate.query(sql, new TaskRowMapper(), projectId);
+    }//abfa
 
     public void createTask(){
 

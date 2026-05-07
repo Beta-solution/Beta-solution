@@ -1,9 +1,11 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Task;
 import com.example.betasolutions.service.ProfileService;
 import com.example.betasolutions.service.SkillService;
 import com.example.betasolutions.service.TaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +26,15 @@ public class TaskController {
     }
 
     @GetMapping("/projects/{projectId}/tasks")
-    public String getTasksByProject(@PathVariable int projectId, Model model){
+    public String getTasksByProject(@PathVariable int projectId, Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        model.addAttribute("tasks", taskService.getTaskByProjectId(projectId));
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("currentUser", currentUser);
+        return "tasks/index";
+    } //abfa
 
     @GetMapping("/projects/{projectId}/tasks/create")
     public String showCreateForm(@PathVariable int projectId, Model model){
