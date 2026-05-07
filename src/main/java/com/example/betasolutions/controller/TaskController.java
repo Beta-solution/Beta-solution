@@ -34,7 +34,7 @@ public class TaskController {
         model.addAttribute("projectId", projectId);
         model.addAttribute("currentUser", currentUser);
         return "tasks/index";
-    }
+    } //abfa
 
     @GetMapping("/projects/{projectId}/tasks/create")
     public String showCreateForm(@PathVariable int projectId, Model model){
