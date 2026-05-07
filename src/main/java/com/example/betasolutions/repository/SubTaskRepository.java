@@ -1,7 +1,10 @@
 package com.example.betasolutions.repository;
 
+import com.example.betasolutions.model.SubTask;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class SubTaskRepository {
@@ -11,16 +14,19 @@ public class SubTaskRepository {
         this.jdbcTemplate=jdbcTemplate;
     }
 
-    public void getAllSubTask(){
-
+    public List<SubTask> getAllSubTask(){
+        String sql = "SELECT * FROM Sub_Tasks";
+        return jdbcTemplate.query(sql, new SubTaskRowMapper());
     }
 
-    public void getSubTaskById(){
-
+    public SubTask getSubTaskById(int id){
+        String sql = "SELECT * FROM Sub_Task WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new SubTaskRowMapper());
     }
 
-    public void getSubTaskByTaskId(){
-
+    public List<SubTask> getSubTaskByTaskId(int taskId){
+        String sql = "SELECT * FROM Sub_Task WHERE id = ?";
+        return jdbcTemplate.query(sql, new SubTaskRowMapper(), taskId);
     }
 
     public void createSubTask(){
