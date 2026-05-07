@@ -15,11 +15,12 @@ public class ProjectRowMapper implements RowMapper<Project> {
                 rs.getInt("id"),
                 rs.getString("name"),
                 rs.getString("description"),
-                rs.getFloat("price"),
-                rs.getInt("totalDuration"),
+                rs.getBigDecimal("hourlyRate"),
+                rs.getFloat("totalDuration"),
                 rs.getDate("startDate").toLocalDate(),
                 rs.getDate("endDate").toLocalDate(),
                 rs.getDate("estimatedDeadline").toLocalDate(),
+                rs.getBigDecimal("finalPrice"),
                 Status.fromDb(rs.getString("status"))
         );
     }
