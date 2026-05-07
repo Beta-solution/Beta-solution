@@ -1,5 +1,6 @@
 package com.example.betasolutions.repository;
 
+import com.example.betasolutions.model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -27,9 +28,21 @@ public class TaskRepository {
 
     }
 
-    public void updateTask(){
+    public void updateTask(int id, Task task){
+        String sql = """
+                UPDATE Tasks SET name = ?, description = ?, duration = ?, status = ?,
+                startDate = ?, endDate = ? WHERE id = ?
+                """;
 
-    }
+        jdbcTemplate.update(sql,
+                task.getName(),
+                task.getDescription(),
+                task.getDuration(),
+                task.getStatus(),
+                task.getStartDate(),
+                task.getEndDate(),
+                id);
+    } //abfa
 
     public void deleteTask(){
 
