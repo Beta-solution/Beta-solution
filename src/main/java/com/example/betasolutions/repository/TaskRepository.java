@@ -48,8 +48,8 @@ public class TaskRepository {
 
     }
 
-    public void deleteTask(int id){
+    public boolean deleteTask(int id){
         String sql = "DELETE FROM Tasks WHERE id = ?";
-        jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, id) > 0;
     } //abfa
 }

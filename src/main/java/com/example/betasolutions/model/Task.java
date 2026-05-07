@@ -56,7 +56,7 @@ public class Task {
         this.id = id;
     }
 
-    public String getName() {
+    public static String getName() {
         return name;
     }
 
