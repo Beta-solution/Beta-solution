@@ -34,6 +34,6 @@ public class TaskRepository {
 
     public boolean deleteTask(int id){
         String sql = "DELETE FROM Tasks WHERE id = ?";
-        return jdbcTemplate.update(sql, Task.getName(), id) > 0;
+        return jdbcTemplate.update(sql, id) > 0;
     } //abfa
 }
