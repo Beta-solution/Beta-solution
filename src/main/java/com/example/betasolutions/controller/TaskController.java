@@ -37,14 +37,23 @@ public class TaskController {
     } //abfa
 
     @GetMapping("/projects/{projectId}/tasks/create")
-    public String showCreateForm(@PathVariable int projectId, Model model){
+    public String showCreateForm(@PathVariable int projectId, Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        model.addAttribute("task", new Task());
+        model.addAttribute("projectId", projectId);
+        return "tasks/create";
+    }//abfa
 
     @PostMapping("/projects/{projectId}/tasks/create")
-    public String createTask(@PathVariable int projectId, @ModelAttribute Task task){
+    public String createTask(@PathVariable int projectId, @ModelAttribute Task task, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login":
 
-    }
+        taskService.createTask(task, projectId);
+        return "redirect:/projects/" + projectId + "/tasks";
+    }//abfa
 
     @GetMapping("/projects/{projectId}/tasks/{id}/edit")
     public String showEditForm(@PathVariable int projectId, @PathVariable int id, Model model){

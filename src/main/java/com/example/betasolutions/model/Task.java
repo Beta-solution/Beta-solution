@@ -44,6 +44,10 @@ public class Task {
         this.project = project;
     }
 
+    public Task() {
+
+    }
+
     public int getId() {
         return id;
     }

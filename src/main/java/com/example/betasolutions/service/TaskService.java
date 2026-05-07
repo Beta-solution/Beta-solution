@@ -26,9 +26,9 @@ public class TaskService {
         return taskRepository.getTaskByProjectId(projectId);
     }//abfa
 
-    public void createTask(){
-
-    }
+    public void createTask(Task task, int projectId){
+        taskRepository.createTask(task, projectId);
+    } //abfa
 
     public void updateTask(){
 

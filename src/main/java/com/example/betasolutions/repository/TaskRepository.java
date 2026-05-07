@@ -29,9 +29,20 @@ public class TaskRepository {
         return jdbcTemplate.query(sql, new TaskRowMapper(), projectId);
     }//abfa
 
-    public void createTask(){
-
-    }
+    public void createTask(Task task, int projectId){
+        String sql = """
+                INSERT  INTO tasks (name, description, duration, status,
+                startDate, endDate, project_id) VALUES (?, ?, ?, ?, ?, ?)
+                """;
+        jdbcTemplate.update(sql,
+                task.getName(),
+                task.getDescription(),
+                task.getDuration(),
+                task.getStatus(),
+                task.getStartDate(),
+                task.getEndDate(),
+        projectId);
+    } //abfa
 
     public void updateTask(){
 
