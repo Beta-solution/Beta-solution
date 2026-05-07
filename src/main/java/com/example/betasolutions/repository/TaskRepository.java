@@ -1,5 +1,6 @@
 package com.example.betasolutions.repository;
 
+import com.example.betasolutions.model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -31,8 +32,8 @@ public class TaskRepository {
 
     }
 
-    public void deleteTask(int id){
+    public boolean deleteTask(int id){
         String sql = "DELETE FROM Tasks WHERE id = ?";
-        jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, Task.getName(), id) > 0;
     } //abfa
 }
