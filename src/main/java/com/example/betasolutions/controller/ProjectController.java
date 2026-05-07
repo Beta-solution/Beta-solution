@@ -30,7 +30,7 @@ public class ProjectController {
         model.addAttribute("projects", projectService.getAllProjects());
         model.addAttribute("currentUser", currentUser);
         return "projects/index";
-    }
+    } //abfa
 
     @GetMapping("/projects/{id}")
     public String getProjectById(@PathVariable int id, Model model, HttpSession httpSession){
@@ -40,7 +40,7 @@ public class ProjectController {
         model.addAttribute("project", projectService.getProjectById(id));
         model.addAttribute("currentUser", currentUser);
         return "projects/detail";
-    }
+    } //abfa
 
     @GetMapping("/projects/create")
     public String showCreateForm(Model model, HttpSession httpSession){

@@ -17,11 +17,11 @@ public class ProjectService {
 
     public List<Project> getAllProjects() {
         return projectRepository.getAllProjects();
-    }
+    } //abfa
 
     public Project getProjectById(int id){
         return projectRepository.getProjectById(id);
-    }
+    } //abfa
 
     public void createProject(){
 
@@ -37,6 +37,6 @@ public class ProjectService {
 
     public List<Project> getProjectByStatus(Status status){
         return projectRepository.getProjectByStatus(status);
-    }
+    } //abfa
 }
 

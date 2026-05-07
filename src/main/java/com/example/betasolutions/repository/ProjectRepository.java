@@ -18,12 +18,12 @@ public class ProjectRepository {
     public List<Project> getAllProjects(){
         String sql = "SELECT * FROM Projects";
         return jdbcTemplate.query(sql, new ProjectRowMapper());
-    }
+    } //abfa
 
     public Project getProjectById(int id){
         String sql = "SELECT * FROM Projects WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ProjectRowMapper());
-    }
+    } //abfa
 
     public void createProject(){
 
@@ -40,5 +40,5 @@ public class ProjectRepository {
     public List<Project> getProjectByStatus(Status status){
         String sql = "SELECT * FROM Projects WHERE status = ?";
         return jdbcTemplate.query(sql, new Object[]{status}, new ProjectRowMapper());
-    }
+    } //abfa
 }
