@@ -30,7 +30,7 @@ public class ProjectRepository {
     public void deleteProject(int id){
         String sql = "DELETE FROM projects WHERE id = ?";
         jdbcTemplate.update(sql, id);
-    }
+    } //abfa
 
     public void getProjectByStatus(){
 

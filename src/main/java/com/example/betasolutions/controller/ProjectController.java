@@ -59,6 +59,6 @@ public class ProjectController {
 
         projectService.deleteProject(id);
         return "redirect:/projects";
-    }
+    } //abfa
     //:)
 }
