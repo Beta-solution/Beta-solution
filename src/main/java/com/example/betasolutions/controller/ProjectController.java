@@ -39,7 +39,7 @@ public class ProjectController {
 
         model.addAttribute("project", new Project());
         return "projects/create";
-    }
+    } //abfa
 
     @PostMapping("/projects/create")
     public String createProject(@ModelAttribute Project project, HttpSession httpSession){
