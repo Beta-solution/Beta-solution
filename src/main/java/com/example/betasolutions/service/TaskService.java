@@ -34,7 +34,7 @@ public class TaskService {
 
     }
 
-    public void deleteTask(){
-
-    }
+    public void deleteTask(int id){
+        taskRepository.deleteTask(id);
+    } //abfa
 }

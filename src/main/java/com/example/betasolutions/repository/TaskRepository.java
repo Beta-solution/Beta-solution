@@ -48,7 +48,8 @@ public class TaskRepository {
 
     }
 
-    public void deleteTask(){
-
-    }
+    public void deleteTask(int id){
+        String sql = "DELETE FROM Tasks WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    } //abfa
 }

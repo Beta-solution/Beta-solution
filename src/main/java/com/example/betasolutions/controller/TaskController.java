@@ -66,7 +66,11 @@ public class TaskController {
     }
 
     @PostMapping("/projects/{projectId}/tasks/{id}/delete")
-    public String deleteTask(@PathVariable int id){
+    public String deleteTask(@PathVariable int id, @PathVariable int projectId, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        taskService.deleteTask(id);
+        return "redirect:/projects/" + projectId + "/tasks";
+    }//abfa
 }
