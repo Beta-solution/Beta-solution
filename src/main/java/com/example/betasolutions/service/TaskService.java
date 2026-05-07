@@ -1,5 +1,6 @@
 package com.example.betasolutions.service;
 
+import com.example.betasolutions.model.Task;
 import com.example.betasolutions.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +24,9 @@ public class TaskService {
 
     }
 
-    public void createTask(){
-
-    }
+    public void createTask(Task task, int projectId){
+        taskRepository.createTask(task, projectId);
+    } //abfa
 
     public void updateTask(){
 
