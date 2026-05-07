@@ -1,9 +1,11 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Task;
 import com.example.betasolutions.service.ProfileService;
 import com.example.betasolutions.service.SkillService;
 import com.example.betasolutions.service.TaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +51,11 @@ public class TaskController {
     }
 
     @PostMapping("/projects/{projectId}/tasks/{id}/delete")
-    public String deleteTask(@PathVariable int id){
+    public String deleteTask(@PathVariable int id, @PathVariable int projectId, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        taskService.deleteTask(id);
+        return "redirect:/projects/" + projectId + "/tasks";
+    }//abfa
 }
