@@ -34,7 +34,11 @@ public class ProjectController {
 
     @GetMapping("/projects/create")
     public String showCreateForm(Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
+        model.addAttribute("project", new Project());
+        return "projects/create";
     }
 
     @PostMapping("/projects/create")

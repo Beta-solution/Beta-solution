@@ -48,6 +48,10 @@ public class Project {
         this.estimatedDeadline = estimatedDeadline;
     }
 
+    public Project() {
+
+    }
+
     public int getId() {
         return id;
     }
