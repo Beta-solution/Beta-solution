@@ -18,8 +18,8 @@ public class SubTaskService {
         return subTaskRepository.getAllSubTask();
     }
 
-    public void getSubTaskById(int id){
-        subTaskRepository.getSubTaskById(id);
+    public SubTask getSubTaskById(int id){
+        return subTaskRepository.getSubTaskById(id);
     }
 
     public List<SubTask> getSubTaskByTaskId(int taskId){
