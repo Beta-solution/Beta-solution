@@ -43,8 +43,23 @@ public class ProjectRepository {
         //abfa
     }
 
-    public void updateProject(){
+    public boolean updateProject(int id, Project project) {
+        String sql = """
+                UPDATE Projects SET name = ?, description = ?, price = ?, totalduration = ?,
+                startDate = ?, endDate = ?, estimatedDeadline = ?, status = ? WHERE id = ?
+                """;
+        jdbcTemplate.update(sql,
+                project.getName(),
+                project.getDescription(),
+                project.getTotalPrice(),
+                project.getTotalDuration(),
+                project.getStartDate(),
+                project.getEndDate(),
+                project.getEstimatedDeadline(),
+                project.getStatus(),
+                id); //abfa
 
+        return jdbcTemplate.update(sql, project.getName(), id) > 0;
     }
 
     public void deleteProject(){

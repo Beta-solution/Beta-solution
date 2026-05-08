@@ -27,9 +27,9 @@ public class ProjectService {
         projectRepository.createProject(project);
     } //abfa
 
-    public void updateProject(){
-
-    }
+    public void updateProject(int id, Project project){
+        projectRepository.updateProject(id, project);
+    } //abfa
 
     public void deleteProject(){
 
