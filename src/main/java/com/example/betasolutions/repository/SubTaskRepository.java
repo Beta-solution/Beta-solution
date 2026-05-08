@@ -45,8 +45,23 @@ public class SubTaskRepository {
                 taskId
                 );
     }
-    public void updateSubTask(){
 
+    public boolean updateSubTask(int id, SubTask subTask){
+        String sql = """
+                Update Sub_Tasks SET name = ?, dscription = +, duration = ?, status = ?,
+                startDate = ?, endDate = ? WHERE id = ?
+                """;
+
+        jdbcTemplate.update(sql,
+                subTask.getName(),
+                subTask.getDescription(),
+                subTask.getDuration(),
+                subTask.getStatus(),
+                subTask.getStartDate(),
+                subTask.getEndDate(),
+                id);
+
+        return jdbcTemplate.update(sql, subTask.getName(), id) > 0;
     }
 
     public void deleteSubTask(){

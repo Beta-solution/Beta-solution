@@ -30,8 +30,8 @@ public class SubTaskService {
         subTaskRepository.createSubTask(subTask, taskId);
     }
 
-    public void updateSubTask(){
-
+    public void updateSubTask(int id, SubTask subtask){
+        subTaskRepository.updateSubTask(id, subtask);
     }
 
     public void deleteSubTask(){
