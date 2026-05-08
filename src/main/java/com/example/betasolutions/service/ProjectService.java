@@ -31,9 +31,9 @@ public class ProjectService {
         projectRepository.updateProject(id, project);
     } //abfa
 
-    public void deleteProject(){
-
-    }
+    public void deleteProject(int id){
+        projectRepository.deleteProject(id);
+    } //abfa
 
     public List<Project> getProjectByStatus(Status status){
         return projectRepository.getProjectByStatus(status);

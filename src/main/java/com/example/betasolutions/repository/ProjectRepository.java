@@ -62,9 +62,10 @@ public class ProjectRepository {
         return jdbcTemplate.update(sql, project.getName(), id) > 0;
     }
 
-    public void deleteProject(){
-
-    }
+    public boolean deleteProject(int id){
+        String sql = "DELETE FROM projects WHERE id = ?";
+        return jdbcTemplate.update(sql, id) > 0;
+    } //abfa
 
     public List<Project> getProjectByStatus(Status status){
         String sql = "SELECT * FROM Projects WHERE status = ?";

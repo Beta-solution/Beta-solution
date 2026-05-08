@@ -80,7 +80,11 @@ public class ProjectController {
 
     @PostMapping("/projects/{id}/delete")
     public String deleteProject(@PathVariable int id, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        projectService.deleteProject(id);
+        return "redirect:/projects";
+    } //abfa
     //:)
 }
