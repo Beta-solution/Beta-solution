@@ -49,7 +49,7 @@ public class TaskController {
     @PostMapping("/projects/{projectId}/tasks/create")
     public String createTask(@PathVariable int projectId, @ModelAttribute Task task, HttpSession httpSession){
         Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login":
+        if (currentUser == null) return "redirect:/login";
 
         taskService.createTask(task, projectId);
         return "redirect:/projects/" + projectId + "/tasks";

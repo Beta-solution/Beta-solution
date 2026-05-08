@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Create profile</title></head>
+<body>
+<h1>Create profile</h1>
+<form th:action="@{/profiles/create}" th:object="${profileForm}" method="post">
+    <label>Name: <input type="text" th:field="*{name}"/></label><br/>
+    <label>Username: <input type="text" th:field="*{username}"/></label><br/>
+    <label>Password: <input type="password" th:field="*{password}"/></label><br/>
+    <label>Email: <input type="email" th:field="*{email}"/></label><br/>
+    <label>Role:
+        <select th:field="*{role}">
+            <option th:value="DEVELOPER">Developer</option>
+            <option th:if="${isOwner}" th:value="PROJECT_MANAGER">Project Manager</option>
+        </select>
+    </label><br/>
+    <button type="submit">Create</button>
+</form>
+<a href="/profiles">Back</a>
+</body>
+</html>
