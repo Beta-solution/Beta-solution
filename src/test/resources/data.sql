@@ -4,7 +4,7 @@ VALUES ('Java'),
        ('HTML');
 
 INSERT INTO Profiles (name, role, username, password, email)
-VALUES ('Alice', 'ADMIN', 'alice', 'password', 'alice@test.dk'),
+VALUES ('Alice', 'OWNER', 'alice', 'password', 'alice@test.dk'),
        ('Bob', 'DEVELOPER', 'bob', 'password', 'bob@test.dk');
 
 INSERT INTO Profiles_Skills (profile_id, skill_id)

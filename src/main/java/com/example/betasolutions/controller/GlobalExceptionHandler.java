@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
         System.out.println(ex.getMessage());
         model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         model.addAttribute("error", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
-        model.addAttribute("message", "Noget gik galt. Prøv igen senere.");
+        model.addAttribute("message", "Something went wrong, try again later.");
         return "error";
     }
 }
