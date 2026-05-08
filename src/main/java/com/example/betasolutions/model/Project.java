@@ -3,6 +3,7 @@ package com.example.betasolutions.model;
 
 import com.example.betasolutions.enums.Status;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -10,42 +11,47 @@ public class Project {
     private int id;
     private String name;
     private String description;
-    private float totalPrice;
-    private int totalDuration;
+    private BigDecimal hourlyRate;
+    private float totalDuration;
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDate estimatedDeadline;
     private Status status;
+    private BigDecimal finalPrice;
     private List<Skill> skills;
     private List<Profile> members;
 
-    public Project(int id, String name, String description, float totalPrice,
-                   int totalDuration, LocalDate startDate, LocalDate endDate,
-                   LocalDate estimatedDeadline, Status status,
+    public Project(int id, String name, String description, BigDecimal hourlyRate,
+                   float totalDuration, LocalDate startDate, LocalDate endDate,
+                   LocalDate estimatedDeadline, BigDecimal finalPrice, Status status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.hourlyRate = hourlyRate;
+        this.totalDuration = totalDuration;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.estimatedDeadline = estimatedDeadline;
+        this.finalPrice = finalPrice;
+        this.status = status;
+    }
+
+    public Project(int id, String name, String description, BigDecimal hourlyRate,
+                   float totalDuration, LocalDate startDate, LocalDate endDate,
+                   LocalDate estimatedDeadline, BigDecimal finalPrice, Status status,
                    List<Skill> skills, List<Profile> members) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.totalPrice = totalPrice;
+        this.hourlyRate = hourlyRate;
         this.totalDuration = totalDuration;
         this.startDate = startDate;
         this.endDate = endDate;
         this.estimatedDeadline = estimatedDeadline;
+        this.finalPrice = finalPrice;
         this.status = status;
         this.skills = skills;
         this.members = members;
-    }
-
-    public Project(int id, String name, String description, float price, int totalDuration, LocalDate startDate,
-                   LocalDate endDate, LocalDate estimatedDeadline, Status status) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.totalPrice = totalPrice;
-        this.totalDuration = totalDuration;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.estimatedDeadline = estimatedDeadline;
     }
 
     public Project() {
@@ -76,19 +82,19 @@ public class Project {
         this.description = description;
     }
 
-    public float getTotalPrice() {
-        return totalPrice;
+    public BigDecimal getTotalPrice() {
+        return hourlyRate;
     }
 
-    public void setTotalPrice(float totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.hourlyRate = totalPrice;
     }
 
-    public int getTotalDuration() {
+    public float getTotalDuration() {
         return totalDuration;
     }
 
-    public void setTotalDuration(int totalDuration) {
+    public void setTotalDuration(float totalDuration) {
         this.totalDuration = totalDuration;
     }
 
