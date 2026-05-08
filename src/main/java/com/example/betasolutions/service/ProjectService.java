@@ -23,9 +23,9 @@ public class ProjectService {
         return projectRepository.getProjectById(id);
     } //abfa
 
-    public void createProject(){
-
-    }
+    public void createProject(Project project) {
+        projectRepository.createProject(project);
+    } //abfa
 
     public void updateProject(){
 

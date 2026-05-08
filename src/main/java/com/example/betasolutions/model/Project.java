@@ -54,6 +54,10 @@ public class Project {
         this.members = members;
     }
 
+    public Project() {
+
+    }
+
     public int getId() {
         return id;
     }

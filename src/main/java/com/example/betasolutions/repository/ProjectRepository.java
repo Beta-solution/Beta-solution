@@ -25,8 +25,22 @@ public class ProjectRepository {
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ProjectRowMapper());
     } //abfa
 
-    public void createProject(){
-
+    public void createProject(Project project){
+        String sql = """
+    INSERT INTO Projects (name, description, price, totalDuration,
+    startDate, endDate, estimatedDeadline, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """;
+        jdbcTemplate.update(sql,
+                project.getName(),
+                project.getDescription(),
+                project.getTotalPrice(),
+                project.getTotalDuration(),
+                project.getStartDate(),
+                project.getEndDate(),
+                project.getEstimatedDeadline(),
+                project.getStatus().name().toLowerCase());
+        //abfa
     }
 
     public void updateProject(){

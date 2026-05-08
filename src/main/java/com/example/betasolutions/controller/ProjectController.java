@@ -44,13 +44,21 @@ public class ProjectController {
 
     @GetMapping("/projects/create")
     public String showCreateForm(Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        model.addAttribute("project", new Project());
+        return "projects/create";
+    } //abfa
 
     @PostMapping("/projects/create")
     public String createProject(@ModelAttribute Project project, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        projectService.createProject(project);
+        return "redirect:/projects";
+    } //abfa
 
     @GetMapping("/projects/{id}/edit")
     public String showEditForm(@PathVariable int id, Model model, HttpSession httpSession){
