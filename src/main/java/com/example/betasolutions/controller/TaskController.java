@@ -1,9 +1,11 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Task;
 import com.example.betasolutions.service.ProfileService;
 import com.example.betasolutions.service.SkillService;
 import com.example.betasolutions.service.TaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,19 +26,34 @@ public class TaskController {
     }
 
     @GetMapping("/projects/{projectId}/tasks")
-    public String getTasksByProject(@PathVariable int projectId, Model model){
+    public String getTasksByProject(@PathVariable int projectId, Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        model.addAttribute("tasks", taskService.getTaskByProjectId(projectId));
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("currentUser", currentUser);
+        return "tasks/index";
+    } //abfa
 
     @GetMapping("/projects/{projectId}/tasks/create")
-    public String showCreateForm(@PathVariable int projectId, Model model){
+    public String showCreateForm(@PathVariable int projectId, Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        model.addAttribute("task", new Task());
+        model.addAttribute("projectId", projectId);
+        return "tasks/create";
+    }//abfa
 
     @PostMapping("/projects/{projectId}/tasks/create")
-    public String createTask(@PathVariable int projectId, @ModelAttribute Task task){
+    public String createTask(@PathVariable int projectId, @ModelAttribute Task task, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login":
 
-    }
+        taskService.createTask(task, projectId);
+        return "redirect:/projects/" + projectId + "/tasks";
+    }//abfa
 
     @GetMapping("/projects/{projectId}/tasks/{id}/edit")
     public String showEditForm(@PathVariable int projectId, @PathVariable int id, Model model){
@@ -49,7 +66,11 @@ public class TaskController {
     }
 
     @PostMapping("/projects/{projectId}/tasks/{id}/delete")
-    public String deleteTask(@PathVariable int id){
+    public String deleteTask(@PathVariable int id, @PathVariable int projectId, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        taskService.deleteTask(id);
+        return "redirect:/projects/" + projectId + "/tasks";
+    }//abfa
 }

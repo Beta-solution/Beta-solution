@@ -1,7 +1,7 @@
 package com.example.betasolutions.enums;
 
 public enum Role {
-    ADMIN,
+    OWNER,
     PROJECT_MANAGER,
     DEVELOPER;
 
@@ -9,7 +9,7 @@ public enum Role {
         if (value == null) return null;
 
         return switch (value.toLowerCase()) {
-            case "admin" -> ADMIN;
+            case "owner" -> OWNER;
             case "project_manager" -> PROJECT_MANAGER;
             case "developer" -> DEVELOPER;
             default -> throw new IllegalArgumentException("Unknown role: " + value);

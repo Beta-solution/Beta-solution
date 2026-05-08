@@ -1,8 +1,11 @@
 package com.example.betasolutions.repository;
 
+import com.example.betasolutions.enums.Status;
 import com.example.betasolutions.model.Project;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class ProjectRepository {
@@ -12,16 +15,32 @@ public class ProjectRepository {
         this.jdbcTemplate=jdbcTemplate;
     }
 
-    public void getAllProjects(){
+    public List<Project> getAllProjects(){
+        String sql = "SELECT * FROM Projects";
+        return jdbcTemplate.query(sql, new ProjectRowMapper());
+    } //abfa
 
-    }
+    public Project getProjectById(int id){
+        String sql = "SELECT * FROM Projects WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ProjectRowMapper());
+    } //abfa
 
-    public void getProjectById(){
-
-    }
-
-    public void createProject(){
-
+    public void createProject(Project project){
+        String sql = """
+    INSERT INTO Projects (name, description, price, totalDuration,
+    startDate, endDate, estimatedDeadline, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """;
+        jdbcTemplate.update(sql,
+                project.getName(),
+                project.getDescription(),
+                project.getTotalPrice(),
+                project.getTotalDuration(),
+                project.getStartDate(),
+                project.getEndDate(),
+                project.getEstimatedDeadline(),
+                project.getStatus().name().toLowerCase());
+        //abfa
     }
 
     public boolean updateProject(int id, Project project) {
@@ -47,7 +66,8 @@ public class ProjectRepository {
 
     }
 
-    public void getProjectByStatus(){
-
-    }
+    public List<Project> getProjectByStatus(Status status){
+        String sql = "SELECT * FROM Projects WHERE status = ?";
+        return jdbcTemplate.query(sql, new Object[]{status}, new ProjectRowMapper());
+    } //abfa
 }

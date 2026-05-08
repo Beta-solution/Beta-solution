@@ -1,5 +1,6 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.exception.ProfileNotFoundException;
 import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.service.ProfileService;
 import jakarta.servlet.http.HttpSession;
@@ -26,16 +27,15 @@ public class LoginController {
                         @RequestParam String password,
                         HttpSession session) {
 
-        Profile profile = profileService.login(username, password);
-
-        if (profile != null) {
-            session.setAttribute("currentUser", profile);
-            session.setMaxInactiveInterval(600); // 600 sekunder = 10 minutter
-            return "redirect:/projects";
-        } else {
-            return "redirect:/login?error";
+        try {
+            Profile profile = profileService.getProfileByUsername(username, password);
+                session.setAttribute("profile", profile);
+                session.setMaxInactiveInterval(600); // 600 sekunder = 10 minutter
+                return "redirect:/projects";
+            } catch (ProfileNotFoundException e) {
+                return "redirect:/login?error";
+            }
         }
-    }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {

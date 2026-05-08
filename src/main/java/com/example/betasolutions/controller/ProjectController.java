@@ -24,23 +24,41 @@ public class ProjectController {
 
     @GetMapping("/projects")
     public String getAllProjects(Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        model.addAttribute("projects", projectService.getAllProjects());
+        model.addAttribute("currentUser", currentUser);
+        return "projects/index";
+    } //abfa
 
     @GetMapping("/projects/{id}")
     public String getProjectById(@PathVariable int id, Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        model.addAttribute("project", projectService.getProjectById(id));
+        model.addAttribute("currentUser", currentUser);
+        return "projects/detail";
+    } //abfa
 
     @GetMapping("/projects/create")
     public String showCreateForm(Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        model.addAttribute("project", new Project());
+        return "projects/create";
+    } //abfa
 
     @PostMapping("/projects/create")
     public String createProject(@ModelAttribute Project project, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
-    }
+        projectService.createProject(project);
+        return "redirect:/projects";
+    } //abfa
 
     @GetMapping("/projects/{id}/edit")
     public String showEditForm(@PathVariable int id, Model model, HttpSession httpSession){
