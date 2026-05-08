@@ -34,7 +34,7 @@ public class SubTaskService {
         subTaskRepository.updateSubTask(id, subtask);
     }
 
-    public void deleteSubTask(){
-
+    public void deleteSubTask(int id){
+        subTaskRepository.deleteSubTask(id);
     }
 }

@@ -71,7 +71,12 @@ public class SubTaskController {
     }
 
     @PostMapping("/tasks/{taskId}/subtasks/{id}/delete")
-    public String deleteSubTask(@PathVariable int id){
+    public String deleteSubTask(@PathVariable int id, @PathVariable int taskId, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
+        subTaskService.deleteSubTask(id);
+        return "redirect:/tasks/" + taskId + "/subtasks";
+        }
     }
 }
