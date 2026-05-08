@@ -1,9 +1,11 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.SubTask;
 import com.example.betasolutions.service.ProfileService;
 import com.example.betasolutions.service.SkillService;
 import com.example.betasolutions.service.SubTaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,13 +41,22 @@ public class SubTaskController {
     }
 
     @GetMapping("/tasks/{taskId}/subtasks/{id}/edit")
-    public String showEditForm(@PathVariable int taskId, @PathVariable int id, Model model){
+    public String showEditForm(@PathVariable int taskId, @PathVariable int id, Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
+        model.addAttribute("subtask", subTaskService.getSubTaskById(id));
+        model.addAttribute("taskId", taskId);
+        return "subtasks/edit";
     }
 
     @PostMapping("/tasks/{taskId}/subtasks/{id}/edit")
-    public String updateSubTask(@PathVariable int id, @ModelAttribute SubTask subTask){
+    public String updateSubTask(@PathVariable int id, @PathVariable int taskId, @ModelAttribute SubTask subTask, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
+        subTaskService.updateSubTask(id, subTask);
+        return "redirect:/tasks/" + taskId + "/subtasks";
     }
 
     @PostMapping("/tasks/{taskId}/subtasks/{id}/delete")

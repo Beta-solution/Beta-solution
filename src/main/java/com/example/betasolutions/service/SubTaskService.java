@@ -1,5 +1,6 @@
 package com.example.betasolutions.service;
 
+import com.example.betasolutions.model.SubTask;
 import com.example.betasolutions.repository.SubTaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,8 @@ public class SubTaskService {
 
     }
 
-    public void updateSubTask(){
-
+    public void updateSubTask(int id, SubTask subtask){
+        subTaskRepository.updateSubTask(id, subtask);
     }
 
     public void deleteSubTask(){
