@@ -30,9 +30,9 @@ public class TaskService {
         taskRepository.createTask(task, projectId);
     } //abfa
 
-    public void updateTask(){
-
-    }
+    public void updateTask(int id, Task task){
+        taskRepository.updateTask(id, task);
+    } //abfa
 
     public void deleteTask(int id){
         taskRepository.deleteTask(id);

@@ -23,17 +23,17 @@ public class ProjectService {
         return projectRepository.getProjectById(id);
     } //abfa
 
-    public void createProject(){
+    public void createProject(Project project) {
+        projectRepository.createProject(project);
+    } //abfa
 
-    }
+    public void updateProject(int id, Project project){
+        projectRepository.updateProject(id, project);
+    } //abfa
 
-    public void updateProject(){
-
-    }
-
-    public void deleteProject(){
-
-    }
+    public void deleteProject(int id){
+        projectRepository.deleteProject(id);
+    } //abfa
 
     public List<Project> getProjectByStatus(Status status){
         return projectRepository.getProjectByStatus(status);
