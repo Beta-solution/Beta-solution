@@ -44,9 +44,23 @@ public class TaskRepository {
         projectId);
     } //abfa
 
-    public void updateTask(){
+    public boolean updateTask(int id, Task task){
+        String sql = """
+                UPDATE Tasks SET name = ?, description = ?, duration = ?, status = ?,
+                startDate = ?, endDate = ? WHERE id = ?
+                """;
 
-    }
+        jdbcTemplate.update(sql,
+                Task.getName(),
+                task.getDescription(),
+                task.getDuration(),
+                task.getStatus(),
+                task.getStartDate(),
+                task.getEndDate(),
+                id);
+
+        return jdbcTemplate.update(sql, Task.getName(), id) > 0;
+    } //abfa
 
     public boolean deleteTask(int id){
         String sql = "DELETE FROM Tasks WHERE id = ?";
