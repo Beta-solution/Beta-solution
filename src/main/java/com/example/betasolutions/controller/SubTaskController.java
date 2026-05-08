@@ -1,9 +1,11 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.SubTask;
 import com.example.betasolutions.service.ProfileService;
 import com.example.betasolutions.service.SkillService;
 import com.example.betasolutions.service.SubTaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +51,12 @@ public class SubTaskController {
     }
 
     @PostMapping("/tasks/{taskId}/subtasks/{id}/delete")
-    public String deleteSubTask(@PathVariable int id){
+    public String deleteSubTask(@PathVariable int id, @PathVariable int taskId, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
+        subTaskService.deleteSubTask(id);
+        return "redirect:/tasks/" + taskId + "/subtasks";
+        }
     }
 }

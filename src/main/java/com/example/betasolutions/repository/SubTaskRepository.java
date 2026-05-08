@@ -31,7 +31,8 @@ public class SubTaskRepository {
 
     }
 
-    public void deleteSubTask(){
-
+    public boolean deleteSubTask(int id){
+        String sql = "DELETE FROM subtask WHERE id = ?";
+        return jdbcTemplate.update(sql, id) > 0;
     }
 }
