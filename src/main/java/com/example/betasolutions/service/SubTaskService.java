@@ -4,6 +4,8 @@ import com.example.betasolutions.model.SubTask;
 import com.example.betasolutions.repository.SubTaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SubTaskService {
     private final SubTaskRepository subTaskRepository;
@@ -12,16 +14,16 @@ public class SubTaskService {
         this.subTaskRepository=subTaskRepository;
     }
 
-    public void getAllSubTask(){
-
+    public List<SubTask> getAllSubTask(){
+        return subTaskRepository.getAllSubTask();
     }
 
-    public void getSubTaskById(){
-
+    public void getSubTaskById(int id){
+        subTaskRepository.getSubTaskById(id);
     }
 
-    public void getSubTaskByTaskId(){
-
+    public List<SubTask> getSubTaskByTaskId(int taskId){
+        return subTaskRepository.getSubTaskByTaskId(taskId);
     }
 
     public void createSubTask(SubTask subTask, int taskId){

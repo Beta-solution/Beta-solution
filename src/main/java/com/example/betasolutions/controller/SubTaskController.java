@@ -26,8 +26,14 @@ public class SubTaskController {
     }
 
     @GetMapping("/tasks/{taskId}/subtasks")
-    public String getSubTasksByTask(@PathVariable int taskId, Model model){
+    public String getSubTasksByTask(@PathVariable int taskId, Model model, HttpSession httpSession){
+        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
+        if (currentUser == null) return "redirect:/login";
 
+        model.addAttribute("subTasks", subTaskService.getSubTaskByTaskId(taskId));
+        model.addAttribute("taskId", taskId);
+        model.addAttribute("currentUser", currentUser);
+        return "subtasks/index";
     }
 
     @GetMapping("/tasks/{taskId}/subtasks/create")
