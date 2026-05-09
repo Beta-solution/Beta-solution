@@ -1,7 +1,10 @@
 package com.example.betasolutions.service;
 
+import com.example.betasolutions.model.Skill;
 import com.example.betasolutions.repository.SkillRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SkillService {
@@ -11,12 +14,12 @@ public class SkillService {
         this.skillRepository = skillRepository;
     }
 
-    public void getAllSkill() {
-
+    public List<Skill> getAllSkill() {
+        return skillRepository.getAllSkill();
     }
 
-    public void getSkillById() {
-
+    public Skill getSkillById(int id) {
+        return skillRepository.getSkillById(id);
     }
 
     public void createSkill() {
