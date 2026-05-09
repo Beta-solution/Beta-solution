@@ -27,7 +27,7 @@ public class SkillService {
 
     }
 
-    public void deleteSkill() {
-
+    public boolean deleteSkill(int id) {
+        return skillRepository.deleteSkill(id);
     }
 }
