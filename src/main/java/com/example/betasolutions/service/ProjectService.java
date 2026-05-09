@@ -17,26 +17,26 @@ public class ProjectService {
 
     public List<Project> getAllProjects() {
         return projectRepository.getAllProjects();
-    } //abfa
+    }
 
     public Project getProjectById(int id){
         return projectRepository.getProjectById(id);
-    } //abfa
+    }
 
     public void createProject(Project project) {
         projectRepository.createProject(project);
-    } //abfa
+    }
 
-    public void updateProject(int id, Project project){
-        projectRepository.updateProject(id, project);
-    } //abfa
+    public boolean updateProject(int id, Project project){
+        return projectRepository.updateProject(id, project);
+    }
 
-    public void deleteProject(int id){
-        projectRepository.deleteProject(id);
-    } //abfa
+    public boolean deleteProject(int id){
+        return projectRepository.deleteProject(id);
+    }
 
     public List<Project> getProjectByStatus(Status status){
         return projectRepository.getProjectByStatus(status);
-    } //abfa
+    }
 }
 

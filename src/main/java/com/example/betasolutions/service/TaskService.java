@@ -16,25 +16,25 @@ public class TaskService {
 
     public List<Task> getAllTask(){
         return taskRepository.getAllTask();
-    }//abfa
+    }
 
     public Task getTaskById(int id){
         return taskRepository.getTaskById(id);
-    }//abfa
+    }
 
     public List<Task> getTaskByProjectId(int projectId){
         return taskRepository.getTaskByProjectId(projectId);
-    }//abfa
+    }
 
     public void createTask(Task task, int projectId){
         taskRepository.createTask(task, projectId);
-    } //abfa
+    }
 
-    public void updateTask(int id, Task task){
-        taskRepository.updateTask(id, task);
-    } //abfa
+    public boolean updateTask(int id, Task task){
+        return taskRepository.updateTask(id, task);
+    }
 
-    public void deleteTask(int id){
-        taskRepository.deleteTask(id);
-    } //abfa
+    public boolean deleteTask(int id){
+        return taskRepository.deleteTask(id);
+    }
 }

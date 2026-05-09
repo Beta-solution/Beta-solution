@@ -18,8 +18,8 @@ public class SubTaskService {
         return subTaskRepository.getAllSubTask();
     }
 
-    public void getSubTaskById(int id){
-        subTaskRepository.getSubTaskById(id);
+    public SubTask getSubTaskById(int id){
+        return subTaskRepository.getSubTaskById(id);
     }
 
     public List<SubTask> getSubTaskByTaskId(int taskId){
@@ -30,11 +30,11 @@ public class SubTaskService {
         subTaskRepository.createSubTask(subTask, taskId);
     }
 
-    public void updateSubTask(int id, SubTask subtask){
-        subTaskRepository.updateSubTask(id, subtask);
+    public boolean updateSubTask(int id, SubTask subtask){
+        return subTaskRepository.updateSubTask(id, subtask);
     }
 
-    public void deleteSubTask(int id){
-        subTaskRepository.deleteSubTask(id);
+    public boolean deleteSubTask(int id){
+        return subTaskRepository.deleteSubTask(id);
     }
 }
