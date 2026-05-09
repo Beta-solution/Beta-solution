@@ -50,7 +50,7 @@ public class TaskRepository {
                 """;
 
         jdbcTemplate.update(sql,
-                Task.getName(),
+                task.getName(),
                 task.getDescription(),
                 task.getDuration(),
                 task.getStatus(),
@@ -58,7 +58,7 @@ public class TaskRepository {
                 task.getEndDate(),
                 id);
 
-        return jdbcTemplate.update(sql, Task.getName(), id) > 0;
+        return jdbcTemplate.update(sql, task.getName(), id) > 0;
     }
 
     public boolean deleteTask(int id){
