@@ -1,5 +1,6 @@
 package com.example.betasolutions.service;
 
+import com.example.betasolutions.model.Skill;
 import com.example.betasolutions.repository.SkillRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,8 @@ public class SkillService {
 
     }
 
-    public void updateSkill() {
-
+    public boolean updateSkill(int id, Skill skill) {
+        return skillRepository.updateSkill(id, skill);
     }
 
     public void deleteSkill() {
