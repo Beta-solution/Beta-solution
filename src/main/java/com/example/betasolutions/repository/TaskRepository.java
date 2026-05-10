@@ -4,6 +4,7 @@ import com.example.betasolutions.model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -37,8 +38,8 @@ public class TaskRepository {
                 task.getName(),
                 task.getDescription(),
                 task.getStatus(),
-                task.getStartDate(),
-                task.getEndDate(),
+                Date.valueOf(task.getStartDate()),
+                Date.valueOf(task.getEndDate()),
         projectId);
     }
 
@@ -52,8 +53,8 @@ public class TaskRepository {
                 task.getName(),
                 task.getDescription(),
                 task.getStatus(),
-                task.getStartDate(),
-                task.getEndDate(),
+                Date.valueOf(task.getStartDate()),
+                Date.valueOf(task.getEndDate()),
                 id);
 
         return jdbcTemplate.update(sql, task.getName(), id) > 0;

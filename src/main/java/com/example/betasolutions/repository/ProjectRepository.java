@@ -5,6 +5,7 @@ import com.example.betasolutions.model.Project;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -35,9 +36,9 @@ public class ProjectRepository {
                 project.getName(),
                 project.getDescription(),
                 project.getHourlyRate(),
-                project.getStartDate(),
-                project.getEndDate(),
-                project.getEstimatedDeadline(),
+                Date.valueOf(project.getStartDate()),
+                Date.valueOf(project.getEndDate()),
+                Date.valueOf(project.getEstimatedDeadline()),
                 project.getStatus().name().toLowerCase());
 
     }
@@ -51,8 +52,8 @@ public class ProjectRepository {
                 project.getName(),
                 project.getDescription(),
                 project.getHourlyRate(),
-                project.getStartDate(),
-                project.getEndDate(),
+                Date.valueOf(project.getStartDate()),
+                Date.valueOf(project.getEndDate()),
                 project.getEstimatedDeadline(),
                 project.getStatus(),
                 id);
