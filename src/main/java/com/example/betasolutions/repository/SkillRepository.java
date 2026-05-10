@@ -25,8 +25,9 @@ public class SkillRepository {
         jdbcTemplate.update(sql, skill.getName());
     }
 
-    public void updateSkill() {
-
+    public boolean updateSkill(int id, Skill skill) {
+        String sql = "UPDATE skill SET name=? WHERE id=?";
+        return jdbcTemplate.update(sql, skill.getName(), id) > 0;
     }
 
     public void deleteSkill() {

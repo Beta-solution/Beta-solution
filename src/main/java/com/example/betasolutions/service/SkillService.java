@@ -27,8 +27,8 @@ public class SkillService {
         skillRepository.createSkill(skill);
     }
 
-    public void updateSkill() {
-
+    public boolean updateSkill(int id, Skill skill) {
+        return skillRepository.updateSkill(id, skill);
     }
 
     public void deleteSkill() {
