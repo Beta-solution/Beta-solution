@@ -5,6 +5,8 @@ import com.example.betasolutions.repository.SkillRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SkillService {
     private final SkillRepository skillRepository;
@@ -15,12 +17,12 @@ public class SkillService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void getAllSkill() {
-
+    public List<Skill> getAllSkill() {
+        return skillRepository.getAllSkill();
     }
 
-    public void getSkillById() {
-
+    public Skill getSkillById(int id) {
+        return skillRepository.getSkillById(id);
     }
 
     public void createSkill(Skill skill) {
