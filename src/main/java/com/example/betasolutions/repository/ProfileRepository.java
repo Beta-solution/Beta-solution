@@ -47,11 +47,12 @@ public class ProfileRepository {
         validateProfile(profile);
 
         String sql = """
-            INSERT INTO Profiles (name, username, password, email) VALUES (?, ?, ?, ?)
-            """;
+        INSERT INTO Profiles (name, role, username, password, email) VALUES (?, ?, ?, ?, ?)
+        """;
 
         int rows = jdbcTemplate.update(sql,
                 profile.getName(),
+                profile.getRole() != null ? profile.getRole().name() : "DEVELOPER",
                 profile.getUsername(),
                 profile.getPassword(),
                 profile.getEmail()
@@ -63,10 +64,11 @@ public class ProfileRepository {
 
         validateProfile(profile);
 
-        String sql = "UPDATE Profiles SET name = ?, username = ?, password = ?, email = ? WHERE id = ?";
+        String sql = "UPDATE Profiles SET name = ?, role = ?, username = ?, password = ?, email = ? WHERE id = ?";
 
         int rows = jdbcTemplate.update(sql,
                 profile.getName(),
+                profile.getRole().name(),
                 profile.getUsername(),
                 profile.getPassword(),
                 profile.getEmail(),
@@ -81,11 +83,14 @@ public class ProfileRepository {
     }
 
     public boolean deleteProfile(int profileId){
-        String sql = "DELETE FROM Profiles WHERE id = ?";
-        int rows = jdbcTemplate.update(sql,profileId);
-        if (rows == 0){
-            throw new ProfileNotFoundException("Profile with id " + profileId + " was not found");
-        }
+        getProfileById(profileId);
+
+        jdbcTemplate.update("DELETE FROM Profiles_Skills WHERE profile_id = ?", profileId);
+        jdbcTemplate.update("DELETE FROM Profiles_Projects WHERE profile_id = ?", profileId);
+        jdbcTemplate.update("DELETE FROM Profiles_Tasks WHERE profile_id = ?", profileId);
+        jdbcTemplate.update("DELETE FROM Profiles_Sub_Tasks WHERE profile_id = ?", profileId);
+
+        jdbcTemplate.update("DELETE FROM Profiles WHERE id = ?", profileId);
         return true;
     }
 
@@ -103,6 +108,9 @@ public class ProfileRepository {
         }
         if (profile.getEmail() == null || profile.getEmail().isBlank()) {
             throw new InvalidProfileException("Email cannot be empty");
+        }
+        if (profile.getRole() == null) {
+            throw new InvalidProfileException("Role cannot be null");
         }
     }
 }

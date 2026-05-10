@@ -1,5 +1,6 @@
 package com.example.betasolutions.repository;
 
+import com.example.betasolutions.enums.Role;
 import com.example.betasolutions.exception.InvalidProfileException;
 import com.example.betasolutions.exception.ProfileNotFoundException;
 import com.example.betasolutions.model.Profile;
@@ -66,6 +67,7 @@ public class ProfileRepositoryTest {
         newProfile.setName("Nyt Medlem");
         newProfile.setUsername("nyt123");
         newProfile.setPassword("password");
+        newProfile.setRole(Role.OWNER);
         newProfile.setEmail("nyt@email.com");
 
         boolean result = profileRepository.createProfile(newProfile);
@@ -126,6 +128,7 @@ public class ProfileRepositoryTest {
         updated.setName("Alice Opdateret");
         updated.setUsername("alice");
         updated.setPassword("password");
+        updated.setRole(Role.OWNER);
         updated.setEmail("alice@test.dk");
 
         boolean result = profileRepository.updateProfile(updated, 1);
@@ -139,6 +142,7 @@ public class ProfileRepositoryTest {
         updated.setName("Magnus Opdateret");
         updated.setUsername("magnus123");
         updated.setPassword("password");
+        updated.setRole(Role.DEVELOPER);
         updated.setEmail("magnus@email.com");
 
         assertThrows(ProfileNotFoundException.class, () -> profileRepository.updateProfile(updated, 999));
