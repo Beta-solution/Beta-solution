@@ -17,17 +17,16 @@ public class TaskRepository {
     public List<Task> getAllTask(){
         String sql = "SELECT * FROM Tasks";
         return jdbcTemplate.query(sql, new TaskRowMapper());
-    }//abfa
-
+    }
     public Task getTaskById(int id){
         String sql = "SELECT * FROM Tasks WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, new TaskRowMapper());
-    }//abfa
+    }
 
     public List<Task> getTaskByProjectId(int projectId){
         String sql = "SELECT * FROM Tasks WHERE project_Id = ?";
         return jdbcTemplate.query(sql, new TaskRowMapper(), projectId);
-    }//abfa
+    }
 
     public void createTask(Task task, int projectId){
         String sql = """
@@ -42,7 +41,7 @@ public class TaskRepository {
                 task.getStartDate(),
                 task.getEndDate(),
         projectId);
-    } //abfa
+    }
 
     public boolean updateTask(int id, Task task){
         String sql = """
@@ -51,7 +50,7 @@ public class TaskRepository {
                 """;
 
         jdbcTemplate.update(sql,
-                Task.getName(),
+                task.getName(),
                 task.getDescription(),
                 task.getDuration(),
                 task.getStatus(),
@@ -59,11 +58,11 @@ public class TaskRepository {
                 task.getEndDate(),
                 id);
 
-        return jdbcTemplate.update(sql, Task.getName(), id) > 0;
-    } //abfa
+        return jdbcTemplate.update(sql, task.getName(), id) > 0;
+    }
 
     public boolean deleteTask(int id){
         String sql = "DELETE FROM Tasks WHERE id = ?";
         return jdbcTemplate.update(sql, id) > 0;
-    } //abfa
+    }
 }

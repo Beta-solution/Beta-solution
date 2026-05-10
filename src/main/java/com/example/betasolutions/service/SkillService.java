@@ -1,33 +1,39 @@
 package com.example.betasolutions.service;
 
+import com.example.betasolutions.model.Skill;
 import com.example.betasolutions.repository.SkillRepository;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SkillService {
     private final SkillRepository skillRepository;
+    private final JdbcTemplate jdbcTemplate;
 
-    public SkillService(SkillRepository skillRepository) {
+    public SkillService(SkillRepository skillRepository, JdbcTemplate jdbcTemplate) {
         this.skillRepository = skillRepository;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void getAllSkill() {
-
+    public List<Skill> getAllSkill() {
+        return skillRepository.getAllSkill();
     }
 
-    public void getSkillById() {
-
+    public Skill getSkillById(int id) {
+        return skillRepository.getSkillById(id);
     }
 
-    public void createSkill() {
-
+    public void createSkill(Skill skill) {
+        skillRepository.createSkill(skill);
     }
 
-    public void updateSkill() {
-
+    public boolean updateSkill(int id, Skill skill) {
+        return skillRepository.updateSkill(id, skill);
     }
 
-    public void deleteSkill() {
-
+    public boolean deleteSkill(int id) {
+        return skillRepository.deleteSkill(id);
     }
 }

@@ -18,12 +18,12 @@ public class ProjectRepository {
     public List<Project> getAllProjects(){
         String sql = "SELECT * FROM Projects";
         return jdbcTemplate.query(sql, new ProjectRowMapper());
-    } //abfa
+    }
 
     public Project getProjectById(int id){
         String sql = "SELECT * FROM Projects WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ProjectRowMapper());
-    } //abfa
+    }
 
     public void createProject(Project project){
         String sql = """
@@ -40,7 +40,7 @@ public class ProjectRepository {
                 project.getEndDate(),
                 project.getEstimatedDeadline(),
                 project.getStatus().name().toLowerCase());
-        //abfa
+
     }
 
     public boolean updateProject(int id, Project project) {
@@ -57,7 +57,7 @@ public class ProjectRepository {
                 project.getEndDate(),
                 project.getEstimatedDeadline(),
                 project.getStatus(),
-                id); //abfa
+                id);
 
         return jdbcTemplate.update(sql, project.getName(), id) > 0;
     }
@@ -65,10 +65,10 @@ public class ProjectRepository {
     public boolean deleteProject(int id){
         String sql = "DELETE FROM projects WHERE id = ?";
         return jdbcTemplate.update(sql, id) > 0;
-    } //abfa
+    }
 
     public List<Project> getProjectByStatus(Status status){
         String sql = "SELECT * FROM Projects WHERE status = ?";
         return jdbcTemplate.query(sql, new Object[]{status}, new ProjectRowMapper());
-    } //abfa
+    }
 }

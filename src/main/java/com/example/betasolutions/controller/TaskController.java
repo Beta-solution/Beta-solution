@@ -1,5 +1,6 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.enums.Role;
 import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Task;
 import com.example.betasolutions.service.ProfileService;
@@ -27,19 +28,21 @@ public class TaskController {
 
     @GetMapping("/projects/{projectId}/tasks")
     public String getTasksByProject(@PathVariable int projectId, Model model, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         model.addAttribute("tasks", taskService.getTaskByProjectId(projectId));
         model.addAttribute("projectId", projectId);
-        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
         return "tasks/index";
-    } //abfa
+    }
 
     @GetMapping("/projects/{projectId}/tasks/create")
     public String showCreateForm(@PathVariable int projectId, Model model, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         model.addAttribute("task", new Task());
         model.addAttribute("projectId", projectId);
@@ -48,38 +51,44 @@ public class TaskController {
 
     @PostMapping("/projects/{projectId}/tasks/create")
     public String createTask(@PathVariable int projectId, @ModelAttribute Task task, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
-
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
         taskService.createTask(task, projectId);
         return "redirect:/projects/" + projectId + "/tasks";
-    }//abfa
+    }
 
     @GetMapping("/projects/{projectId}/tasks/{id}/edit")
     public String showEditForm(@PathVariable int projectId, @PathVariable int id, Model model, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if(currentUser == null) return "redirect:/login";
-
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
         model.addAttribute("task", taskService.getTaskById(id));
         model.addAttribute("projectId", projectId);
         return "tasks/edit";
-    } //abfa
+    }
 
     @PostMapping("/projects/{projectId}/tasks/{id}/edit")
     public String updateTask(@PathVariable int id, @ModelAttribute Task task, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if(currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         taskService.updateTask(id, task);
         return "redirect:/projects/" + id + "/tasks";
-    } //abfa
-
+    }
     @PostMapping("/projects/{projectId}/tasks/{id}/delete")
     public String deleteTask(@PathVariable int id, @PathVariable int projectId, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         taskService.deleteTask(id);
         return "redirect:/projects/" + projectId + "/tasks";
-    }//abfa
+    }
+
+    private boolean hasProfileAccess(HttpSession httpSession) {
+        Profile loggedIn = (Profile) httpSession.getAttribute("profile");
+        return loggedIn != null && loggedIn.getRole() != Role.DEVELOPER;
+    }
 }

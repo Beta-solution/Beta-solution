@@ -1,5 +1,6 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.enums.Role;
 import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Project;
 import com.example.betasolutions.service.ProjectService;
@@ -24,67 +25,77 @@ public class ProjectController {
 
     @GetMapping("/projects")
     public String getAllProjects(Model model, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         model.addAttribute("projects", projectService.getAllProjects());
-        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
         return "projects/index";
-    } //abfa
+    }
 
     @GetMapping("/projects/{id}")
     public String getProjectById(@PathVariable int id, Model model, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         model.addAttribute("project", projectService.getProjectById(id));
-        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
         return "projects/detail";
-    } //abfa
+    }
 
     @GetMapping("/projects/create")
     public String showCreateForm(Model model, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         model.addAttribute("project", new Project());
         return "projects/create";
-    } //abfa
+    }
 
     @PostMapping("/projects/create")
     public String createProject(@ModelAttribute Project project, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         projectService.createProject(project);
         return "redirect:/projects";
-    } //abfa
+    }
 
     @GetMapping("/projects/{id}/edit")
     public String showEditForm(@PathVariable int id, Model model, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         model.addAttribute("project", projectService.getProjectById(id));
         return "projects/edit";
-    } //abfa
+    }
 
     @PostMapping("/projects/{id}/edit")
     public String updateProject(@PathVariable int id, @ModelAttribute Project project, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return  "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         projectService.updateProject(id, project);
-        return "redirect:/projects"; //abfa
-    } //abfa
+        return "redirect:/projects";
+    }
 
     @PostMapping("/projects/{id}/delete")
     public String deleteProject(@PathVariable int id, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         projectService.deleteProject(id);
         return "redirect:/projects";
-    } //abfa
-    //:)
+    }
+    private boolean hasProfileAccess(HttpSession httpSession) {
+        Profile loggedIn = (Profile) httpSession.getAttribute("profile");
+        return loggedIn != null && loggedIn.getRole() != Role.DEVELOPER;
+    }
 }

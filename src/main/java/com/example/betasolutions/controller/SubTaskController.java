@@ -1,5 +1,6 @@
 package com.example.betasolutions.controller;
 
+import com.example.betasolutions.enums.Role;
 import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.SubTask;
 import com.example.betasolutions.service.ProfileService;
@@ -27,19 +28,21 @@ public class SubTaskController {
 
     @GetMapping("/tasks/{taskId}/subtasks")
     public String getSubTasksByTask(@PathVariable int taskId, Model model, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         model.addAttribute("subTasks", subTaskService.getSubTaskByTaskId(taskId));
         model.addAttribute("taskId", taskId);
-        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
         return "subtasks/index";
     }
 
     @GetMapping("/tasks/{taskId}/subtasks/create")
     public String showCreateForm(@PathVariable int taskId, Model model, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         model.addAttribute("subTask", new SubTask());
         model.addAttribute("taskId",  taskId);
@@ -47,14 +50,19 @@ public class SubTaskController {
     }
 
     @PostMapping("/tasks/{taskId}/subtasks/create")
-    public String createSubTask(@PathVariable int taskId, @ModelAttribute SubTask subTask){
-
+    public String createSubTask(@PathVariable int taskId, @ModelAttribute SubTask subTask, HttpSession httpSession){
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
+        subTaskService.createSubTask(subTask, taskId);
+        return "redirect:/tasks" + taskId + "subtasks";
     }
 
     @GetMapping("/tasks/{taskId}/subtasks/{id}/edit")
     public String showEditForm(@PathVariable int taskId, @PathVariable int id, Model model, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         model.addAttribute("subtask", subTaskService.getSubTaskById(id));
         model.addAttribute("taskId", taskId);
@@ -63,8 +71,9 @@ public class SubTaskController {
 
     @PostMapping("/tasks/{taskId}/subtasks/{id}/edit")
     public String updateSubTask(@PathVariable int id, @PathVariable int taskId, @ModelAttribute SubTask subTask, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         subTaskService.updateSubTask(id, subTask);
         return "redirect:/tasks/" + taskId + "/subtasks";
@@ -72,11 +81,16 @@ public class SubTaskController {
 
     @PostMapping("/tasks/{taskId}/subtasks/{id}/delete")
     public String deleteSubTask(@PathVariable int id, @PathVariable int taskId, HttpSession httpSession){
-        Profile currentUser = (Profile) httpSession.getAttribute("currentUser");
-        if (currentUser == null) return "redirect:/login";
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
 
         subTaskService.deleteSubTask(id);
         return "redirect:/tasks/" + taskId + "/subtasks";
         }
+
+    private boolean hasProfileAccess(HttpSession httpSession) {
+        Profile loggedIn = (Profile) httpSession.getAttribute("profile");
+        return loggedIn != null && loggedIn.getRole() != Role.DEVELOPER;
     }
-}
+    }
