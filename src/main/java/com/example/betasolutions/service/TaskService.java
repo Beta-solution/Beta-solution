@@ -1,6 +1,8 @@
 package com.example.betasolutions.service;
 
+import com.example.betasolutions.model.SubTask;
 import com.example.betasolutions.model.Task;
+import com.example.betasolutions.repository.SubTaskRepository;
 import com.example.betasolutions.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +11,11 @@ import java.util.List;
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final SubTaskRepository subTaskRepository;
 
-    public TaskService(TaskRepository taskRepository){
+    public TaskService(TaskRepository taskRepository, SubTaskRepository subTaskRepository){
         this.taskRepository=taskRepository;
+        this.subTaskRepository = subTaskRepository;
     }
 
     public List<Task> getAllTask(){
@@ -36,5 +40,16 @@ public class TaskService {
 
     public boolean deleteTask(int id){
         return taskRepository.deleteTask(id);
+    }
+
+    public int calculateTaskDuration(int taskId) {
+        List<SubTask> subTasks = subTaskRepository.getSubTaskByTaskId(taskId);
+
+        int total = 0;
+
+        for(SubTask st : subTasks) {
+            total += st.getDuration();
+        }
+        return total;
     }
 }

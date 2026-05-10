@@ -16,7 +16,6 @@ public class TaskRowMapper implements RowMapper<Task> {
                 rs.getInt("id"),
                 rs.getString("name"),
                 rs.getString("description"),
-                rs.getInt("duration"),
                 Status.fromDb(rs.getString("status")),
                 rs.getDate("startDate").toLocalDate(),
                 rs.getDate("endDate").toLocalDate(),

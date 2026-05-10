@@ -30,13 +30,12 @@ public class TaskRepository {
 
     public void createTask(Task task, int projectId){
         String sql = """
-                INSERT  INTO tasks (name, description, duration, status,
+                INSERT  INTO tasks (name, description, status,
                 startDate, endDate, project_id) VALUES (?, ?, ?, ?, ?, ?)
                 """;
         jdbcTemplate.update(sql,
                 task.getName(),
                 task.getDescription(),
-                task.getDuration(),
                 task.getStatus(),
                 task.getStartDate(),
                 task.getEndDate(),
@@ -45,14 +44,13 @@ public class TaskRepository {
 
     public boolean updateTask(int id, Task task){
         String sql = """
-                UPDATE Tasks SET name = ?, description = ?, duration = ?, status = ?,
+                UPDATE Tasks SET name = ?, description = ?, status = ?,
                 startDate = ?, endDate = ? WHERE id = ?
                 """;
 
         jdbcTemplate.update(sql,
                 task.getName(),
                 task.getDescription(),
-                task.getDuration(),
                 task.getStatus(),
                 task.getStartDate(),
                 task.getEndDate(),
