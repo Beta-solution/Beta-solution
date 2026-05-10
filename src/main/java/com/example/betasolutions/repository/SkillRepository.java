@@ -30,8 +30,9 @@ public class SkillRepository {
         return jdbcTemplate.update(sql, skill.getName(), id) > 0;
     }
 
-    public void deleteSkill() {
-
+    public boolean deleteSkill(int id) {
+        String sql = "DELETE FROM skill WHERE id = ?";
+        return jdbcTemplate.update(sql, id) > 0;
     }
 
 

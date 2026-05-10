@@ -31,7 +31,7 @@ public class SkillService {
         return skillRepository.updateSkill(id, skill);
     }
 
-    public void deleteSkill() {
-
+    public boolean deleteSkill(int id) {
+        return skillRepository.deleteSkill(id);
     }
 }
