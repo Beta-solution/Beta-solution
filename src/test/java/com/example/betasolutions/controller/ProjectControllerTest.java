@@ -3,7 +3,7 @@ package com.example.betasolutions.controller;
 import com.example.betasolutions.enums.Role;
 import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Project;
-import com.example.betasolutions.service.ProjectCalculationService;
+import com.example.betasolutions.service.CalculationService;
 import com.example.betasolutions.service.ProjectService;
 import com.example.betasolutions.service.SkillService;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class ProjectControllerTest {
     private SkillService skillService;
 
     @MockitoBean
-    private ProjectCalculationService projectCalculationService;
+    private CalculationService calculationService;
 
     private MockHttpSession authorizedSession() {
         Profile profile = new Profile();

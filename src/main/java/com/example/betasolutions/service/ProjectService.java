@@ -14,11 +14,11 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final TaskService taskService;
-    private final ProjectCalculationService calculationService;
+    private final CalculationService calculationService;
 
     public ProjectService(ProjectRepository projectRepository,
                           TaskService taskService,
-                          ProjectCalculationService calculationService) {
+                          CalculationService calculationService) {
         this.projectRepository = projectRepository;
         this.taskService = taskService;
         this.calculationService = calculationService;

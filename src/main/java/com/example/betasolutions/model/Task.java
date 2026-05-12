@@ -9,6 +9,7 @@ public class Task {
     private int id;
     private String name;
     private String description;
+    private int totalDuration;
     private Profile profile;
     private Skill skill;
     private Status status;
@@ -116,5 +117,9 @@ public class Task {
     public void setProject(Project project) {
         this.project = project;
     }
+
+    public int getTotalDuration() {return totalDuration;}
+
+    public void setTotalDuration(int totalDuration) {this.totalDuration = totalDuration;}
 
 }

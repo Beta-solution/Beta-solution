@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class ProjectCalculationService {
+public class CalculationService {
 
     public int calculateTaskDuration(List<SubTask> subTasks) {
         int total = 0;

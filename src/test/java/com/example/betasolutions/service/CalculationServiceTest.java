@@ -22,10 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "/cleanup.sql",
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-class ProjectCalculationServiceTest {
+class CalculationServiceTest {
 
     @Autowired
-    private ProjectCalculationService projectCalculationService;
+    private CalculationService calculationService;
 
     @Test
     void shouldCalculateTaskDuration() {
@@ -59,7 +59,7 @@ class ProjectCalculationServiceTest {
                 task
         );
 
-        int result = projectCalculationService.calculateTaskDuration(
+        int result = calculationService.calculateTaskDuration(
                 List.of(subTask1, subTask2)
         );
 
@@ -119,7 +119,7 @@ class ProjectCalculationServiceTest {
                 task2
         );
 
-        int result = projectCalculationService.calculateProjectDuration(
+        int result = calculationService.calculateProjectDuration(
                 List.of(task1, task2),
                 List.of(subTask1, subTask2, subTask3)
         );
@@ -130,7 +130,7 @@ class ProjectCalculationServiceTest {
     @Test
     void shouldConvertMinutesToHours() {
 
-        BigDecimal result = projectCalculationService.durationToHours(90);
+        BigDecimal result = calculationService.durationToHours(90);
 
         assertEquals(BigDecimal.valueOf(1.5), result);
     }
@@ -138,7 +138,7 @@ class ProjectCalculationServiceTest {
     @Test
     void shouldCalculateEstimatedPrice() {
 
-        BigDecimal result = projectCalculationService.calculateEstimatedPrice(
+        BigDecimal result = calculationService.calculateEstimatedPrice(
                 120,
                 BigDecimal.valueOf(500)
         );

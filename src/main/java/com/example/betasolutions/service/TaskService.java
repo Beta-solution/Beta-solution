@@ -12,10 +12,15 @@ import java.util.List;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final SubTaskRepository subTaskRepository;
+    private final SubTaskService subTaskService;
+    private final CalculationService calculationService;
 
-    public TaskService(TaskRepository taskRepository, SubTaskRepository subTaskRepository){
+    public TaskService(TaskRepository taskRepository, SubTaskRepository subTaskRepository,
+                       SubTaskService subTaskService, CalculationService calculationService){
         this.taskRepository=taskRepository;
         this.subTaskRepository = subTaskRepository;
+        this.subTaskService = subTaskService;
+        this.calculationService = calculationService;
     }
 
     public List<Task> getAllTask(){
@@ -42,14 +47,18 @@ public class TaskService {
         return taskRepository.deleteTask(id);
     }
 
-    public int calculateTaskDuration(int taskId) {
-        List<SubTask> subTasks = subTaskRepository.getSubTaskByTaskId(taskId);
+    public List<Task> getTasksWithDuration(int projectId) {
+        List<Task> tasks = getTaskByProjectId(projectId);
 
-        int total = 0;
-
-        for(SubTask st : subTasks) {
-            total += st.getDuration();
+        for(Task ts : tasks) {
+            int totalDuration = getTaskDuration(ts.getId());
+            ts.setTotalDuration(totalDuration);
         }
-        return total;
+        return tasks;
+    }
+
+    public int getTaskDuration(int taskId) {
+            List<SubTask> subTasks = subTaskService.getSubTaskByTaskId(taskId);
+            return calculationService.calculateTaskDuration(subTasks);
     }
 }

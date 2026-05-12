@@ -3,7 +3,7 @@ package com.example.betasolutions.controller;
 import com.example.betasolutions.enums.Role;
 import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Project;
-import com.example.betasolutions.service.ProjectCalculationService;
+import com.example.betasolutions.service.CalculationService;
 import com.example.betasolutions.service.ProjectService;
 import com.example.betasolutions.service.SkillService;
 import jakarta.servlet.http.HttpSession;
@@ -19,7 +19,7 @@ public class ProjectController {
     private final ProjectService projectService;
     private final SkillService skillService; //Skal bruges til at sætte skills på et project
 
-    public ProjectController(ProjectService projectService, SkillService skillService, ProjectCalculationService projectCalculationService) {
+    public ProjectController(ProjectService projectService, SkillService skillService, CalculationService calculationService) {
         this.projectService = projectService;
         this.skillService = skillService;
     }
