@@ -12,23 +12,21 @@ public class Project {
     private String name;
     private String description;
     private BigDecimal hourlyRate;
-    private float totalDuration;
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDate estimatedDeadline;
     private Status status;
     private BigDecimal finalPrice;
     private List<Skill> skills;
-    private List<Profile> members;
+    private List<Profile> profiles;
 
     public Project(int id, String name, String description, BigDecimal hourlyRate,
-                   float totalDuration, LocalDate startDate, LocalDate endDate,
+                   LocalDate startDate, LocalDate endDate,
                    LocalDate estimatedDeadline, BigDecimal finalPrice, Status status) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.hourlyRate = hourlyRate;
-        this.totalDuration = totalDuration;
         this.startDate = startDate;
         this.endDate = endDate;
         this.estimatedDeadline = estimatedDeadline;
@@ -37,21 +35,20 @@ public class Project {
     }
 
     public Project(int id, String name, String description, BigDecimal hourlyRate,
-                   float totalDuration, LocalDate startDate, LocalDate endDate,
+                   LocalDate startDate, LocalDate endDate,
                    LocalDate estimatedDeadline, BigDecimal finalPrice, Status status,
-                   List<Skill> skills, List<Profile> members) {
+                   List<Skill> skills, List<Profile> profiles) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.hourlyRate = hourlyRate;
-        this.totalDuration = totalDuration;
         this.startDate = startDate;
         this.endDate = endDate;
         this.estimatedDeadline = estimatedDeadline;
         this.finalPrice = finalPrice;
         this.status = status;
         this.skills = skills;
-        this.members = members;
+        this.profiles = profiles;
     }
 
     public Project() {
@@ -82,20 +79,12 @@ public class Project {
         this.description = description;
     }
 
-    public BigDecimal getTotalPrice() {
+    public BigDecimal getHourlyRate() {
         return hourlyRate;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.hourlyRate = totalPrice;
-    }
-
-    public float getTotalDuration() {
-        return totalDuration;
-    }
-
-    public void setTotalDuration(float totalDuration) {
-        this.totalDuration = totalDuration;
+    public void setHourlyRate(BigDecimal hourlyRate) {
+        this.hourlyRate = hourlyRate;
     }
 
     public LocalDate getStartDate() {
@@ -138,11 +127,15 @@ public class Project {
         this.skills = skills;
     }
 
-    public List<Profile> getMembers() {
-        return members;
+    public List<Profile> getProfiles() {
+        return profiles;
     }
 
-    public void setMembers(List<Profile> members) {
-        this.members = members;
+    public void setProfiles(List<Profile> profiles) {
+        this.profiles = profiles;
     }
+
+    public BigDecimal getFinalPrice() {return finalPrice;}
+
+    public void setFinalPrice(BigDecimal finalPrice) {this.finalPrice = finalPrice;}
 }

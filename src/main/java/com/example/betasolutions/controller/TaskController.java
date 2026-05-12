@@ -4,6 +4,7 @@ import com.example.betasolutions.enums.Role;
 import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Task;
 import com.example.betasolutions.service.ProfileService;
+import com.example.betasolutions.service.CalculationService;
 import com.example.betasolutions.service.SkillService;
 import com.example.betasolutions.service.TaskService;
 import jakarta.servlet.http.HttpSession;
@@ -19,11 +20,14 @@ public class TaskController {
     private final TaskService taskService;
     private final SkillService skillService;
     private final ProfileService profileService; //Denne skal bruges, hvis man vil tildele en person til en task
+    private final CalculationService calculationService;
 
-    public TaskController(TaskService taskService, SkillService skillService, ProfileService profileService) {
+    public TaskController(TaskService taskService, SkillService skillService, ProfileService profileService,
+                          CalculationService calculationService) {
         this.taskService = taskService;
         this.skillService = skillService;
         this.profileService = profileService;
+        this.calculationService = calculationService;
     }
 
     @GetMapping("/projects/{projectId}/tasks")
@@ -32,7 +36,7 @@ public class TaskController {
             return "redirect:/unauthorized";
         }
 
-        model.addAttribute("tasks", taskService.getTaskByProjectId(projectId));
+        model.addAttribute("tasks", taskService.getTasksWithDuration(projectId));
         model.addAttribute("projectId", projectId);
         model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
         return "tasks/index";

@@ -4,6 +4,7 @@ import com.example.betasolutions.model.SubTask;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -31,7 +32,7 @@ public class SubTaskRepository {
 
     public void createSubTask(SubTask subTask, int taskId){
         String sql = """
-                INSERT INTO Sub_Tasks (name, description, status,
+                INSERT INTO Sub_Tasks (name, description, duration, status,
                 startDate, endDate, task_id) VALUES (?, ?, ?, ?, ?, ?)
                 """;
 
@@ -40,15 +41,15 @@ public class SubTaskRepository {
                 subTask.getDescription(),
                 subTask.getDuration(),
                 subTask.getStatus(),
-                subTask.getStartDate(),
-                subTask.getEndDate(),
+                Date.valueOf(subTask.getStartDate()),
+                Date.valueOf(subTask.getEndDate()),
                 taskId
                 );
     }
 
     public boolean updateSubTask(int id, SubTask subTask){
         String sql = """
-                Update Sub_Tasks SET name = ?, dscription = +, duration = ?, status = ?,
+                Update Sub_Tasks SET name = ?, description = ?, duration = ?, status = ?,
                 startDate = ?, endDate = ? WHERE id = ?
                 """;
 
@@ -57,8 +58,8 @@ public class SubTaskRepository {
                 subTask.getDescription(),
                 subTask.getDuration(),
                 subTask.getStatus(),
-                subTask.getStartDate(),
-                subTask.getEndDate(),
+                Date.valueOf(subTask.getStartDate()),
+                Date.valueOf(subTask.getEndDate()),
                 id);
 
         return jdbcTemplate.update(sql, subTask.getName(), id) > 0;

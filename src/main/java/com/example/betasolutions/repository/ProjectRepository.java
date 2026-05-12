@@ -5,6 +5,7 @@ import com.example.betasolutions.model.Project;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -27,35 +28,35 @@ public class ProjectRepository {
 
     public void createProject(Project project){
         String sql = """
-    INSERT INTO Projects (name, description, price, totalDuration,
-    startDate, endDate, estimatedDeadline, status)
+    INSERT INTO Projects (name, description, hourlyRate,
+    startDate, endDate, estimatedDeadline, finalPrice, status)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     """;
         jdbcTemplate.update(sql,
                 project.getName(),
                 project.getDescription(),
-                project.getTotalPrice(),
-                project.getTotalDuration(),
-                project.getStartDate(),
-                project.getEndDate(),
-                project.getEstimatedDeadline(),
+                project.getHourlyRate(),
+                Date.valueOf(project.getStartDate()),
+                Date.valueOf(project.getEndDate()),
+                Date.valueOf(project.getEstimatedDeadline()),
+                project.getFinalPrice(),
                 project.getStatus().name().toLowerCase());
 
     }
 
     public boolean updateProject(int id, Project project) {
         String sql = """
-                UPDATE Projects SET name = ?, description = ?, price = ?, totalduration = ?,
-                startDate = ?, endDate = ?, estimatedDeadline = ?, status = ? WHERE id = ?
+                UPDATE Projects SET name = ?, description = ?, hourlyRate = ?,
+                startDate = ?, endDate = ?, estimatedDeadline = ?, finalPrice = ?, status = ? WHERE id = ?
                 """;
         jdbcTemplate.update(sql,
                 project.getName(),
                 project.getDescription(),
-                project.getTotalPrice(),
-                project.getTotalDuration(),
-                project.getStartDate(),
-                project.getEndDate(),
+                project.getHourlyRate(),
+                Date.valueOf(project.getStartDate()),
+                Date.valueOf(project.getEndDate()),
                 project.getEstimatedDeadline(),
+                project.getFinalPrice(),
                 project.getStatus(),
                 id);
 

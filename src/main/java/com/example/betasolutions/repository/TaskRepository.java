@@ -4,6 +4,7 @@ import com.example.betasolutions.model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -30,32 +31,30 @@ public class TaskRepository {
 
     public void createTask(Task task, int projectId){
         String sql = """
-                INSERT  INTO tasks (name, description, duration, status,
+                INSERT  INTO tasks (name, description, status,
                 startDate, endDate, project_id) VALUES (?, ?, ?, ?, ?, ?)
                 """;
         jdbcTemplate.update(sql,
                 task.getName(),
                 task.getDescription(),
-                task.getDuration(),
                 task.getStatus(),
-                task.getStartDate(),
-                task.getEndDate(),
+                Date.valueOf(task.getStartDate()),
+                Date.valueOf(task.getEndDate()),
         projectId);
     }
 
     public boolean updateTask(int id, Task task){
         String sql = """
-                UPDATE Tasks SET name = ?, description = ?, duration = ?, status = ?,
+                UPDATE Tasks SET name = ?, description = ?, status = ?,
                 startDate = ?, endDate = ? WHERE id = ?
                 """;
 
         jdbcTemplate.update(sql,
                 task.getName(),
                 task.getDescription(),
-                task.getDuration(),
                 task.getStatus(),
-                task.getStartDate(),
-                task.getEndDate(),
+                Date.valueOf(task.getStartDate()),
+                Date.valueOf(task.getEndDate()),
                 id);
 
         return jdbcTemplate.update(sql, task.getName(), id) > 0;

@@ -4,39 +4,38 @@ package com.example.betasolutions.model;
 import com.example.betasolutions.enums.Status;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Task {
     private int id;
     private String name;
     private String description;
-    private Profile profile;
-    private int duration;
+    private int totalDuration;
+    private List<Profile> profiles;
     private Skill skill;
     private Status status;
     private LocalDate startDate;
     private LocalDate endDate;
     private Project project;
 
-    public Task(int id, String name, String description, int duration, Status status,
+    public Task(int id, String name, String description, Status status,
                 LocalDate startDate, LocalDate endDate, int projectId) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.duration = duration;
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public Task(int id, String name, String description, Profile profile,
-                int duration, Skill skill, Status status,
+    public Task(int id, String name, String description, List<Profile> profiles,
+                Skill skill, Status status,
                 LocalDate startDate, LocalDate endDate,
                 Project project) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.profile = profile;
-        this.duration = duration;
+        this.profiles = profiles;
         this.skill = skill;
         this.status = status;
         this.startDate = startDate;
@@ -72,20 +71,12 @@ public class Task {
         this.description = description;
     }
 
-    public Profile getProfile() {
-        return profile;
+    public List<Profile> getProfiles() {
+        return profiles;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setProfiles(List<Profile> profiles) {
+        this.profiles = profiles;
     }
 
     public Skill getSkill() {
@@ -127,5 +118,9 @@ public class Task {
     public void setProject(Project project) {
         this.project = project;
     }
+
+    public int getTotalDuration() {return totalDuration;}
+
+    public void setTotalDuration(int totalDuration) {this.totalDuration = totalDuration;}
 
 }

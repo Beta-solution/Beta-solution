@@ -16,7 +16,6 @@ public class ProjectRowMapper implements RowMapper<Project> {
                 rs.getString("name"),
                 rs.getString("description"),
                 rs.getBigDecimal("hourlyRate"),
-                rs.getFloat("totalDuration"),
                 rs.getDate("startDate").toLocalDate(),
                 rs.getDate("endDate").toLocalDate(),
                 rs.getDate("estimatedDeadline").toLocalDate(),
