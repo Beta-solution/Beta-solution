@@ -1,7 +1,6 @@
 package com.example.betasolutions.repository;
 
 import com.example.betasolutions.enums.Status;
-import com.example.betasolutions.model.Project;
 import com.example.betasolutions.model.Task;
 import org.springframework.jdbc.core.RowMapper;
 

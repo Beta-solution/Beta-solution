@@ -2,6 +2,7 @@ package com.example.betasolutions.service;
 
 import com.example.betasolutions.enums.Status;
 import com.example.betasolutions.model.Project;
+import com.example.betasolutions.model.SubTask;
 import com.example.betasolutions.model.Task;
 import com.example.betasolutions.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
@@ -49,18 +50,29 @@ public class ProjectService {
     }
 
 
-    public int getProjectDuration(int projectId) {
+    public BigDecimal getProjectDuration(int projectId) {
+
         List<Task> tasks = taskService.getTaskByProjectId(projectId);
-        return calculationService.calculateProjectDuration(tasks, taskService);
+
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (Task task : tasks) {
+
+            total = total.add(
+                    taskService.getTaskDuration(task.getId())
+            );
+        }
+
+        return total;
     }
 
     public BigDecimal getEstimatedPrice(int projectId) {
         Project project = getProjectById(projectId);
 
-        int minutes = getProjectDuration(projectId);
+        BigDecimal hours = getProjectDuration(projectId);
 
         return calculationService.calculateEstimatedPrice(
-                minutes,
+                hours,
                 project.getHourlyRate()
         );
     }

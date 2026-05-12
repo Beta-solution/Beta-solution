@@ -93,6 +93,6 @@ public class TaskController {
 
     private boolean hasProfileAccess(HttpSession httpSession) {
         Profile loggedIn = (Profile) httpSession.getAttribute("profile");
-        return loggedIn != null && loggedIn.getRole() != Role.DEVELOPER;
+        return loggedIn != null && loggedIn.getRole() != Role.JUNIOR;
     }
 }

@@ -3,6 +3,7 @@ package com.example.betasolutions.model;
 
 import com.example.betasolutions.enums.Status;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class Task {
     private int id;
     private String name;
     private String description;
-    private int totalDuration;
+    private BigDecimal totalDuration;
     private List<Profile> profiles;
     private Skill skill;
     private Status status;
@@ -119,8 +120,8 @@ public class Task {
         this.project = project;
     }
 
-    public int getTotalDuration() {return totalDuration;}
+    public BigDecimal getTotalDuration() {return totalDuration;}
 
-    public void setTotalDuration(int totalDuration) {this.totalDuration = totalDuration;}
+    public void setTotalDuration(BigDecimal totalDuration) {this.totalDuration = totalDuration;}
 
 }

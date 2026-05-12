@@ -10,40 +10,35 @@ import java.util.List;
 @Service
 public class CalculationService {
 
-    public int calculateTaskDuration(List<SubTask> subTasks) {
-        int total = 0;
+    public BigDecimal calculateTaskDuration(List<SubTask> subTasks) {
+        BigDecimal total = BigDecimal.valueOf(0);
 
         for (SubTask st : subTasks) {
-            total += st.getDuration();
+            total = total.add(st.getDuration());
         }
 
         return total;
     }
 
-    public int calculateProjectDuration(List<Task> tasks, List<SubTask> allSubTasks) {
-        int total = 0;
+    public BigDecimal calculateProjectDuration(List<Task> tasks, List<SubTask> allSubTasks) {
+        BigDecimal total = BigDecimal.valueOf(0);
 
         for (Task task : tasks) {
 
-            int taskTotal = calculateTaskDuration(
+            BigDecimal taskTotal = calculateTaskDuration(
                     allSubTasks.stream()
                             .filter(st -> st.getTask().getId() == task.getId())
                             .toList()
             );
 
-            total += taskTotal;
+            total = total.add(taskTotal);
         }
 
         return total;
     }
 
-    public BigDecimal durationToHours(int minutes) {
-        double hours = minutes / 60.0;
-        return BigDecimal.valueOf(hours);
-    }
 
-    public BigDecimal calculateEstimatedPrice(int totalMinutes, BigDecimal hourlyRate) {
-        return durationToHours(totalMinutes)
-                .multiply(hourlyRate);
+    public BigDecimal calculateEstimatedPrice(BigDecimal totalHours, BigDecimal hourlyRate) {
+        return totalHours.multiply(hourlyRate);
     }
 }
