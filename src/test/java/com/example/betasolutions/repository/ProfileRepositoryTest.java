@@ -142,7 +142,7 @@ public class ProfileRepositoryTest {
         updated.setName("Magnus Opdateret");
         updated.setUsername("magnus123");
         updated.setPassword("password");
-        updated.setRole(Role.DEVELOPER);
+        updated.setRole(Role.JUNIOR);
         updated.setEmail("magnus@email.com");
 
         assertThrows(ProfileNotFoundException.class, () -> profileRepository.updateProfile(updated, 999));

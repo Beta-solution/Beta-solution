@@ -2,6 +2,7 @@ package com.example.betasolutions.model;
 
 import com.example.betasolutions.enums.Status;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class SubTask {
@@ -9,14 +10,14 @@ public class SubTask {
     private String name;
     private String description;
     private Profile profile;
-    private int duration;
+    private BigDecimal duration;
     private Skill skill;
     private Status status;
     private LocalDate startDate;
     private LocalDate endDate;
     private Task task;
 
-    public SubTask(int id, String name, String description, int duration,
+    public SubTask(int id, String name, String description, BigDecimal duration,
                    Status status, LocalDate startDate, LocalDate endDate, int taskId) {
         this.id = id;
         this.name = name;
@@ -28,7 +29,7 @@ public class SubTask {
     }
 
     public SubTask(int id, String name, String description, Profile profile,
-                   int duration, Skill skill, Status status,
+                   BigDecimal duration, Skill skill, Status status,
                    LocalDate startDate, LocalDate endDate, Task task) {
         this.id = id;
         this.name = name;
@@ -58,8 +59,8 @@ public class SubTask {
     public Profile getProfile() { return profile; }
     public void setProfile(Profile profile) { this.profile = profile; }
 
-    public int getDuration() { return duration; }
-    public void setDuration(int duration) { this.duration = duration; }
+    public BigDecimal getDuration() { return duration; }
+    public void setDuration(BigDecimal duration) { this.duration = duration; }
 
     public Skill getSkill() { return skill; }
     public void setSkill(Skill skill) { this.skill = skill; }

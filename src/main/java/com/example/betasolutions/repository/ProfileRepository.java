@@ -52,7 +52,7 @@ public class ProfileRepository {
 
         int rows = jdbcTemplate.update(sql,
                 profile.getName(),
-                profile.getRole() != null ? profile.getRole().name() : "DEVELOPER",
+                profile.getRole() != null ? profile.getRole().name() : "JUNIOR",
                 profile.getUsername(),
                 profile.getPassword(),
                 profile.getEmail()

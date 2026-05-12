@@ -6,6 +6,7 @@ import com.example.betasolutions.repository.SubTaskRepository;
 import com.example.betasolutions.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -51,13 +52,13 @@ public class TaskService {
         List<Task> tasks = getTaskByProjectId(projectId);
 
         for(Task ts : tasks) {
-            int totalDuration = getTaskDuration(ts.getId());
+            BigDecimal totalDuration = getTaskDuration(ts.getId());
             ts.setTotalDuration(totalDuration);
         }
         return tasks;
     }
 
-    public int getTaskDuration(int taskId) {
+    public BigDecimal getTaskDuration(int taskId) {
             List<SubTask> subTasks = subTaskService.getSubTaskByTaskId(taskId);
             return calculationService.calculateTaskDuration(subTasks);
     }

@@ -58,7 +58,7 @@ public class ProfileController {
             return "redirect:/unauthorized";
         }
 
-        if(profile.getRole() == Role.PROJECT_MANAGER && !isOwner(httpSession)){
+        if(profile.getRole() == Role.SENIOR && !isOwner(httpSession)){
             return "redirect:/unauthorized";
         }
 
@@ -92,7 +92,7 @@ public class ProfileController {
 
         Profile profileToDelete = profileService.getProfileById(id);
 
-        if(profileToDelete.getRole() == Role.PROJECT_MANAGER && !isOwner(httpSession)){
+        if(profileToDelete.getRole() == Role.SENIOR && !isOwner(httpSession)){
             return "redirect:/unauthorized";
         }
 
@@ -104,7 +104,7 @@ public class ProfileController {
 
     private boolean hasProfileAccess(HttpSession httpSession) {
         Profile loggedIn = (Profile) httpSession.getAttribute("profile");
-        return loggedIn != null && loggedIn.getRole() != Role.DEVELOPER;
+        return loggedIn != null && loggedIn.getRole() != Role.JUNIOR;
     }
 
     private Profile getLoggedIn(HttpSession httpSession) {

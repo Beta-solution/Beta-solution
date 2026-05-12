@@ -1,126 +1,133 @@
-INSERT INTO Skills (name)
-VALUES ('Java'),
-       ('SQL'),
-       ('HTML');
+DROP
+DATABASE IF EXISTS betasolutions;
 
-INSERT INTO Profiles (name, role, username, password, email)
-VALUES ('Alice', 'OWNER', 'alice', 'password', 'alice@test.dk'),
-       ('Bob', 'DEVELOPER', 'bob', 'password', 'bob@test.dk');
+CREATE
+DATABASE betasolutions;
 
-INSERT INTO Profiles_Skills (profile_id, skill_id)
-VALUES (1, 1),
-       (1, 2),
-       (2, 3);
+USE
+betasolutions;
 
-INSERT INTO Projects (name,
-                      description,
-                      hourlyRate,
-                      startDate,
-                      endDate,
-                      estimatedDeadline,
-                      finalPrice,
-                      status)
-VALUES ('Project 1',
-        'First project',
-        500.00,
-        '2026-01-01',
-        '2026-02-01',
-        '2026-02-05',
-        50000.00,
-        'IN_PROGRESS'),
+CREATE TABLE Skills
+(
+    id   INT          NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
 
-       ('Project 2',
-        'Second project',
-        600.00,
-        '2026-03-01',
-        '2026-03-20',
-        '2026-03-25',
-        30000.00,
-        'TODO');
+CREATE TABLE Profiles
+(
+    id       INT          NOT NULL AUTO_INCREMENT,
+    name     VARCHAR(255) NOT NULL,
+    role     VARCHAR(50)  NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email    VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
 
-INSERT INTO Profiles_Projects (profile_id, project_id)
-VALUES (1, 1),
-       (2, 2);
+CREATE TABLE Profiles_Skills
+(
+    profile_id INT NOT NULL,
+    skill_id   INT NOT NULL,
+    PRIMARY KEY (profile_id, skill_id),
+    FOREIGN KEY (profile_id) REFERENCES Profiles (id),
+    FOREIGN KEY (skill_id) REFERENCES Skills (id)
+);
 
-INSERT INTO Project_Skills (project_id, skill_id, quantity)
-VALUES (1, 1, 2),
-       (1, 2, 1),
-       (2, 3, 1);
+CREATE TABLE Projects
+(
+    id                INT            NOT NULL AUTO_INCREMENT,
+    name              VARCHAR(255)   NOT NULL,
+    description       VARCHAR(255),
+    hourlyRate        DECIMAL(10, 2) NOT NULL,
+    startDate         DATE,
+    endDate           DATE,
+    estimatedDeadline DATE,
+    finalPrice        DECIMAL(10, 2),
+    status            VARCHAR(50),
+    PRIMARY KEY (id)
+);
 
-INSERT INTO Tasks (name,
-                   description,
-                   status,
-                   startDate,
-                   endDate,
-                   project_id)
-VALUES ('Task 1',
-        'First task',
-        'IN_PROGRESS',
-        '2026-01-01',
-        '2026-01-10',
-        1),
+CREATE TABLE Profiles_Projects
+(
+    profile_id INT NOT NULL,
+    project_id INT NOT NULL,
+    PRIMARY KEY (profile_id, project_id),
+    FOREIGN KEY (profile_id) REFERENCES Profiles (id),
+    FOREIGN KEY (project_id) REFERENCES Projects (id)
+);
 
-       ('Task 2',
-        'Second task',
-        'DONE',
-        '2026-01-11',
-        '2026-01-15',
-        1),
+CREATE TABLE Project_Skills
+(
+    project_id INT NOT NULL,
+    skill_id   INT NOT NULL,
+    quantity   INT,
+    PRIMARY KEY (project_id, skill_id),
+    FOREIGN KEY (project_id) REFERENCES Projects (id),
+    FOREIGN KEY (skill_id) REFERENCES Skills (id)
+);
 
-       ('Task 3',
-        'Third task',
-        'TODO',
-        '2026-03-01',
-        '2026-03-10',
-        2);
+CREATE TABLE Tasks
+(
+    id          INT NOT NULL AUTO_INCREMENT,
+    name        VARCHAR(255),
+    description VARCHAR(255),
+    status      VARCHAR(50),
+    startDate   DATE,
+    endDate     DATE,
+    project_id  INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (project_id) REFERENCES Projects (id)
+);
 
-INSERT INTO Profiles_Tasks (profile_id, task_id)
-VALUES (1, 1),
-       (1, 2),
-       (2, 3);
+CREATE TABLE Profiles_Tasks
+(
+    profile_id INT NOT NULL,
+    task_id    INT NOT NULL,
+    PRIMARY KEY (profile_id, task_id),
+    FOREIGN KEY (profile_id) REFERENCES Profiles (id),
+    FOREIGN KEY (task_id) REFERENCES Tasks (id)
+);
 
-INSERT INTO Tasks_Skills (task_id, skill_id, quantity)
-VALUES (1, 1, 1),
-       (2, 2, 1),
-       (3, 3, 1);
+CREATE TABLE Tasks_Skills
+(
+    task_id  INT NOT NULL,
+    skill_id INT NOT NULL,
+    quantity INT,
+    PRIMARY KEY (task_id, skill_id),
+    FOREIGN KEY (task_id) REFERENCES Tasks (id),
+    FOREIGN KEY (skill_id) REFERENCES Skills (id)
+);
 
-INSERT INTO Sub_Tasks (name,
-                       description,
-                       duration,
-                       status,
-                       startDate,
-                       endDate,
-                       task_id)
-VALUES ('SubTask 1',
-        'First subtask',
-        5,
-        'IN_PROGRESS',
-        '2026-01-01',
-        '2026-01-03',
-        1),
+CREATE TABLE Sub_Tasks
+(
+    id          INT NOT NULL AUTO_INCREMENT,
+    name        VARCHAR(255),
+    description VARCHAR(255),
+    duration    DECIMAL(5,2),
+    status      VARCHAR(50),
+    startDate   DATE,
+    endDate     DATE,
+    task_id     INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (task_id) REFERENCES Tasks (id)
+);
 
-       ('SubTask 2',
-        'Second subtask',
-        3,
-        'DONE',
-        '2026-01-04',
-        '2026-01-05',
-        1),
+CREATE TABLE Profiles_Sub_Tasks
+(
+    profile_id  INT NOT NULL,
+    sub_task_id INT NOT NULL,
+    PRIMARY KEY (profile_id, sub_task_id),
+    FOREIGN KEY (profile_id) REFERENCES Profiles (id),
+    FOREIGN KEY (sub_task_id) REFERENCES Sub_Tasks (id)
+);
 
-       ('SubTask 3',
-        'Third subtask',
-        4,
-        'TODO',
-        '2026-03-01',
-        '2026-03-03',
-        3);
-
-INSERT INTO Profiles_Sub_Tasks (profile_id, sub_task_id)
-VALUES (1, 1),
-       (1, 2),
-       (2, 3);
-
-INSERT INTO Sub_Tasks_Skills (sub_task_id, skill_id, quantity)
-VALUES (1, 1, 1),
-       (2, 2, 1),
-       (3, 3, 1);
+CREATE TABLE Sub_Tasks_Skills
+(
+    sub_task_id INT NOT NULL,
+    skill_id    INT NOT NULL,
+    quantity    INT,
+    PRIMARY KEY (sub_task_id, skill_id),
+    FOREIGN KEY (sub_task_id) REFERENCES Sub_Tasks (id),
+    FOREIGN KEY (skill_id) REFERENCES Skills (id)
+);

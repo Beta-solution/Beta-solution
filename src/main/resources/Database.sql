@@ -104,7 +104,7 @@ CREATE TABLE Sub_Tasks
     id          INT NOT NULL AUTO_INCREMENT,
     name        VARCHAR(255),
     description VARCHAR(255),
-    duration    INT,
+    duration    DECIMAL(5,2),
     status      VARCHAR(50),
     startDate   DATE,
     endDate     DATE,
