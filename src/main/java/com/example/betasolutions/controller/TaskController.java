@@ -31,12 +31,12 @@ public class TaskController {
     }
 
     @GetMapping("/projects/{projectId}/tasks")
-    public String getTasksByProject(@PathVariable int projectId, @PathVariable int taskId, Model model, HttpSession httpSession){
+    public String getTasksByProject(@PathVariable int projectId, Model model, HttpSession httpSession){
         if (!hasProfileAccess(httpSession)) {
             return "redirect:/unauthorized";
         }
 
-        model.addAttribute("tasks", taskService.getTaskByProjectId(projectId));
+        model.addAttribute("tasks", taskService.getTasksWithDuration(projectId));
         model.addAttribute("projectId", projectId);
         model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
         return "tasks/index";
