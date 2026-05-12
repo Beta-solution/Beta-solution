@@ -1,5 +1,6 @@
 package com.example.betasolutions.repository;
 
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.SubTask;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -68,5 +69,22 @@ public class SubTaskRepository {
     public boolean deleteSubTask(int id){
         String sql = "DELETE FROM subtask WHERE id = ?";
         return jdbcTemplate.update(sql, id) > 0;
+    }
+
+    public boolean addProfileToSubTask(int profileId, int subTaskId) {
+        String sql = "INSERT INTO Profiles_Sub_Tasks (profile_id, sub_task_id) VALUES (?, ?)";
+
+        return jdbcTemplate.update(sql, profileId, subTaskId) > 0;
+    }
+
+    public List<Profile> getProfilesBySubTaskId(int subTaskId) {
+        String sql = """
+        SELECT p.*
+        FROM Profiles p
+        JOIN Profiles_Sub_Tasks pst ON p.id = pst.profile_id
+        WHERE pst.sub_task_id = ?
+    """;
+
+        return jdbcTemplate.query(sql, new ProfileRowMapper(), subTaskId);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.betasolutions.repository;
 
 import com.example.betasolutions.enums.Status;
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Project;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -71,5 +72,23 @@ public class ProjectRepository {
     public List<Project> getProjectByStatus(Status status){
         String sql = "SELECT * FROM Projects WHERE status = ?";
         return jdbcTemplate.query(sql, new Object[]{status}, new ProjectRowMapper());
+    }
+
+    public boolean addProfileToProject(int profileId, int projectId) {
+        String sql = "INSERT INTO Profiles_Projects (profile_id, project_id) VALUES (?, ?)";
+        return jdbcTemplate.update(sql,
+                profileId,
+                projectId) > 0;
+    }
+
+    public List<Profile> getProfilesByProjectId(int projectId) {
+        String sql = """
+        SELECT p.*
+        FROM Profiles p
+        JOIN Profiles_Projects pp ON p.id = pp.profile_id
+        WHERE pp.project_id = ?
+    """;
+
+        return jdbcTemplate.query(sql, new ProfileRowMapper(), projectId);
     }
 }

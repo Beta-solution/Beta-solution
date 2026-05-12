@@ -12,7 +12,6 @@ public class Task {
     private String name;
     private String description;
     private BigDecimal totalDuration;
-    private List<Profile> profiles;
     private Skill skill;
     private Status status;
     private LocalDate startDate;
@@ -36,7 +35,6 @@ public class Task {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.profiles = profiles;
         this.skill = skill;
         this.status = status;
         this.startDate = startDate;
@@ -70,14 +68,6 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Profile> getProfiles() {
-        return profiles;
-    }
-
-    public void setProfiles(List<Profile> profiles) {
-        this.profiles = profiles;
     }
 
     public Skill getSkill() {

@@ -109,17 +109,10 @@ CREATE TABLE Sub_Tasks
     startDate   DATE,
     endDate     DATE,
     task_id     INT,
+    profile_id  INT,
     PRIMARY KEY (id),
-    FOREIGN KEY (task_id) REFERENCES Tasks (id)
-);
-
-CREATE TABLE Profiles_Sub_Tasks
-(
-    profile_id  INT NOT NULL,
-    sub_task_id INT NOT NULL,
-    PRIMARY KEY (profile_id, sub_task_id),
-    FOREIGN KEY (profile_id) REFERENCES Profiles (id),
-    FOREIGN KEY (sub_task_id) REFERENCES Sub_Tasks (id)
+    FOREIGN KEY (task_id) REFERENCES Tasks (id),
+    FOREIGN KEY (profile_id) REFERENCES Profiles(id)
 );
 
 CREATE TABLE Sub_Tasks_Skills
