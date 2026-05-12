@@ -34,6 +34,22 @@ public class ProfileService {
         return profileRepository.updateProfile(profile, profileId);
     }
 
+    public List<Profile> getProfilesByProjectId(int projectId) {
+        return profileRepository.getProfilesByProjectId(projectId);
+    }
+
+    public List<Profile> getAvailableProfilesForProject(int projectId) {
+        return profileRepository.getProfilesNotInProject(projectId);
+    }
+
+    public List<Profile> getProfilesBySubTaskId(int subTaskId) {
+        return profileRepository.getProfilesBySubTaskId(subTaskId);
+    }
+
+    public List<Profile> getAvailableProfilesForSubTask(int subTaskId) {
+        return profileRepository.getProfilesNotInSubTask(subTaskId);
+    }
+
     public boolean deleteProfile(int profileId){
         return profileRepository.deleteProfile(profileId);
     }
