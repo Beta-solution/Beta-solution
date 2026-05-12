@@ -4,13 +4,14 @@ package com.example.betasolutions.model;
 import com.example.betasolutions.enums.Status;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Task {
     private int id;
     private String name;
     private String description;
     private int totalDuration;
-    private Profile profile;
+    private List<Profile> profiles;
     private Skill skill;
     private Status status;
     private LocalDate startDate;
@@ -27,14 +28,14 @@ public class Task {
         this.endDate = endDate;
     }
 
-    public Task(int id, String name, String description, Profile profile,
+    public Task(int id, String name, String description, List<Profile> profiles,
                 Skill skill, Status status,
                 LocalDate startDate, LocalDate endDate,
                 Project project) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.profile = profile;
+        this.profiles = profiles;
         this.skill = skill;
         this.status = status;
         this.startDate = startDate;
@@ -70,12 +71,12 @@ public class Task {
         this.description = description;
     }
 
-    public Profile getProfile() {
-        return profile;
+    public List<Profile> getProfiles() {
+        return profiles;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public void setProfiles(List<Profile> profiles) {
+        this.profiles = profiles;
     }
 
     public Skill getSkill() {

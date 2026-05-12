@@ -18,7 +18,7 @@ public class Project {
     private Status status;
     private BigDecimal finalPrice;
     private List<Skill> skills;
-    private List<Profile> members;
+    private List<Profile> profiles;
 
     public Project(int id, String name, String description, BigDecimal hourlyRate,
                    LocalDate startDate, LocalDate endDate,
@@ -37,7 +37,7 @@ public class Project {
     public Project(int id, String name, String description, BigDecimal hourlyRate,
                    LocalDate startDate, LocalDate endDate,
                    LocalDate estimatedDeadline, BigDecimal finalPrice, Status status,
-                   List<Skill> skills, List<Profile> members) {
+                   List<Skill> skills, List<Profile> profiles) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -48,7 +48,7 @@ public class Project {
         this.finalPrice = finalPrice;
         this.status = status;
         this.skills = skills;
-        this.members = members;
+        this.profiles = profiles;
     }
 
     public Project() {
@@ -127,11 +127,15 @@ public class Project {
         this.skills = skills;
     }
 
-    public List<Profile> getMembers() {
-        return members;
+    public List<Profile> getProfiles() {
+        return profiles;
     }
 
-    public void setMembers(List<Profile> members) {
-        this.members = members;
+    public void setProfiles(List<Profile> profiles) {
+        this.profiles = profiles;
     }
+
+    public BigDecimal getFinalPrice() {return finalPrice;}
+
+    public void setFinalPrice(BigDecimal finalPrice) {this.finalPrice = finalPrice;}
 }

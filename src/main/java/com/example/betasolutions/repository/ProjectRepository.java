@@ -28,9 +28,9 @@ public class ProjectRepository {
 
     public void createProject(Project project){
         String sql = """
-    INSERT INTO Projects (name, description, price, totalDuration,
-    startDate, endDate, estimatedDeadline, status)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO Projects (name, description, hourlyRate,
+    startDate, endDate, estimatedDeadline, finalPrice, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     """;
         jdbcTemplate.update(sql,
                 project.getName(),
@@ -39,14 +39,15 @@ public class ProjectRepository {
                 Date.valueOf(project.getStartDate()),
                 Date.valueOf(project.getEndDate()),
                 Date.valueOf(project.getEstimatedDeadline()),
+                project.getFinalPrice(),
                 project.getStatus().name().toLowerCase());
 
     }
 
     public boolean updateProject(int id, Project project) {
         String sql = """
-                UPDATE Projects SET name = ?, description = ?, price = ?,
-                startDate = ?, endDate = ?, estimatedDeadline = ?, status = ? WHERE id = ?
+                UPDATE Projects SET name = ?, description = ?, hourlyRate = ?,
+                startDate = ?, endDate = ?, estimatedDeadline = ?, finalPrice = ?, status = ? WHERE id = ?
                 """;
         jdbcTemplate.update(sql,
                 project.getName(),
@@ -55,6 +56,7 @@ public class ProjectRepository {
                 Date.valueOf(project.getStartDate()),
                 Date.valueOf(project.getEndDate()),
                 project.getEstimatedDeadline(),
+                project.getFinalPrice(),
                 project.getStatus(),
                 id);
 
