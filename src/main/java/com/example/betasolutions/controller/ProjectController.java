@@ -4,6 +4,7 @@ import com.example.betasolutions.enums.Role;
 import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Project;
 import com.example.betasolutions.service.CalculationService;
+import com.example.betasolutions.service.ProfileService;
 import com.example.betasolutions.service.ProjectService;
 import com.example.betasolutions.service.SkillService;
 import jakarta.servlet.http.HttpSession;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ProjectController {
     private final ProjectService projectService;
     private final SkillService skillService; //Skal bruges til at sætte skills på et project
+    private final ProfileService profileService;
 
-    public ProjectController(ProjectService projectService, SkillService skillService, CalculationService calculationService) {
+    public ProjectController(ProjectService projectService, SkillService skillService, ProfileService profileService) {
         this.projectService = projectService;
         this.skillService = skillService;
+        this.profileService = profileService;
     }
 
     @GetMapping("/projects")
@@ -97,6 +100,39 @@ public class ProjectController {
         projectService.deleteProject(id);
         return "redirect:/projects";
     }
+
+    @GetMapping("/projects/{projectId}/members")
+    public String showAssignProfiles(@PathVariable int projectId,
+                                     Model model,
+                                     HttpSession httpSession) {
+
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
+
+        Project project = projectService.getProjectById(projectId);
+
+        model.addAttribute("project", project);
+        model.addAttribute("profiles", profileService.getAllProfiles());
+        model.addAttribute("projectProfiles", projectService.getProfilesByProjectId(projectId));
+
+        return "projects/members";
+    }
+
+    @PostMapping("/projects/{projectId}/members/{profileId}")
+    public String addProfileToProject(@PathVariable int projectId,
+                                      @PathVariable int profileId,
+                                      HttpSession httpSession) {
+
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
+
+        projectService.addProfileToProject(projectId, profileId);
+
+        return "redirect:/projects/" + projectId + "/members";
+    }
+
     private boolean hasProfileAccess(HttpSession httpSession) {
         Profile loggedIn = (Profile) httpSession.getAttribute("profile");
         return loggedIn != null && loggedIn.getRole() != Role.JUNIOR;

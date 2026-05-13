@@ -1,6 +1,7 @@
 package com.example.betasolutions.service;
 
 import com.example.betasolutions.enums.Status;
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Project;
 import com.example.betasolutions.model.SubTask;
 import com.example.betasolutions.model.Task;
@@ -49,6 +50,12 @@ public class ProjectService {
         return projectRepository.getProjectByStatus(status);
     }
 
+    public boolean addProfileToProject(int profileId, int projectId) {
+        return projectRepository.addProfileToProject(profileId, projectId);}
+
+    public List<Profile> getProfilesByProjectId(int projectId) {
+        return projectRepository.getProfilesByProjectId(projectId);
+    }
 
     public BigDecimal getProjectDuration(int projectId) {
 

@@ -91,6 +91,26 @@ public class TaskController {
         return "redirect:/projects/" + projectId + "/tasks";
     }
 
+    @GetMapping("/projects/{projectId}/tasks/{taskId}")
+    public String getTask(@PathVariable int projectId,
+                          @PathVariable int taskId,
+                          Model model,
+                          HttpSession httpSession) {
+
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
+
+        Task task = taskService.getTaskById(taskId);
+
+        model.addAttribute("task", task);
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("profiles", taskService.getProfilesByTaskId(taskId));
+        model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
+
+        return "tasks/detail";
+    }
+
     private boolean hasProfileAccess(HttpSession httpSession) {
         Profile loggedIn = (Profile) httpSession.getAttribute("profile");
         return loggedIn != null && loggedIn.getRole() != Role.JUNIOR;

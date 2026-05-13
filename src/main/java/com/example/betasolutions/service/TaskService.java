@@ -1,5 +1,6 @@
 package com.example.betasolutions.service;
 
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.SubTask;
 import com.example.betasolutions.model.Task;
 import com.example.betasolutions.repository.SubTaskRepository;
@@ -7,6 +8,7 @@ import com.example.betasolutions.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -61,5 +63,24 @@ public class TaskService {
     public BigDecimal getTaskDuration(int taskId) {
             List<SubTask> subTasks = subTaskService.getSubTaskByTaskId(taskId);
             return calculationService.calculateTaskDuration(subTasks);
+    }
+
+    public List<Profile> getProfilesByTaskId(int taskId) {
+
+        List<SubTask> subTasks = subTaskService.getSubTaskByTaskId(taskId);
+
+        List<Profile> result = new ArrayList<>();
+
+        for (SubTask st : subTasks) {
+            List<Profile> profiles = subTaskService.getProfilesBySubTaskId(st.getId());
+
+            for (Profile p : profiles) {
+                if (!result.contains(p)) {
+                    result.add(p);
+                }
+            }
+        }
+
+        return result;
     }
 }

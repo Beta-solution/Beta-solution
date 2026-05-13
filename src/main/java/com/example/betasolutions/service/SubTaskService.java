@@ -1,5 +1,6 @@
 package com.example.betasolutions.service;
 
+import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.SubTask;
 import com.example.betasolutions.repository.SubTaskRepository;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,14 @@ public class SubTaskService {
 
     public boolean deleteSubTask(int id){
         return subTaskRepository.deleteSubTask(id);
+    }
+
+    public List<Profile> getProfilesBySubTaskId(int subTaskId) {
+        return subTaskRepository.getProfilesBySubTaskId(subTaskId);
+    }
+
+    public boolean addProfileToSubTask(int profileId, int subTaskId) {
+        return subTaskRepository.addProfileToSubTask(profileId, subTaskId);
     }
 
 }
