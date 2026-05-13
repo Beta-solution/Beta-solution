@@ -17,8 +17,8 @@ public class SubTaskRowMapper implements RowMapper<SubTask> {
                 rs.getString("description"),
                 rs.getBigDecimal("duration"),
                 Status.fromDb(rs.getString("status")),
-                rs.getDate("startDate").toLocalDate(),
-                rs.getDate("endDate").toLocalDate(),
+                rs.getDate("startDate") != null ? rs.getDate("startDate").toLocalDate() : null,
+                rs.getDate("endDate") != null ? rs.getDate("endDate").toLocalDate() : null,
                 rs.getInt("task_id")
         );
     }
