@@ -33,7 +33,7 @@ public class ProjectTemplateRepository {
 
     public int createTemplate(ProjectTemplate template) {
         String sql = """
-                INSERT INTO Project_Templates (name, description, hourlyRate, estimatedDeadlineDays)
+                INSERT INTO Project_Templates (name, description, hourlyRate, estimatedDeadline)
                 VALUES (?, ?, ?, ?)
                 """;
         jdbcTemplate.update(sql,
@@ -53,7 +53,7 @@ public class ProjectTemplateRepository {
     public boolean updateTemplate(int id, ProjectTemplate template) {
         String sql = """
                 UPDATE Project_Templates SET name = ?, description = ?,hourlyRate = ?, 
-                estimatedDeadlineDays = ? WHERE id = ?
+                estimatedDeadline = ? WHERE id = ?
                 """;
         return jdbcTemplate.update(sql,
                 template.getName(),
