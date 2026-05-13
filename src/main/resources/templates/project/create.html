@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Edit Template</title></head>
+<head><title>Create Project</title></head>
 <body>
-<h1>Edit Template</h1>
-<form th:action="@{/templates/{id}/edit(id=${template.id})}" th:object="${template}" method="post">
+<h1>Create Project</h1>
+<form th:action="@{/projects/create}" th:object="${project}" method="post">
     <label>Name: <input type="text" th:field="*{name}"/></label><br/>
     <label>Description: <input type="text" th:field="*{description}"/></label><br/>
     <label>Hourly Rate: <input type="number" step="0.01" th:field="*{hourlyRate}"/></label><br/>
-    <label>Estimated Deadline: <input type="date" th:field="*{estimatedDeadlineDays}"/></label>
-    <button type="submit">Save</button>
+    <button type="submit">Create</button>
 </form>
-<a href="/templates">Back</a>
+<a href="/projects">Back</a>
 </body>
 </html>

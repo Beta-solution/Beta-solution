@@ -1,6 +1,7 @@
 package com.example.betasolutions.repository;
 
 import com.example.betasolutions.model.Task;
+import com.example.betasolutions.repository.rowmapper.TaskRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

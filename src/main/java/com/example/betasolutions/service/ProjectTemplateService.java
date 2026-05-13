@@ -5,6 +5,7 @@ import com.example.betasolutions.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -49,7 +50,7 @@ public class ProjectTemplateService {
         projectTemplate.setName(project.getName());
         projectTemplate.setDescription(project.getDescription());
         projectTemplate.setHourlyRate(project.getHourlyRate());
-        projectTemplate.setEstimatedDeadlineDays(90);
+        projectTemplate.setEstimatedDeadlineDays(project.getEstimatedDeadline());
 
         int projectTemplateId = projectTemplateRepository.createTemplate(projectTemplate);
 

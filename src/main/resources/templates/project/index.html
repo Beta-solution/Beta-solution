@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Projects</title></head>
+<body>
+<h1>Projects</h1>
+<a href="/projects/create">Create new project</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Hourly Rate</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="project : ${projects}">
+        <td th:text="${project.id}"></td>
+        <td th:text="${project.name}"></td>
+        <td th:text="${project.description}"></td>
+        <td th:text="${project.hourlyRate}"></td>
+        <td>
+            <a th:href="@{/projects/{id}(id=${project.id})}">View</a>
+            <a th:href="@{/projects/{id}/edit(id=${project.id})}">Edit</a>
+            <a th:href="@{/projects/{id}/tasks(id=${project.id})}">Tasks</a>
+            <a th:href="@{/projects/{id}/members(id=${project.id})}">Members</a>
+            <form th:action="@{/projects/{id}/save-as-template(id=${project.id})}" method="post" style="display:inline">
+                <button type="submit">Save as Template</button>
+            </form>
+            <form th:action="@{/projects/{id}/delete(id=${project.id})}" method="post" style="display:inline">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

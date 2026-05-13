@@ -1,4 +1,4 @@
-package com.example.betasolutions.repository;
+package com.example.betasolutions.repository.rowmapper;
 
 import com.example.betasolutions.model.Skill;
 import org.springframework.jdbc.core.RowMapper;

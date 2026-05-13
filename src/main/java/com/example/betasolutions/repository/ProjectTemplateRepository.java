@@ -1,6 +1,7 @@
 package com.example.betasolutions.repository;
 
 import com.example.betasolutions.model.ProjectTemplate;
+import com.example.betasolutions.repository.rowmapper.ProjectTemplateRowMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
