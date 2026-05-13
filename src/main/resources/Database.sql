@@ -80,15 +80,6 @@ CREATE TABLE Tasks
     FOREIGN KEY (project_id) REFERENCES Projects (id)
 );
 
-CREATE TABLE Profiles_Tasks
-(
-    profile_id INT NOT NULL,
-    task_id    INT NOT NULL,
-    PRIMARY KEY (profile_id, task_id),
-    FOREIGN KEY (profile_id) REFERENCES Profiles (id),
-    FOREIGN KEY (task_id) REFERENCES Tasks (id)
-);
-
 CREATE TABLE Tasks_Skills
 (
     task_id  INT NOT NULL,
@@ -131,7 +122,7 @@ CREATE TABLE Project_Templates
     name                  VARCHAR(255)   NOT NULL,
     description           VARCHAR(255),
     hourlyRate            DECIMAL(10, 2),
-    estimatedDeadlineDays INT,
+    estimatedDeadline     DATE,
     PRIMARY KEY (id)
 );
 

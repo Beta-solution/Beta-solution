@@ -3,7 +3,7 @@ package com.example.betasolutions.controller;
 import com.example.betasolutions.enums.Role;
 import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Project;
-import com.example.betasolutions.service.CalculationService;
+import com.example.betasolutions.service.ProfileService;
 import com.example.betasolutions.service.ProjectService;
 import com.example.betasolutions.service.SkillService;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.util.List;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -38,7 +37,7 @@ class ProjectControllerTest {
     private SkillService skillService;
 
     @MockitoBean
-    private CalculationService calculationService;
+    private ProfileService profileService;
 
     private MockHttpSession authorizedSession() {
         Profile profile = new Profile();
@@ -89,7 +88,7 @@ class ProjectControllerTest {
                 .thenReturn(project);
 
         when(projectService.getProjectDuration(1))
-                .thenReturn(120);
+                .thenReturn(BigDecimal.valueOf(120));
 
         when(projectService.getEstimatedPrice(1))
                 .thenReturn(BigDecimal.valueOf(1000));
@@ -99,9 +98,8 @@ class ProjectControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("projects/detail"))
                 .andExpect(model().attribute("project", project))
-                .andExpect(model().attribute("totalDuration", 120))
-                .andExpect(model().attribute("estimatedPrice",
-                        BigDecimal.valueOf(1000)));
+                .andExpect(model().attribute("totalDuration", BigDecimal.valueOf(120)))
+                .andExpect(model().attribute("estimatedPrice", BigDecimal.valueOf(1000)));
     }
 
     @Test
@@ -121,7 +119,7 @@ class ProjectControllerTest {
                         .session(authorizedSession())
                         .param("name", "Project 1")
                         .param("description", "Description")
-                        .param("hourlyRate", "500")
+                        .param("hourlyRate", "500.00")
                         .param("startDate", "2026-01-01")
                         .param("endDate", "2026-02-01")
                         .param("estimatedDeadline", "2026-02-05"))
@@ -175,7 +173,7 @@ class ProjectControllerTest {
     void shouldRejectDeveloperAccess() throws Exception {
 
         Profile developer = new Profile();
-        developer.setRole(Role.DEVELOPER);
+        developer.setRole(Role.JUNIOR);
 
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("profile", developer);

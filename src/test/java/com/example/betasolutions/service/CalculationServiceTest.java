@@ -7,8 +7,6 @@ import com.example.betasolutions.model.Task;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,11 +15,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@ActiveProfiles("test")
-@Sql(scripts = {"/schema.sql", "/data.sql"},
-        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = "/cleanup.sql",
-        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 class CalculationServiceTest {
 
     @Autowired
@@ -37,33 +30,29 @@ class CalculationServiceTest {
                 1,
                 "SubTask 1",
                 "Description",
-                null,
-                30,
-                null,
+                BigDecimal.valueOf(30),
                 Status.IN_PROGRESS,
                 LocalDate.now(),
                 LocalDate.now(),
-                task
+                task.getId()
         );
 
         SubTask subTask2 = new SubTask(
                 2,
                 "SubTask 2",
                 "Description",
-                null,
-                45,
-                null,
+                BigDecimal.valueOf(45),
                 Status.DONE,
                 LocalDate.now(),
                 LocalDate.now(),
-                task
+                task.getId()
         );
 
-        int result = calculationService.calculateTaskDuration(
+        BigDecimal result = calculationService.calculateTaskDuration(
                 List.of(subTask1, subTask2)
         );
 
-        assertEquals(75, result);
+        assertEquals(BigDecimal.valueOf(75), result);
     }
 
     @Test
@@ -84,65 +73,51 @@ class CalculationServiceTest {
                 1,
                 "SubTask 1",
                 "Description",
-                null,
-                20,
-                null,
+                BigDecimal.valueOf(20),
                 Status.IN_PROGRESS,
                 LocalDate.now(),
                 LocalDate.now(),
-                task1
+                task1.getId()
         );
 
         SubTask subTask2 = new SubTask(
                 2,
                 "SubTask 2",
                 "Description",
-                null,
-                40,
-                null,
+                BigDecimal.valueOf(40),
                 Status.DONE,
                 LocalDate.now(),
                 LocalDate.now(),
-                task1
+                task1.getId()
         );
 
         SubTask subTask3 = new SubTask(
                 3,
                 "SubTask 3",
                 "Description",
-                null,
-                15,
-                null,
+                BigDecimal.valueOf(15),
                 Status.TODO,
                 LocalDate.now(),
                 LocalDate.now(),
-                task2
+                task2.getId()
         );
 
-        int result = calculationService.calculateProjectDuration(
+        BigDecimal result = calculationService.calculateProjectDuration(
                 List.of(task1, task2),
                 List.of(subTask1, subTask2, subTask3)
         );
 
-        assertEquals(75, result);
-    }
-
-    @Test
-    void shouldConvertMinutesToHours() {
-
-        BigDecimal result = calculationService.durationToHours(90);
-
-        assertEquals(BigDecimal.valueOf(1.5), result);
+        assertEquals(BigDecimal.valueOf(75), result);
     }
 
     @Test
     void shouldCalculateEstimatedPrice() {
 
         BigDecimal result = calculationService.calculateEstimatedPrice(
-                120,
+                BigDecimal.valueOf(120),
                 BigDecimal.valueOf(500)
         );
 
-        assertEquals(BigDecimal.valueOf(1000.0), result);
+        assertEquals(BigDecimal.valueOf(60000), result);
     }
 }
