@@ -13,7 +13,7 @@ public class ProjectTemplateRowMapper implements RowMapper<ProjectTemplate> {
                 rs.getString("name"),
                 rs.getString("description"),
                 rs.getBigDecimal("hourlyRate"),
-                rs.getDate("estimatedDeadline").toLocalDate()
+                rs.getDate("estimatedDeadline") != null ? rs.getDate("estimatedDeadline").toLocalDate() : null
         );
     }
 }

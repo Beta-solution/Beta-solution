@@ -86,10 +86,10 @@ public class ProfileRepository {
     public boolean deleteProfile(int profileId){
         getProfileById(profileId);
 
+        jdbcTemplate.update("DELETE FROM Sub_Tasks_Skills WHERE sub_task_id IN (SELECT id FROM Sub_Tasks WHERE profile_id = ?)", profileId);
+        jdbcTemplate.update("UPDATE Sub_Tasks SET profile_id = NULL WHERE profile_id = ?", profileId);
         jdbcTemplate.update("DELETE FROM Profiles_Skills WHERE profile_id = ?", profileId);
         jdbcTemplate.update("DELETE FROM Profiles_Projects WHERE profile_id = ?", profileId);
-        jdbcTemplate.update("DELETE FROM Profiles_Tasks WHERE profile_id = ?", profileId);
-        jdbcTemplate.update("DELETE FROM Profiles_Sub_Tasks WHERE profile_id = ?", profileId);
 
         jdbcTemplate.update("DELETE FROM Profiles WHERE id = ?", profileId);
         return true;
