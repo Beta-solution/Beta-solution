@@ -1,18 +1,11 @@
-DROP TABLE IF EXISTS Sub_Tasks_Skills;
-DROP TABLE IF EXISTS Profiles_Sub_Tasks;
-DROP TABLE IF EXISTS Sub_Tasks;
-DROP TABLE IF EXISTS Tasks_Skills;
-DROP TABLE IF EXISTS Profiles_Tasks;
-DROP TABLE IF EXISTS Tasks;
-DROP TABLE IF EXISTS Project_Skills;
-DROP TABLE IF EXISTS Profiles_Projects;
-DROP TABLE IF EXISTS Projects;
-DROP TABLE IF EXISTS Profiles_Skills;
-DROP TABLE IF EXISTS Profiles;
-DROP TABLE IF EXISTS Skills;
-DROP TABLE IF EXISTS Sub_Task_Templates;
-DROP TABLE IF EXISTS Task_Templates;
-DROP TABLE IF EXISTS Project_Templates;
+DROP
+DATABASE IF EXISTS betasolutions;
+
+CREATE
+DATABASE betasolutions;
+
+USE
+betasolutions;
 
 CREATE TABLE Skills
 (
@@ -87,15 +80,6 @@ CREATE TABLE Tasks
     FOREIGN KEY (project_id) REFERENCES Projects (id)
 );
 
-CREATE TABLE Profiles_Tasks
-(
-    profile_id INT NOT NULL,
-    task_id    INT NOT NULL,
-    PRIMARY KEY (profile_id, task_id),
-    FOREIGN KEY (profile_id) REFERENCES Profiles (id),
-    FOREIGN KEY (task_id) REFERENCES Tasks (id)
-);
-
 CREATE TABLE Tasks_Skills
 (
     task_id  INT NOT NULL,
@@ -111,22 +95,15 @@ CREATE TABLE Sub_Tasks
     id          INT NOT NULL AUTO_INCREMENT,
     name        VARCHAR(255),
     description VARCHAR(255),
-    duration    INT,
+    duration    DECIMAL(5,2),
     status      VARCHAR(50),
     startDate   DATE,
     endDate     DATE,
     task_id     INT,
+    profile_id  INT,
     PRIMARY KEY (id),
-    FOREIGN KEY (task_id) REFERENCES Tasks (id)
-);
-
-CREATE TABLE Profiles_Sub_Tasks
-(
-    profile_id  INT NOT NULL,
-    sub_task_id INT NOT NULL,
-    PRIMARY KEY (profile_id, sub_task_id),
-    FOREIGN KEY (profile_id) REFERENCES Profiles (id),
-    FOREIGN KEY (sub_task_id) REFERENCES Sub_Tasks (id)
+    FOREIGN KEY (task_id) REFERENCES Tasks (id),
+    FOREIGN KEY (profile_id) REFERENCES Profiles(id)
 );
 
 CREATE TABLE Sub_Tasks_Skills
@@ -145,7 +122,7 @@ CREATE TABLE Project_Templates
     name                  VARCHAR(255)   NOT NULL,
     description           VARCHAR(255),
     hourlyRate            DECIMAL(10, 2),
-    estimatedDeadlineDays INT,
+    estimatedDeadline     DATE,
     PRIMARY KEY (id)
 );
 
@@ -154,7 +131,6 @@ CREATE TABLE Task_Templates
     id                  INT          NOT NULL AUTO_INCREMENT,
     name                VARCHAR(255),
     description         VARCHAR(255),
-    duration            DECIMAL(5, 2),
     project_template_id INT          NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (project_template_id) REFERENCES Project_Templates (id)
