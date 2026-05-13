@@ -2,15 +2,16 @@ package com.example.betasolutions.controller;
 
 import com.example.betasolutions.enums.Role;
 import com.example.betasolutions.model.Profile;
+import com.example.betasolutions.model.Skill;
 import com.example.betasolutions.service.ProfileService;
 import com.example.betasolutions.service.SkillService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -48,14 +49,20 @@ public class ProfileController {
             return "redirect:/unauthorized";
         }
         model.addAttribute("profileForm", new Profile());
+        model.addAttribute("skillForm", skillService.getAllSkill());
         model.addAttribute("isOwner", isOwner(httpSession));
         return "profiles/form";
     }
 
     @PostMapping("/profiles/create")
-    public String createProfile(@ModelAttribute Profile profile, HttpSession httpSession){
+    public String createProfile(@ModelAttribute Profile profile, @RequestParam(required = false) List<Integer> skillIds, HttpSession httpSession){
         if (!hasProfileAccess(httpSession)) {
             return "redirect:/unauthorized";
+        }
+
+        if (skillIds != null) {
+            List<Skill> skills = skillIds.stream().map(skillService::getSkillById).toList();
+            profile.setSkills(skills);
         }
 
         if(profile.getRole() == Role.SENIOR && !isOwner(httpSession)){
@@ -72,14 +79,21 @@ public class ProfileController {
             return "redirect:/unauthorized";
         }
         model.addAttribute("profileEdit", profileService.getProfileById(id));
+        model.addAttribute("skills", skillService.getAllSkill());
         return "profiles/edit";
     }
 
     @PostMapping("/profiles/{id}/edit")
-    public String updateProfile(@PathVariable int id, @ModelAttribute Profile profile, HttpSession httpSession){
+    public String updateProfile(@PathVariable int id, @RequestParam(required = false) List<Integer> skillIds,  @ModelAttribute Profile profile, HttpSession httpSession){
         if (!hasProfileAccess(httpSession)) {
             return "redirect:/unauthorized";
         }
+
+        if (skillIds != null) {
+            List<Skill> skills = skillIds.stream().map(skillService::getSkillById).toList();
+            profile.setSkills(skills);
+        }
+
         profileService.updateProfile(profile, id);
         return "redirect:/profiles";
     }
