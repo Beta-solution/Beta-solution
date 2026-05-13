@@ -69,7 +69,7 @@ public class ProjectTemplateService {
                 SubTaskTemplate subTaskTemplate = new SubTaskTemplate();
                 subTaskTemplate.setName(subTask.getName());
                 subTaskTemplate.setDescription(subTask.getDescription());
-                subTaskTemplate.setDuration(new BigDecimal(subTask.getDuration()));
+                subTaskTemplate.setDuration(subTask.getDuration());
                 subTaskTemplate.setTaskTemplateId(taskTemplateId);
 
                 subTaskTemplateRepository.createSubTaskTemplate(subTaskTemplate);
