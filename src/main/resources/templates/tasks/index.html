@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Tasks</title></head>
+<body>
+<h1>Tasks</h1>
+<a th:href="@{/projects/{id}/tasks/create(id=${projectId})}">Create new task</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Duration</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.id}"></td>
+        <td th:text="${task.name}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.duration}"></td>
+        <td>
+            <a th:href="@{/projects/{projectId}/tasks/{id}(projectId=${projectId},id=${task.id})}">View</a>
+            <a th:href="@{/projects/{projectId}/tasks/{id}/edit(projectId=${projectId},id=${task.id})}">Edit</a>
+            <a th:href="@{/tasks/{id}/subtasks(id=${task.id})}">Subtasks</a>
+            <form th:action="@{/projects/{projectId}/tasks/{id}/delete(projectId=${projectId},id=${task.id})}" method="post" style="display:inline">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/projects/{id}(id=${projectId})}">Back</a>
+</body>
+</html>

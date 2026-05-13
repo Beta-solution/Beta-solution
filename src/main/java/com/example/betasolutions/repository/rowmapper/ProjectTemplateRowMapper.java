@@ -1,4 +1,4 @@
-package com.example.betasolutions.repository;
+package com.example.betasolutions.repository.rowmapper;
 
 import com.example.betasolutions.model.ProjectTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,7 +13,7 @@ public class ProjectTemplateRowMapper implements RowMapper<ProjectTemplate> {
                 rs.getString("name"),
                 rs.getString("description"),
                 rs.getBigDecimal("hourlyRate"),
-                rs.getInt("estimatedDeadlineDays")
+                rs.getDate("estimatedDeadlineDays").toLocalDate()
         );
     }
 }

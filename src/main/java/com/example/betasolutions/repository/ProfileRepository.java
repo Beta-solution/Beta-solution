@@ -3,6 +3,7 @@ package com.example.betasolutions.repository;
 import com.example.betasolutions.exception.InvalidProfileException;
 import com.example.betasolutions.exception.ProfileNotFoundException;
 import com.example.betasolutions.model.Profile;
+import com.example.betasolutions.repository.rowmapper.ProfileRowMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

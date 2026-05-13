@@ -1,7 +1,7 @@
 package com.example.betasolutions.repository;
 
-import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.SubTask;
+import com.example.betasolutions.repository.rowmapper.SubTaskRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

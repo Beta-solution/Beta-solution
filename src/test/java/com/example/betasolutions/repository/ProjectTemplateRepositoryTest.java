@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,7 +40,7 @@ public class ProjectTemplateRepositoryTest {
     void getTemplateById_TemplateExists_ReturnsTemplate() {
         ProjectTemplate result = projectTemplateRepository.getTemplateById(1);
         assertEquals("Betalingsløsning", result.getName());
-        assertEquals(90, result.getEstimatedDeadlineDays());
+        assertEquals(LocalDate.of(2026, 3, 31), result.getEstimatedDeadlineDays());;
     }
 
     @Test
@@ -55,7 +56,7 @@ public class ProjectTemplateRepositoryTest {
         template.setName("Ny skabelon");
         template.setDescription("Beskrivelse");
         template.setHourlyRate(new BigDecimal("750.00"));
-        template.setEstimatedDeadlineDays(60);
+        template.setEstimatedDeadlineDays(LocalDate.of(2026, 6, 1));
 
         int id = projectTemplateRepository.createTemplate(template);
 
@@ -69,13 +70,13 @@ public class ProjectTemplateRepositoryTest {
         template.setName("Ny skabelon");
         template.setDescription("Beskrivelse");
         template.setHourlyRate(new BigDecimal("750.00"));
-        template.setEstimatedDeadlineDays(60);
+        template.setEstimatedDeadlineDays(LocalDate.of(2026, 6, 1));
 
         int id = projectTemplateRepository.createTemplate(template);
         ProjectTemplate saved = projectTemplateRepository.getTemplateById(id);
 
         assertEquals("Ny skabelon", saved.getName());
-        assertEquals(60, saved.getEstimatedDeadlineDays());
+        assertEquals(LocalDate.of(2026, 6, 1), saved.getEstimatedDeadlineDays());
     }
 
     // -------------------- updateTemplate --------------------
@@ -86,7 +87,7 @@ public class ProjectTemplateRepositoryTest {
         updated.setName("Opdateret skabelon");
         updated.setDescription("Ny beskrivelse");
         updated.setHourlyRate(new BigDecimal("800.00"));
-        updated.setEstimatedDeadlineDays(45);
+        updated.setEstimatedDeadlineDays(LocalDate.of(2026, 6, 1));
 
         boolean result = projectTemplateRepository.updateTemplate(1, updated);
 
@@ -100,7 +101,7 @@ public class ProjectTemplateRepositoryTest {
         updated.setName("Opdateret skabelon");
         updated.setDescription("Ny beskrivelse");
         updated.setHourlyRate(new BigDecimal("800.00"));
-        updated.setEstimatedDeadlineDays(45);
+        updated.setEstimatedDeadlineDays(LocalDate.of(2026, 6, 1));
 
         boolean result = projectTemplateRepository.updateTemplate(999, updated);
 

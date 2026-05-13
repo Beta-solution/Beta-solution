@@ -1,6 +1,7 @@
 package com.example.betasolutions.repository;
 
 import com.example.betasolutions.model.TaskTemplate;
+import com.example.betasolutions.repository.rowmapper.TaskTemplateRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +29,6 @@ public class TaskTemplateRepository {
         jdbcTemplate.update(sql,
                 template.getName(),
                 template.getDescription(),
-                template.getDuration(),
                 template.getProjectTemplateId());
 
         return jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
