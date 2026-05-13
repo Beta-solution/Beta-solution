@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Edit Template</title></head>
+<body>
+<h1>Edit Template</h1>
+<form th:action="@{/templates/{id}/edit(id=${template.id})}" th:object="${template}" method="post">
+    <label>Name: <input type="text" th:field="*{name}"/></label><br/>
+    <label>Description: <input type="text" th:field="*{description}"/></label><br/>
+    <label>Hourly Rate: <input type="number" step="0.01" th:field="*{hourlyRate}"/></label><br/>
+    <label>Estimated Deadline (days): <input type="number" th:field="*{estimatedDeadlineDays}"/></label><br/>
+    <button type="submit">Save</button>
+</form>
+<a href="/templates">Back</a>
+</body>
+</html>

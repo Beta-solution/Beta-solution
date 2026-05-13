@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Templates</title></head>
+<body>
+<h1>Templates</h1>
+<a href="/projects">Back</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Hourly Rate</th>
+        <th>Estimated Deadline (days)</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="template : ${templates}">
+        <td th:text="${template.id}"></td>
+        <td th:text="${template.name}"></td>
+        <td th:text="${template.description}"></td>
+        <td th:text="${template.hourlyRate}"></td>
+        <td th:text="${template.estimatedDeadlineDays}"></td>
+        <td>
+            <a th:href="@{/templates/{id}(id=${template.id})}">View</a>
+            <a th:href="@{/templates/{id}/edit(id=${template.id})}">Edit</a>
+            <form th:action="@{/templates/{id}/delete(id=${template.id})}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -124,3 +124,35 @@ CREATE TABLE Sub_Tasks_Skills
     FOREIGN KEY (sub_task_id) REFERENCES Sub_Tasks (id),
     FOREIGN KEY (skill_id) REFERENCES Skills (id)
 );
+
+CREATE TABLE Project_Templates
+(
+    id                    INT            NOT NULL AUTO_INCREMENT,
+    name                  VARCHAR(255)   NOT NULL,
+    description           VARCHAR(255),
+    hourlyRate            DECIMAL(10, 2),
+    estimatedDeadlineDays INT,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE Task_Templates
+(
+    id                  INT          NOT NULL AUTO_INCREMENT,
+    name                VARCHAR(255),
+    description         VARCHAR(255),
+    duration            DECIMAL(5, 2),
+    project_template_id INT          NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (project_template_id) REFERENCES Project_Templates (id)
+);
+
+CREATE TABLE Sub_Task_Templates
+(
+    id               INT          NOT NULL AUTO_INCREMENT,
+    name             VARCHAR(255),
+    description      VARCHAR(255),
+    duration         DECIMAL(5, 2),
+    task_template_id INT          NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (task_template_id) REFERENCES Task_Templates (id)
+);

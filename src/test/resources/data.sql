@@ -131,3 +131,17 @@ INSERT INTO Sub_Tasks_Skills (sub_task_id, skill_id, quantity)
 VALUES (1, 1, 1),
        (2, 2, 1),
        (3, 3, 1);
+
+INSERT INTO Project_Templates (name, description, hourlyRate, estimatedDeadlineDays)
+VALUES ('Betalingsløsning', 'Standard betalingsløsning', 500.00, 90),
+       ('Webshop', 'Standard webshop', 600.00, 120);
+
+INSERT INTO Task_Templates (name, description, duration, project_template_id)
+VALUES ('Frontend', 'Lav frontend', 10.00, 1),
+       ('Backend', 'Lav backend', 20.00, 1),
+       ('Database', 'Lav database', 5.00, 2);
+
+INSERT INTO Sub_Task_Templates (name, description, duration, task_template_id)
+VALUES ('Design', 'Lav design', 3.00, 1),
+       ('Implementer', 'Implementer frontend', 7.00, 1),
+       ('API', 'Lav API', 20.00, 2);
