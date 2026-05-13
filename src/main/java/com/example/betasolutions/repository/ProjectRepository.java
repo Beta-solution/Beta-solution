@@ -81,14 +81,8 @@ public class ProjectRepository {
                 projectId) > 0;
     }
 
-    public List<Profile> getProfilesByProjectId(int projectId) {
-        String sql = """
-        SELECT p.*
-        FROM Profiles p
-        JOIN Profiles_Projects pp ON p.id = pp.profile_id
-        WHERE pp.project_id = ?
-    """;
-
-        return jdbcTemplate.query(sql, new ProfileRowMapper(), projectId);
+    public boolean removeProfileFromProject(int profileId, int projectId) {
+        String sql = "DELETE FROM Profiles_Projects WHERE profile_id = ? AND project_id = ?";
+        return jdbcTemplate.update(sql, profileId, projectId) > 0;
     }
 }

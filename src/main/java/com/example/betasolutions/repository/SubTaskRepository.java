@@ -77,14 +77,8 @@ public class SubTaskRepository {
         return jdbcTemplate.update(sql, profileId, subTaskId) > 0;
     }
 
-    public List<Profile> getProfilesBySubTaskId(int subTaskId) {
-        String sql = """
-        SELECT p.*
-        FROM Profiles p
-        JOIN Profiles_Sub_Tasks pst ON p.id = pst.profile_id
-        WHERE pst.sub_task_id = ?
-    """;
-
-        return jdbcTemplate.query(sql, new ProfileRowMapper(), subTaskId);
+    public boolean removeProfileFromSubTask(int profileId, int subTaskId) {
+        String sql = "DELETE FROM Profiles_Sub_Tasks WHERE profile_id = ? AND sub_task_id = ?";
+        return jdbcTemplate.update(sql, profileId, subTaskId) > 0;
     }
 }

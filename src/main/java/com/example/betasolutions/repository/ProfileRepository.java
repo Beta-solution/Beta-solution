@@ -113,4 +113,54 @@ public class ProfileRepository {
             throw new InvalidProfileException("Role cannot be null");
         }
     }
+
+    public List<Profile> getProfilesByProjectId(int projectId) {
+        String sql = """
+        SELECT p.*
+        FROM Profiles p
+        JOIN Profiles_Projects pp ON p.id = pp.profile_id
+        WHERE pp.project_id = ?
+    """;
+
+        return jdbcTemplate.query(sql, new ProfileRowMapper(), projectId);
+    }
+
+    public List<Profile> getProfilesNotInProject(int projectId) {
+        String sql = """
+        SELECT *
+        FROM Profiles
+        WHERE id NOT IN (
+            SELECT profile_id
+            FROM Profiles_Projects
+            WHERE project_id = ?
+        )
+    """;
+
+        return jdbcTemplate.query(sql, new ProfileRowMapper(), projectId);
+    }
+
+    public List<Profile> getProfilesBySubTaskId(int subTaskId) {
+        String sql = """
+        SELECT p.*
+        FROM Profiles p
+        JOIN Profiles_Sub_Tasks pst ON p.id = pst.profile_id
+        WHERE pst.sub_task_id = ?
+    """;
+
+        return jdbcTemplate.query(sql, new ProfileRowMapper(), subTaskId);
+    }
+
+    public List<Profile> getProfilesNotInSubTask(int subTaskId) {
+        String sql = """
+        SELECT *
+        FROM Profiles
+        WHERE id NOT IN (
+            SELECT profile_id
+            FROM Profiles_Sub_Tasks
+            WHERE sub_task_id = ?
+        )
+    """;
+
+        return jdbcTemplate.query(sql, new ProfileRowMapper(), subTaskId);
+    }
 }

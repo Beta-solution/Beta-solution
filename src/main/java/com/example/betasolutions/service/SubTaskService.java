@@ -39,12 +39,12 @@ public class SubTaskService {
         return subTaskRepository.deleteSubTask(id);
     }
 
-    public List<Profile> getProfilesBySubTaskId(int subTaskId) {
-        return subTaskRepository.getProfilesBySubTaskId(subTaskId);
-    }
-
     public boolean addProfileToSubTask(int profileId, int subTaskId) {
         return subTaskRepository.addProfileToSubTask(profileId, subTaskId);
+    }
+
+    public boolean removeProfileFromSubTask(int profileId, int subTaskId) {
+        return subTaskRepository.removeProfileFromSubTask(profileId, subTaskId);
     }
 
 }

@@ -4,6 +4,7 @@ import com.example.betasolutions.enums.Role;
 import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.SubTask;
 import com.example.betasolutions.service.ProfileService;
+import com.example.betasolutions.service.ProjectService;
 import com.example.betasolutions.service.SkillService;
 import com.example.betasolutions.service.SubTaskService;
 import jakarta.servlet.http.HttpSession;
@@ -19,11 +20,13 @@ public class SubTaskController {
     private final SubTaskService subTaskService;
     private final SkillService skillService;
     private final ProfileService profileService;
+    private final ProjectService projectService;
 
-    public SubTaskController(SubTaskService subTaskService, SkillService skillService, ProfileService profileService) {
+    public SubTaskController(SubTaskService subTaskService, SkillService skillService, ProfileService profileService, ProjectService projectService) {
         this.subTaskService = subTaskService;
         this.skillService = skillService;
         this.profileService = profileService;
+        this.projectService = projectService;
     }
 
     @GetMapping("/tasks/{taskId}/subtasks")
@@ -126,9 +129,8 @@ public class SubTaskController {
         }
 
         model.addAttribute("subTask", subTaskService.getSubTaskById(subTaskId));
-        model.addAttribute("profiles", profileService.getAllProfiles());
-        model.addAttribute("assignedProfiles",
-                subTaskService.getProfilesBySubTaskId(subTaskId));
+        model.addAttribute("profiles", profileService.getAvailableProfilesForSubTask(subTaskId));
+        model.addAttribute("assignedProfiles", profileService.getProfilesBySubTaskId(subTaskId));
 
         return "subtasks/members";
     }
@@ -143,6 +145,20 @@ public class SubTaskController {
         }
 
         subTaskService.addProfileToSubTask(profileId, subTaskId);
+
+        return "redirect:/subtasks/" + subTaskId + "/members";
+    }
+
+    @PostMapping("/subtasks/{subTaskId}/members/{profileId}/remove")
+    public String removeProfileFromSubTask(@PathVariable int subTaskId,
+                                           @PathVariable int profileId,
+                                           HttpSession httpSession) {
+
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
+
+        subTaskService.removeProfileFromSubTask(profileId, subTaskId);
 
         return "redirect:/subtasks/" + subTaskId + "/members";
     }

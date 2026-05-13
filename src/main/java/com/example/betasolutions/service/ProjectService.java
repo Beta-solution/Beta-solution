@@ -51,10 +51,11 @@ public class ProjectService {
     }
 
     public boolean addProfileToProject(int profileId, int projectId) {
-        return projectRepository.addProfileToProject(profileId, projectId);}
+        return projectRepository.addProfileToProject(profileId, projectId);
+    }
 
-    public List<Profile> getProfilesByProjectId(int projectId) {
-        return projectRepository.getProfilesByProjectId(projectId);
+    public boolean removeProfileFromProject(int profileId, int projectId) {
+        return projectRepository.removeProfileFromProject(profileId, projectId);
     }
 
     public BigDecimal getProjectDuration(int projectId) {

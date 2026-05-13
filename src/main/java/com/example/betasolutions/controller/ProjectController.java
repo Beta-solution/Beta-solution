@@ -113,8 +113,8 @@ public class ProjectController {
         Project project = projectService.getProjectById(projectId);
 
         model.addAttribute("project", project);
-        model.addAttribute("profiles", profileService.getAllProfiles());
-        model.addAttribute("projectProfiles", projectService.getProfilesByProjectId(projectId));
+        model.addAttribute("profiles", profileService.getAvailableProfilesForProject(projectId));
+        model.addAttribute("projectProfiles", profileService.getProfilesByProjectId(projectId));
 
         return "projects/members";
     }
@@ -129,6 +129,20 @@ public class ProjectController {
         }
 
         projectService.addProfileToProject(projectId, profileId);
+
+        return "redirect:/projects/" + projectId + "/members";
+    }
+
+    @PostMapping("/projects/{projectId}/members/{profileId}/remove")
+    public String removeProfileFromProject(@PathVariable int projectId,
+                                           @PathVariable int profileId,
+                                           HttpSession httpSession) {
+
+        if (!hasProfileAccess(httpSession)) {
+            return "redirect:/unauthorized";
+        }
+
+        projectService.removeProfileFromProject(profileId, projectId);
 
         return "redirect:/projects/" + projectId + "/members";
     }

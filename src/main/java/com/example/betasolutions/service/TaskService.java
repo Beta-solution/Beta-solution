@@ -17,13 +17,15 @@ public class TaskService {
     private final SubTaskRepository subTaskRepository;
     private final SubTaskService subTaskService;
     private final CalculationService calculationService;
+    private final ProfileService profileService;
 
     public TaskService(TaskRepository taskRepository, SubTaskRepository subTaskRepository,
-                       SubTaskService subTaskService, CalculationService calculationService){
+                       SubTaskService subTaskService, CalculationService calculationService, ProfileService profileService){
         this.taskRepository=taskRepository;
         this.subTaskRepository = subTaskRepository;
         this.subTaskService = subTaskService;
         this.calculationService = calculationService;
+        this.profileService = profileService;
     }
 
     public List<Task> getAllTask(){
@@ -72,7 +74,7 @@ public class TaskService {
         List<Profile> result = new ArrayList<>();
 
         for (SubTask st : subTasks) {
-            List<Profile> profiles = subTaskService.getProfilesBySubTaskId(st.getId());
+            List<Profile> profiles = profileService.getProfilesBySubTaskId(st.getId());
 
             for (Profile p : profiles) {
                 if (!result.contains(p)) {
