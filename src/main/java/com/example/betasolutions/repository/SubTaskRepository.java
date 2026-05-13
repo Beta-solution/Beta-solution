@@ -22,20 +22,20 @@ public class SubTaskRepository {
     }
 
     public SubTask getSubTaskById(int id){
-        String sql = "SELECT * FROM Sub_Task WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new SubTaskRowMapper());
+        String sql = "SELECT * FROM Sub_Tasks WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new SubTaskRowMapper(), id);
     }
 
     public List<SubTask> getSubTaskByTaskId(int taskId){
-        String sql = "SELECT * FROM Sub_Task WHERE id = ?";
+        String sql = "SELECT * FROM Sub_Tasks WHERE id = ?";
         return jdbcTemplate.query(sql, new SubTaskRowMapper(), taskId);
     }
 
     public void createSubTask(SubTask subTask, int taskId){
         String sql = """
                 INSERT INTO Sub_Tasks (name, description, duration, status,
-                startDate, endDate, task_id) VALUES (?, ?, ?, ?, ?, ?)
-                """;
+                startDate, endDate, task_id) VALUES (?, ?, ?, ?, ?, ?, ?)
+        """;
 
         jdbcTemplate.update(sql,
                 subTask.getName(),
@@ -54,20 +54,18 @@ public class SubTaskRepository {
                 startDate = ?, endDate = ? WHERE id = ?
                 """;
 
-        jdbcTemplate.update(sql,
+        return jdbcTemplate.update(sql,
                 subTask.getName(),
                 subTask.getDescription(),
                 subTask.getDuration(),
                 subTask.getStatus(),
                 Date.valueOf(subTask.getStartDate()),
                 Date.valueOf(subTask.getEndDate()),
-                id);
-
-        return jdbcTemplate.update(sql, subTask.getName(), id) > 0;
+                id) > 0;
     }
 
     public boolean deleteSubTask(int id){
-        String sql = "DELETE FROM subtask WHERE id = ?";
+        String sql = "DELETE FROM Sub_Tasks WHERE id = ?";
         return jdbcTemplate.update(sql, id) > 0;
     }
 

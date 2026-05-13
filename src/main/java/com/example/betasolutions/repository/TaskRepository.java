@@ -20,9 +20,10 @@ public class TaskRepository {
         String sql = "SELECT * FROM Tasks";
         return jdbcTemplate.query(sql, new TaskRowMapper());
     }
+
     public Task getTaskById(int id){
         String sql = "SELECT * FROM Tasks WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new TaskRowMapper());
+        return jdbcTemplate.queryForObject(sql, new TaskRowMapper(), id);
     }
 
     public List<Task> getTaskByProjectId(int projectId){
@@ -50,15 +51,13 @@ public class TaskRepository {
                 startDate = ?, endDate = ? WHERE id = ?
                 """;
 
-        jdbcTemplate.update(sql,
+        return jdbcTemplate.update(sql,
                 task.getName(),
                 task.getDescription(),
                 task.getStatus(),
                 Date.valueOf(task.getStartDate()),
                 Date.valueOf(task.getEndDate()),
-                id);
-
-        return jdbcTemplate.update(sql, task.getName(), id) > 0;
+                id) > 0;
     }
 
     public boolean deleteTask(int id){
