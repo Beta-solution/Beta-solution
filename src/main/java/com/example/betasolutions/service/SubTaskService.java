@@ -27,8 +27,8 @@ public class SubTaskService {
         return subTaskRepository.getSubTaskByTaskId(taskId);
     }
 
-    public void createSubTask(SubTask subTask, int taskId){
-        subTaskRepository.createSubTask(subTask, taskId);
+    public boolean createSubTask(SubTask subTask, int taskId){
+        return subTaskRepository.createSubTask(subTask, taskId);
     }
 
     public boolean updateSubTask(int id, SubTask subtask){

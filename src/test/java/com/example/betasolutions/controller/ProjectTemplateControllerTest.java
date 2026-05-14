@@ -161,7 +161,7 @@ class ProjectTemplateControllerTest {
                         .param("name", "Opdateret skabelon")
                         .param("description", "Ny beskrivelse")
                         .param("hourlyRate", "800")
-                        .param("estimatedDeadlineDays", "45"))
+                        .param("estimatedDeadlineDays", "2026-06-01"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/templates"));
 

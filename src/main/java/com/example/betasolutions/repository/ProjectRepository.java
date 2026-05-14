@@ -1,8 +1,10 @@
 package com.example.betasolutions.repository;
 
 import com.example.betasolutions.enums.Status;
+import com.example.betasolutions.exception.ProjectNotFoundException;
 import com.example.betasolutions.model.Project;
 import com.example.betasolutions.repository.rowmapper.ProjectRowMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -24,8 +26,12 @@ public class ProjectRepository {
 
     public Project getProjectById(int id){
         String sql = "SELECT * FROM Projects WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ProjectRowMapper());
-    }
+            try {
+                return jdbcTemplate.queryForObject(sql, new ProjectRowMapper(), id);
+            } catch (EmptyResultDataAccessException e) {
+                throw new ProjectNotFoundException("Project with id " + id + " not found");
+            }
+        }
 
     public void createProject(Project project){
         String sql = """
@@ -37,11 +43,11 @@ public class ProjectRepository {
                 project.getName(),
                 project.getDescription(),
                 project.getHourlyRate(),
-                Date.valueOf(project.getStartDate()),
-                Date.valueOf(project.getEndDate()),
-                Date.valueOf(project.getEstimatedDeadline()),
+                project.getStartDate() != null ? Date.valueOf(project.getStartDate()) : null,
+                project.getEndDate() != null ? Date.valueOf(project.getEndDate()) : null,
+                project.getEstimatedDeadline() != null ? Date.valueOf(project.getEstimatedDeadline()) : null,
                 project.getFinalPrice(),
-                project.getStatus().name().toLowerCase());
+                project.getStatus() != null ? project.getStatus().name().toLowerCase() : "todo");
 
     }
 
@@ -50,28 +56,33 @@ public class ProjectRepository {
                 UPDATE Projects SET name = ?, description = ?, hourlyRate = ?,
                 startDate = ?, endDate = ?, estimatedDeadline = ?, finalPrice = ?, status = ? WHERE id = ?
                 """;
-        jdbcTemplate.update(sql,
+        int rows = jdbcTemplate.update(sql,
                 project.getName(),
                 project.getDescription(),
                 project.getHourlyRate(),
-                Date.valueOf(project.getStartDate()),
-                Date.valueOf(project.getEndDate()),
-                project.getEstimatedDeadline(),
+                project.getStartDate() != null ? Date.valueOf(project.getStartDate()) : null,
+                project.getEndDate() != null ? Date.valueOf(project.getEndDate()) : null,
+                project.getEstimatedDeadline() != null ? Date.valueOf(project.getEstimatedDeadline()) : null,
                 project.getFinalPrice(),
-                project.getStatus(),
+                project.getStatus() != null ? project.getStatus().name() : null,
                 id);
-
-        return jdbcTemplate.update(sql, project.getName(), id) > 0;
+        if (rows == 0) throw new ProjectNotFoundException("Project with id " + id + " not found");
+        return rows > 0;
     }
 
     public boolean deleteProject(int id){
-        String sql = "DELETE FROM projects WHERE id = ?";
-        return jdbcTemplate.update(sql, id) > 0;
+        jdbcTemplate.update("DELETE FROM Sub_Tasks_Skills WHERE sub_task_id IN (SELECT id FROM Sub_Tasks WHERE task_id IN (SELECT id FROM Tasks WHERE project_id = ?))", id);
+        jdbcTemplate.update("DELETE FROM Sub_Tasks WHERE task_id IN (SELECT id FROM Tasks WHERE project_id = ?)", id);
+        jdbcTemplate.update("DELETE FROM Tasks_Skills WHERE task_id IN (SELECT id FROM Tasks WHERE project_id = ?)", id);
+        jdbcTemplate.update("DELETE FROM Tasks WHERE project_id = ?", id);
+        jdbcTemplate.update("DELETE FROM Project_Skills WHERE project_id = ?", id);
+        jdbcTemplate.update("DELETE FROM Profiles_Projects WHERE project_id = ?", id);
+        return jdbcTemplate.update("DELETE FROM Projects WHERE id = ?", id) > 0;
     }
 
     public List<Project> getProjectByStatus(Status status){
         String sql = "SELECT * FROM Projects WHERE status = ?";
-        return jdbcTemplate.query(sql, new Object[]{status}, new ProjectRowMapper());
+        return jdbcTemplate.query(sql, new ProjectRowMapper(), status.name());
     }
 
     public boolean addProfileToProject(int profileId, int projectId) {

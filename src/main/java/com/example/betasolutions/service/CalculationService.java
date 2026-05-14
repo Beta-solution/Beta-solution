@@ -27,7 +27,7 @@ public class CalculationService {
 
             BigDecimal taskTotal = calculateTaskDuration(
                     allSubTasks.stream()
-                            .filter(st -> st.getTask().getId() == task.getId())
+                            .filter(st -> st.getTaskId() == task.getId())
                             .toList()
             );
 

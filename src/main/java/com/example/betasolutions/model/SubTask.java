@@ -16,6 +16,8 @@ public class SubTask {
     private LocalDate startDate;
     private LocalDate endDate;
     private Task task;
+    private int taskId;
+
 
     public SubTask(int id, String name, String description, BigDecimal duration,
                    Status status, LocalDate startDate, LocalDate endDate, int taskId) {
@@ -26,6 +28,7 @@ public class SubTask {
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.taskId=taskId;
     }
 
     public SubTask(int id, String name, String description, Profile profile,
@@ -76,4 +79,12 @@ public class SubTask {
 
     public Task getTask() { return task; }
     public void setTask(Task task) { this.task = task; }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
 }
