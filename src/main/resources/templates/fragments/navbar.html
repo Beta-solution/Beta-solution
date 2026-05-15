@@ -1,0 +1,12 @@
+<nav th:fragment="navbar" style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:#f0f0f0;">
+    <span><strong>Beta Solutions</strong></span>
+    <div>
+        <a th:if="${session.profile != null}" href="/projects">Projects</a>
+        <a th:if="${session.profile != null and session.profile.role.name() != 'JUNIOR'}"
+           href="/profiles" style="margin-left:10px;">Profiles</a>
+        <span th:if="${session.profile != null}"
+              th:text="'  |  Logget ind som: ' + ${session.profile.name}"></span>
+        <a th:if="${session.profile != null}" href="/logout" style="margin-left:10px;">Log ud</a>
+        <a th:if="${session.profile == null}" href="/login">Log ind</a>
+    </div>
+</nav>

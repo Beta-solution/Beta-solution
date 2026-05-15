@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head><title>Project</title></head>
 <body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 <h1>Project</h1>
 <p><strong>ID:</strong> <span th:text="${project.id}"></span></p>
 <p><strong>Name:</strong> <span th:text="${project.name}"></span></p>

@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head><title>Edit Template</title></head>
 <body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 <h1>Edit Template</h1>
 <form th:action="@{/templates/{id}/edit(id=${template.id})}" th:object="${template}" method="post">
     <label>Name: <input type="text" th:field="*{name}"/></label><br/>
