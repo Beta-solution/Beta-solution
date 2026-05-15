@@ -16,12 +16,12 @@ public class SkillRepository {
     }
 
     public List<Skill> getAllSkill() {
-        String sql = "SELECT * FROM skill";
+        String sql = "SELECT * FROM Skills";
         return  jdbcTemplate.query(sql, new SkillRowMapper());
     }
 
     public Skill getSkillById(int id) {
-    String sql = "SELECT * FROM skill WHERE id = ?";
+    String sql = "SELECT * FROM Skills WHERE id = ?";
     return jdbcTemplate.queryForObject(sql, new SkillRowMapper(), id);
     }
 
@@ -31,12 +31,12 @@ public class SkillRepository {
     }
 
     public boolean updateSkill(int id, Skill skill) {
-        String sql = "UPDATE skill SET name=? WHERE id=?";
+        String sql = "UPDATE Skills SET name=? WHERE id=?";
         return jdbcTemplate.update(sql, skill.getName(), id) > 0;
     }
 
     public boolean deleteSkill(int id) {
-        String sql = "DELETE FROM skill WHERE id = ?";
+        String sql = "DELETE FROM Skills WHERE id = ?";
         return jdbcTemplate.update(sql, id) > 0;
     }
 
