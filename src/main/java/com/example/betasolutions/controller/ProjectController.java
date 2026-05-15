@@ -119,7 +119,7 @@ public class ProjectController {
         return "projects/members";
     }
 
-    @PostMapping("/projects/{projectId}/members/{profileId}")
+    @PostMapping("/projects/{projectId}/members/{profileId}/add")
     public String addProfileToProject(@PathVariable int projectId,
                                       @PathVariable int profileId,
                                       HttpSession httpSession) {

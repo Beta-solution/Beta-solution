@@ -3,10 +3,7 @@ package com.example.betasolutions.controller;
 import com.example.betasolutions.enums.Role;
 import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.SubTask;
-import com.example.betasolutions.service.ProfileService;
-import com.example.betasolutions.service.ProjectService;
-import com.example.betasolutions.service.SkillService;
-import com.example.betasolutions.service.SubTaskService;
+import com.example.betasolutions.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,16 +18,19 @@ public class SubTaskController {
     private final SkillService skillService;
     private final ProfileService profileService;
     private final ProjectService projectService;
+    private final TaskService taskService;
 
-    public SubTaskController(SubTaskService subTaskService, SkillService skillService, ProfileService profileService, ProjectService projectService) {
+    public SubTaskController(SubTaskService subTaskService, SkillService skillService, ProfileService profileService,
+                             ProjectService projectService, TaskService taskService) {
         this.subTaskService = subTaskService;
         this.skillService = skillService;
         this.profileService = profileService;
         this.projectService = projectService;
+        this.taskService=taskService;
     }
 
-    @GetMapping("/tasks/{taskId}/subtasks")
-    public String getSubTasksByTask(@PathVariable int taskId,
+    @GetMapping("/projects/{projectId}/tasks/{taskId}/subtasks")
+    public String getSubTasksByTask(@PathVariable int projectId, @PathVariable int taskId,
                                     Model model,
                                     HttpSession httpSession) {
 
@@ -40,13 +40,12 @@ public class SubTaskController {
 
         model.addAttribute("subTasks", subTaskService.getSubTaskByTaskId(taskId));
         model.addAttribute("taskId", taskId);
-        model.addAttribute("currentUser", httpSession.getAttribute("currentUser"));
-
+        model.addAttribute("projectId", projectId);
         return "subtasks/index";
     }
 
-    @GetMapping("/tasks/{taskId}/subtasks/create")
-    public String showCreateForm(@PathVariable int taskId,
+    @GetMapping("/projects/{projectId}/tasks/{taskId}/subtasks/create")
+    public String showCreateForm(@PathVariable int projectId, @PathVariable int taskId,
                                  Model model,
                                  HttpSession httpSession) {
 
@@ -56,12 +55,13 @@ public class SubTaskController {
 
         model.addAttribute("subTask", new SubTask());
         model.addAttribute("taskId", taskId);
+        model.addAttribute("projectId", projectId);
 
         return "subtasks/create";
     }
 
-    @PostMapping("/tasks/{taskId}/subtasks/create")
-    public String createSubTask(@PathVariable int taskId,
+    @PostMapping("/projects/{projectId}/tasks/{taskId}/subtasks/create")
+    public String createSubTask(@PathVariable int projectId, @PathVariable int taskId,
                                 @ModelAttribute SubTask subTask,
                                 HttpSession httpSession) {
 
@@ -71,11 +71,11 @@ public class SubTaskController {
 
         subTaskService.createSubTask(subTask, taskId);
 
-        return "redirect:/tasks/" + taskId + "/subtasks";
+        return "redirect:/projects/" + projectId + "/tasks/" + taskId + "/subtasks";
     }
 
-    @GetMapping("/tasks/{taskId}/subtasks/{id}/edit")
-    public String showEditForm(@PathVariable int taskId,
+    @GetMapping("/projects/{projectId}/tasks/{taskId}/subtasks/{id}/edit")
+    public String showEditForm(@PathVariable int projectId, @PathVariable int taskId,
                                @PathVariable int id,
                                Model model,
                                HttpSession httpSession) {
@@ -86,12 +86,14 @@ public class SubTaskController {
 
         model.addAttribute("subTask", subTaskService.getSubTaskById(id));
         model.addAttribute("taskId", taskId);
+        model.addAttribute("projectId", projectId);
 
         return "subtasks/edit";
     }
 
-    @PostMapping("/tasks/{taskId}/subtasks/{id}/edit")
+    @PostMapping("/projects/{projectId}/tasks/{taskId}/subtasks/{id}/edit")
     public String updateSubTask(@PathVariable int taskId,
+                                @PathVariable int projectId,
                                 @PathVariable int id,
                                 @ModelAttribute SubTask subTask,
                                 HttpSession httpSession) {
@@ -102,11 +104,12 @@ public class SubTaskController {
 
         subTaskService.updateSubTask(id, subTask);
 
-        return "redirect:/tasks/" + taskId + "/subtasks";
+        return "redirect:/projects/" + projectId + "/tasks/" + taskId + "/subtasks";
     }
 
-    @PostMapping("/tasks/{taskId}/subtasks/{id}/delete")
-    public String deleteSubTask(@PathVariable int taskId,
+    @PostMapping("/projects/{projectId}/tasks/{taskId}/subtasks/{id}/delete")
+    public String deleteSubTask(@PathVariable int projectId,
+                                @PathVariable int taskId,
                                 @PathVariable int id,
                                 HttpSession httpSession) {
 
@@ -116,7 +119,7 @@ public class SubTaskController {
 
         subTaskService.deleteSubTask(id);
 
-        return "redirect:/tasks/" + taskId + "/subtasks";
+        return "redirect:/projects/" + projectId + "/tasks/" + taskId + "/subtasks";
     }
 
     @GetMapping("/subtasks/{subTaskId}/members")

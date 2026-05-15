@@ -1,8 +1,6 @@
 DELETE FROM Sub_Tasks_Skills;
-DELETE FROM Profiles_Sub_Tasks;
 DELETE FROM Sub_Tasks;
 DELETE FROM Tasks_Skills;
-DELETE FROM Profiles_Tasks;
 DELETE FROM Tasks;
 DELETE FROM Project_Skills;
 DELETE FROM Profiles_Projects;

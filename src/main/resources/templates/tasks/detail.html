@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Task</title></head>
+<body>
+<h1>Task</h1>
+<p><strong>ID:</strong> <span th:text="${task.id}"></span></p>
+<p><strong>Name:</strong> <span th:text="${task.name}"></span></p>
+<p><strong>Description:</strong> <span th:text="${task.description}"></span></p>
+
+<h2>Assigned Profiles</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Role</th>
+    </tr>
+    <tr th:each="profile : ${profiles}">
+        <td th:text="${profile.id}"></td>
+        <td th:text="${profile.name}"></td>
+        <td th:text="${profile.role}"></td>
+    </tr>
+</table>
+
+<a th:href="@{/tasks/{id}/subtasks(id=${task.id})}">View Subtasks</a> |
+<a th:href="@{/projects/{projectId}/tasks/{id}/edit(projectId=${projectId},id=${task.id})}">Edit</a> |
+<a th:href="@{/projects/{id}/tasks(id=${projectId})}">Back</a>
+</body>
+</html>

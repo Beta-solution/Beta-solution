@@ -7,7 +7,7 @@
     <label>Name: <input type="text" th:field="*{name}"/></label><br/>
     <label>Description: <input type="text" th:field="*{description}"/></label><br/>
     <label>Hourly Rate: <input type="number" step="0.01" th:field="*{hourlyRate}"/></label><br/>
-    <label>Estimated Deadline (days): <input type="number" th:field="*{estimatedDeadlineDays}"/></label><br/>
+    <label>Estimated Deadline: <input type="date" th:field="*{estimatedDeadlineDays}"/></label>
     <button type="submit">Save</button>
 </form>
 <a href="/templates">Back</a>

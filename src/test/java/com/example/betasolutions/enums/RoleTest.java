@@ -9,22 +9,19 @@ class RoleTest {
     @Test
     void shouldReturnOwner() {
         Role role = Role.fromDb("owner");
-
         assertEquals(Role.OWNER, role);
     }
 
     @Test
-    void shouldReturnProjectManager() {
-        Role role = Role.fromDb("project_manager");
-
-        assertEquals(Role.PROJECT_MANAGER, role);
+    void shouldReturnSenior() {
+        Role role = Role.fromDb("senior");
+        assertEquals(Role.SENIOR, role);
     }
 
     @Test
-    void shouldReturnDeveloper() {
-        Role role = Role.fromDb("developer");
-
-        assertEquals(Role.DEVELOPER, role);
+    void shouldReturnJunior() {
+        Role role = Role.fromDb("junior");
+        assertEquals(Role.JUNIOR, role);
     }
 
     @Test

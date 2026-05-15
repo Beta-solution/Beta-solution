@@ -58,7 +58,7 @@ public class ProjectRepositoryTest {
     @Test
     void createProject_ValidProject_IsPersistedAndRetrievable() {
         Project newProject = new Project();
-        newProject.setName("Project 3");
+        newProject.setName("Project3");
         newProject.setDescription("Third project");
         newProject.setStatus(Status.IN_PROGRESS);
         newProject.setHourlyRate(BigDecimal.valueOf(500.00));
@@ -71,19 +71,19 @@ public class ProjectRepositoryTest {
         assertEquals(3, all.size());
 
         Project saved = all.stream()
-                .filter(p -> p.getName().equals("Project 3"))
+                .filter(p -> p.getName().equals("Project3"))
                 .findFirst()
                 .orElseThrow();
 
         assertEquals("Third project", saved.getDescription());
-        assertEquals(0, BigDecimal.valueOf(750.00).compareTo(saved.getHourlyRate()));
-        assertEquals(Status.TODO, saved.getStatus());
+        assertEquals(0, BigDecimal.valueOf(500).compareTo(saved.getHourlyRate()));
+        assertEquals(Status.IN_PROGRESS, saved.getStatus());
     }
 
     @Test
     void createProject_CanBeRetrievedById() {
         Project newProject = new Project();
-        newProject.setName("Project 3");
+        newProject.setName("Project3");
         newProject.setDescription("Third project");
         newProject.setHourlyRate(BigDecimal.valueOf(750.00));
         newProject.setStartDate(LocalDate.of(2026, 4, 1));
@@ -96,7 +96,7 @@ public class ProjectRepositoryTest {
 
         // ID 3 is next after the two seeded projects
         Project result = projectRepository.getProjectById(3);
-        assertEquals("Project 3", result.getName());
+        assertEquals("Project3", result.getName());
     }
 
     // -------------------- updateProject --------------------
@@ -171,7 +171,7 @@ public class ProjectRepositoryTest {
         List<Project> result = projectRepository.getProjectByStatus(Status.IN_PROGRESS);
 
         assertEquals(1, result.size());
-        assertEquals("Project 1", result.get(0).getName());
+        assertEquals("Project1", result.get(0).getName());
     }
 
     @Test
@@ -179,7 +179,7 @@ public class ProjectRepositoryTest {
         List<Project> result = projectRepository.getProjectByStatus(Status.TODO);
 
         assertEquals(1, result.size());
-        assertEquals("Project 2", result.get(0).getName());
+        assertEquals("Project2", result.get(0).getName());
     }
 
     @Test

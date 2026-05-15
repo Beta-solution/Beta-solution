@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Project Members</title></head>
+<body>
+<h1>Members - <span th:text="${project.name}"></span></h1>
+
+<h2>Assigned Members</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="profile : ${projectProfiles}">
+        <td th:text="${profile.id}"></td>
+        <td th:text="${profile.name}"></td>
+        <td th:text="${profile.role}"></td>
+        <td>
+            <form th:action="@{/projects/{projectId}/members/{profileId}/remove(projectId=${project.id},profileId=${profile.id})}" method="post">
+                <button type="submit">Remove</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<h2>Available Profiles</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="profile : ${profiles}">
+        <td th:text="${profile.id}"></td>
+        <td th:text="${profile.name}"></td>
+        <td th:text="${profile.role}"></td>
+        <td>
+            <form th:action="@{/projects/{projectId}/members/{profileId}(projectId=${project.id},profileId=${profile.id})}" method="post">
+                <button type="submit">Add</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/projects/{id}(id=${project.id})}">Back</a>
+</body>
+</html>

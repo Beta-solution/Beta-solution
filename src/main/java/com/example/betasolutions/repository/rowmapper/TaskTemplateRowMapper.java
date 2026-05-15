@@ -1,4 +1,4 @@
-package com.example.betasolutions.repository;
+package com.example.betasolutions.repository.rowmapper;
 
 import com.example.betasolutions.model.TaskTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -12,7 +12,6 @@ public class TaskTemplateRowMapper implements RowMapper<TaskTemplate> {
                 rs.getInt("id"),
                 rs.getString("name"),
                 rs.getString("description"),
-                rs.getBigDecimal("duration"),
                 rs.getInt("project_template_id")
         );
     }

@@ -7,18 +7,15 @@ public class TaskTemplate {
     private int id;
     private String name;
     private String description;
-    private BigDecimal duration;
     private int projectTemplateId;
     private List<SubTaskTemplate> subTaskTemplates;
 
     public TaskTemplate() {}
 
-    public TaskTemplate(int id, String name, String description,
-                        BigDecimal duration, int projectTemplateId) {
+    public TaskTemplate(int id, String name, String description, int projectTemplateId) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.duration = duration;
         this.projectTemplateId = projectTemplateId;
     }
 
@@ -30,9 +27,6 @@ public class TaskTemplate {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-
-    public BigDecimal getDuration() { return duration; }
-    public void setDuration(BigDecimal duration) { this.duration = duration; }
 
     public int getProjectTemplateId() { return projectTemplateId; }
     public void setProjectTemplateId(int projectTemplateId) { this.projectTemplateId = projectTemplateId; }

@@ -15,7 +15,7 @@ public class Project {
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDate estimatedDeadline;
-    private Status status;
+    private Status status = Status.TODO;
     private BigDecimal finalPrice;
     private List<Skill> skills;
     private List<Profile> profiles;

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Subtasks</title></head>
+<body>
+<h1>Subtasks</h1>
+<a th:href="@{/projects/{projectId}/tasks/{taskId}/subtasks/create(projectId=${projectId},taskId=${taskId})}">Create new subtask</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Duration</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="subTask : ${subTasks}">
+        <td th:text="${subTask.id}"></td>
+        <td th:text="${subTask.name}"></td>
+        <td th:text="${subTask.description}"></td>
+        <td th:text="${subTask.duration}"></td>
+        <td th:text="${subTask.status}"></td>
+        <td>
+            <a th:href="@{/projects/{projectId}/tasks/{taskId}/subtasks/{id}/edit(projectId=${projectId},taskId=${taskId},id=${subTask.id})}">Edit</a>
+            <a th:href="@{/subtasks/{id}/members(id=${subTask.id})}">Members</a>
+            <form th:action="@{/projects/{projectId}/tasks/{taskId}/subtasks/{id}/delete(projectId=${projectId},taskId=${taskId},id=${subTask.id})}" method="post" style="display:inline">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:href="@{/projects/{projectId}/tasks(projectId=${projectId})}">Back</a>
+</body>
+</html>

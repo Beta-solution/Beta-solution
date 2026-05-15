@@ -4,6 +4,7 @@ import com.example.betasolutions.exception.InvalidProfileException;
 import com.example.betasolutions.exception.ProfileNotFoundException;
 import com.example.betasolutions.model.Profile;
 import com.example.betasolutions.model.Skill;
+import com.example.betasolutions.repository.rowmapper.ProfileRowMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -93,10 +94,10 @@ public class ProfileRepository {
     public boolean deleteProfile(int profileId){
         getProfileById(profileId);
 
+        jdbcTemplate.update("DELETE FROM Sub_Tasks_Skills WHERE sub_task_id IN (SELECT id FROM Sub_Tasks WHERE profile_id = ?)", profileId);
+        jdbcTemplate.update("UPDATE Sub_Tasks SET profile_id = NULL WHERE profile_id = ?", profileId);
         jdbcTemplate.update("DELETE FROM Profiles_Skills WHERE profile_id = ?", profileId);
         jdbcTemplate.update("DELETE FROM Profiles_Projects WHERE profile_id = ?", profileId);
-        jdbcTemplate.update("DELETE FROM Profiles_Tasks WHERE profile_id = ?", profileId);
-        jdbcTemplate.update("DELETE FROM Profiles_Sub_Tasks WHERE profile_id = ?", profileId);
 
         jdbcTemplate.update("DELETE FROM Profiles WHERE id = ?", profileId);
         return true;

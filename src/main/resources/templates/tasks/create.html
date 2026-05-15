@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Create Task</title></head>
+<body>
+<h1>Create Task</h1>
+<form th:action="@{/projects/{projectId}/tasks/create(projectId=${projectId})}" th:object="${task}" method="post">
+    <label>Name: <input type="text" th:field="*{name}"/></label><br/>
+    <label>Description: <input type="text" th:field="*{description}"/></label><br/>
+    <button type="submit">Create</button>
+</form>
+<a th:href="@{/projects/{id}/tasks(id=${projectId})}">Back</a>
+</body>
+</html>
