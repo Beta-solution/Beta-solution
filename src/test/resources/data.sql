@@ -24,7 +24,7 @@ INSERT INTO Projects (
 )
 VALUES
     (
-        'Project 1',
+        'Project1',
         'First project',
         500.00,
         '2026-01-01',
@@ -34,7 +34,7 @@ VALUES
         'IN_PROGRESS'
     ),
     (
-        'Project 2',
+        'Project2',
         'Second project',
         600.00,
         '2026-03-01',
@@ -139,18 +139,14 @@ VALUES (1, 1, 1),
        (2, 2, 1),
        (3, 3, 1);
 
-INSERT INTO Project_Templates (
-    name,
-    description,
-    hourlyRate,
-    estimatedDeadline
-)
+INSERT INTO Project_Templates (name, description, hourlyRate, estimatedDeadline)
+
 VALUES
     (
         'Betalingsløsning',
         'Standard betalingsløsning',
         500.00,
-        '2026-04-01'
+        '2026-03-31'
     ),
     (
         'Webshop',

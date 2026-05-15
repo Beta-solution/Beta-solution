@@ -1,11 +1,16 @@
-DROP
-DATABASE IF EXISTS betasolutions;
-
-CREATE
-DATABASE betasolutions;
-
-USE
-betasolutions;
+DROP TABLE IF EXISTS Sub_Task_Templates;
+DROP TABLE IF EXISTS Task_Templates;
+DROP TABLE IF EXISTS Project_Templates;
+DROP TABLE IF EXISTS Sub_Tasks_Skills;
+DROP TABLE IF EXISTS Sub_Tasks;
+DROP TABLE IF EXISTS Tasks_Skills;
+DROP TABLE IF EXISTS Tasks;
+DROP TABLE IF EXISTS Project_Skills;
+DROP TABLE IF EXISTS Profiles_Projects;
+DROP TABLE IF EXISTS Projects;
+DROP TABLE IF EXISTS Profiles_Skills;
+DROP TABLE IF EXISTS Profiles;
+DROP TABLE IF EXISTS Skills;
 
 CREATE TABLE Skills
 (

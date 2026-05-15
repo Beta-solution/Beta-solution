@@ -24,43 +24,44 @@ public class SubTaskRepository {
     public SubTask getSubTaskById(int id){
         String sql = "SELECT * FROM Sub_Tasks WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new SubTaskRowMapper(), id);
+
     }
 
     public List<SubTask> getSubTaskByTaskId(int taskId){
-        String sql = "SELECT * FROM Sub_Tasks WHERE id = ?";
+        String sql = "SELECT * FROM Sub_Tasks WHERE task_id = ?";
         return jdbcTemplate.query(sql, new SubTaskRowMapper(), taskId);
     }
 
-    public void createSubTask(SubTask subTask, int taskId){
+    public boolean createSubTask(SubTask subTask, int taskId){
         String sql = """
                 INSERT INTO Sub_Tasks (name, description, duration, status,
                 startDate, endDate, task_id) VALUES (?, ?, ?, ?, ?, ?, ?)
-        """;
-
-        jdbcTemplate.update(sql,
-                subTask.getName(),
-                subTask.getDescription(),
-                subTask.getDuration(),
-                subTask.getStatus(),
-                Date.valueOf(subTask.getStartDate()),
-                Date.valueOf(subTask.getEndDate()),
-                taskId
-                );
-    }
-
-    public boolean updateSubTask(int id, SubTask subTask){
-        String sql = """
-                Update Sub_Tasks SET name = ?, description = ?, duration = ?, status = ?,
-                startDate = ?, endDate = ? WHERE id = ?
                 """;
 
         return jdbcTemplate.update(sql,
                 subTask.getName(),
                 subTask.getDescription(),
                 subTask.getDuration(),
-                subTask.getStatus(),
-                Date.valueOf(subTask.getStartDate()),
-                Date.valueOf(subTask.getEndDate()),
+                subTask.getStatus() != null ? subTask.getStatus().name() : null,
+                subTask.getStartDate() != null ? Date.valueOf(subTask.getStartDate()) : null,
+                subTask.getEndDate() != null ? Date.valueOf(subTask.getEndDate()) : null,
+                taskId
+                )>0;
+    }
+
+    public boolean updateSubTask(int id, SubTask subTask){
+        String sql = """
+            Update Sub_Tasks SET name = ?, description = ?, duration = ?, status = ?,
+            startDate = ?, endDate = ? WHERE id = ?
+            """;
+
+        return jdbcTemplate.update(sql,
+                subTask.getName(),
+                subTask.getDescription(),
+                subTask.getDuration(),
+                subTask.getStatus() != null ? subTask.getStatus().name() : null,
+                subTask.getStartDate() != null ? Date.valueOf(subTask.getStartDate()) : null,
+                subTask.getEndDate() != null ? Date.valueOf(subTask.getEndDate()) : null,
                 id) > 0;
     }
 

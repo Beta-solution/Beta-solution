@@ -10,11 +10,9 @@ import java.util.List;
 @Service
 public class SkillService {
     private final SkillRepository skillRepository;
-    private final JdbcTemplate jdbcTemplate;
 
-    public SkillService(SkillRepository skillRepository, JdbcTemplate jdbcTemplate) {
+    public SkillService(SkillRepository skillRepository) {
         this.skillRepository = skillRepository;
-        this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<Skill> getAllSkill() {

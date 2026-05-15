@@ -3,8 +3,7 @@
 <head><title>Create Subtask</title></head>
 <body>
 <h1>Create Subtask</h1>
-<form th:action="@{/tasks/{taskId}/subtasks/create(taskId=${taskId})}" th:object="${subTask}" method="post">
-    <label>Name: <input type="text" th:field="*{name}"/></label><br/>
+<form th:action="@{/projects/{projectId}/tasks/{taskId}/subtasks/create(projectId=${projectId},taskId=${taskId})}" th:object="${subTask}" method="post">    <label>Name: <input type="text" th:field="*{name}"/></label><br/>
     <label>Description: <input type="text" th:field="*{description}"/></label><br/>
     <label>Duration: <input type="number" step="0.01" th:field="*{duration}"/></label><br/>
     <button type="submit">Create</button>
