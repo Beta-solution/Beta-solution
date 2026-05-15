@@ -3,6 +3,7 @@ package com.example.betasolutions.repository;
 import com.example.betasolutions.exception.InvalidProfileException;
 import com.example.betasolutions.exception.ProfileNotFoundException;
 import com.example.betasolutions.model.Profile;
+import com.example.betasolutions.model.Skill;
 import com.example.betasolutions.repository.rowmapper.ProfileRowMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -51,6 +52,10 @@ public class ProfileRepository {
         INSERT INTO Profiles (name, role, username, password, email) VALUES (?, ?, ?, ?, ?)
         """;
 
+        jdbcTemplate.update(sql,  profile.getName(), profile.getRole(), profile.getUsername(), profile.getPassword(), profile.getEmail());
+        Integer newId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        if (profile.getSkills() != null) saveProfileSkills(newId, profile.getSkills());
+
         int rows = jdbcTemplate.update(sql,
                 profile.getName(),
                 profile.getRole() != null ? profile.getRole().name() : "JUNIOR",
@@ -66,6 +71,9 @@ public class ProfileRepository {
         validateProfile(profile);
 
         String sql = "UPDATE Profiles SET name = ?, role = ?, username = ?, password = ?, email = ? WHERE id = ?";
+
+        jdbcTemplate.update(sql, profile.getName(), profile.getRole(), profile.getUsername(), profile.getPassword(), profile.getEmail());
+        saveProfileSkills(profileId, profile.getSkills());
 
         int rows = jdbcTemplate.update(sql,
                 profile.getName(),
@@ -163,5 +171,17 @@ public class ProfileRepository {
     """;
 
         return jdbcTemplate.query(sql, new ProfileRowMapper(), subTaskId);
+    }
+
+    //hjælpemetode som skal bruges i createProfile og updateProfile
+    private void saveProfileSkills(int profileId, List<Skill> skills) {
+        jdbcTemplate.update("DELETE FROM Profiles_Skills WHERE profile_id = ?", profileId);
+        if (skills == null || skills.isEmpty()) return;
+        for (Skill skill : skills) {
+            jdbcTemplate.update(
+                    "INSERT INTO Profiles_Skills (profile_id, skill_id) VALUES (?, ?)",
+                    profileId, skill.getId()
+            );
+        }
     }
 }
