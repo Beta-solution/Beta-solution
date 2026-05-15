@@ -52,18 +52,16 @@ public class ProfileRepository {
         INSERT INTO Profiles (name, role, username, password, email) VALUES (?, ?, ?, ?, ?)
         """;
 
-        jdbcTemplate.update(sql,  profile.getName(), profile.getRole(), profile.getUsername(), profile.getPassword(), profile.getEmail());
+        jdbcTemplate.update(sql,
+                profile.getName(),
+                profile.getRole().name(),
+                profile.getUsername(),
+                profile.getPassword(),
+                profile.getEmail());
         Integer newId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         if (profile.getSkills() != null) saveProfileSkills(newId, profile.getSkills());
 
-        int rows = jdbcTemplate.update(sql,
-                profile.getName(),
-                profile.getRole() != null ? profile.getRole().name() : "JUNIOR",
-                profile.getUsername(),
-                profile.getPassword(),
-                profile.getEmail()
-        );
-        return rows > 0;
+        return true;
     }
 
     public boolean updateProfile(Profile profile, int profileId){
@@ -71,9 +69,6 @@ public class ProfileRepository {
         validateProfile(profile);
 
         String sql = "UPDATE Profiles SET name = ?, role = ?, username = ?, password = ?, email = ? WHERE id = ?";
-
-        jdbcTemplate.update(sql, profile.getName(), profile.getRole(), profile.getUsername(), profile.getPassword(), profile.getEmail());
-        saveProfileSkills(profileId, profile.getSkills());
 
         int rows = jdbcTemplate.update(sql,
                 profile.getName(),

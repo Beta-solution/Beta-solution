@@ -11,8 +11,9 @@
     <label>Email: <input type="email" th:field="*{email}"/></label><br/>
     <label>Role:
         <select th:field="*{role}">
-            <option th:value="DEVELOPER">Developer</option>
-            <option th:if="${isOwner}" th:value="PROJECT_MANAGER">Project Manager</option>
+            <option value="JUNIOR">Junior</option>
+            <option value="SENIOR">Senior</option>
+            <option value="OWNER">Owner</option>
         </select>
     </label><br/>
     <button type="submit">Create</button>
