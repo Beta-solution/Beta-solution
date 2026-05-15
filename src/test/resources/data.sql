@@ -24,7 +24,7 @@ INSERT INTO Projects (
 )
 VALUES
     (
-        'Project 1',
+        'Project1',
         'First project',
         500.00,
         '2026-01-01',
@@ -34,7 +34,7 @@ VALUES
         'IN_PROGRESS'
     ),
     (
-        'Project 2',
+        'Project2',
         'Second project',
         600.00,
         '2026-03-01',
